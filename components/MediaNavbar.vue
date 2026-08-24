@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const isOpen = ref(false)
 const isScrolled = ref(false)
+const isSearchOpen = ref(false)
+const searchTrigger = ref<HTMLButtonElement | null>(null)
 const links = [
   { label: 'Hari Ini', to: '#hari-ini' },
   { label: 'Makkah', to: '#makkah' },
@@ -9,6 +11,10 @@ const links = [
   { label: 'Kultur', to: '#lokal' },
 ]
 function updateScroll() { isScrolled.value = window.scrollY > 24 }
+function closeSearch() {
+  isSearchOpen.value = false
+  nextTick(() => searchTrigger.value?.focus())
+}
 onMounted(() => { updateScroll(); window.addEventListener('scroll', updateScroll, { passive: true }) })
 onBeforeUnmount(() => window.removeEventListener('scroll', updateScroll))
 </script>
@@ -20,9 +26,10 @@ onBeforeUnmount(() => window.removeEventListener('scroll', updateScroll))
         <img src="/assets/images/sht_horizontal_white_logo.png" alt="" class="h-12 w-auto" />
       </NuxtLink>
       <nav class="hidden flex-1 items-center justify-center gap-6 text-[15px] font-medium lg:flex xl:gap-8" aria-label="Navigasi Media"><a v-for="link in links" :key="link.label" :href="link.to" class="opacity-80 transition-opacity hover:opacity-100">{{ link.label }}</a></nav>
-      <div class="hidden items-center lg:flex"><button type="button" class="inline-flex h-11 w-[196px] items-center gap-2 rounded-xl border border-current/35 px-3.5 text-left text-sm opacity-85 transition-colors hover:bg-white/10 hover:opacity-100" aria-label="Cari informasi"><svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path stroke-linecap="round" d="m16 16 5 5"/></svg><span>Cari informasi</span></button></div>
-      <div class="flex items-center gap-2 lg:hidden"><button type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-full hover:bg-white/10" aria-label="Cari informasi"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path stroke-linecap="round" d="m16 16 5 5"/></svg></button><button type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-full hover:bg-white/10" :aria-expanded="isOpen" aria-controls="media-mobile-menu" aria-label="Buka menu" @click="isOpen = !isOpen"><svg v-if="!isOpen" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" /></svg><svg v-else class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" d="M6 6l12 12M18 6 6 18" /></svg></button></div>
+      <div class="hidden items-center lg:flex"><button ref="searchTrigger" type="button" class="inline-flex h-11 w-[196px] items-center gap-2 rounded-xl border border-current/35 px-3.5 text-left text-sm opacity-85 transition-colors hover:bg-white/10 hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold" aria-label="Cari informasi" @click="isSearchOpen = true"><svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path stroke-linecap="round" d="m16 16 5 5"/></svg><span>Cari informasi</span></button></div>
+      <div class="flex items-center gap-2 lg:hidden"><button ref="searchTrigger" type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-full hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold" aria-label="Cari informasi" @click="isSearchOpen = true"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path stroke-linecap="round" d="m16 16 5 5"/></svg></button><button type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-full hover:bg-white/10" :aria-expanded="isOpen" aria-controls="media-mobile-menu" aria-label="Buka menu" @click="isOpen = !isOpen"><svg v-if="!isOpen" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" /></svg><svg v-else class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" d="M6 6l12 12M18 6 6 18" /></svg></button></div>
     </div>
     <div v-show="isOpen" id="media-mobile-menu" class="min-h-screen bg-sht-off-white text-sht-olive-dark lg:hidden"><nav class="mx-auto flex max-w-container flex-col px-5 py-10 sm:px-6" aria-label="Navigasi Media Seluler"><a v-for="(link, index) in links" :key="link.label" :href="link.to" class="flex items-baseline gap-4 border-b border-sht-stone py-5 font-heading text-3xl" @click="isOpen = false"><span class="font-sans text-xs tracking-[0.2em] text-sht-sage">0{{ index + 1 }}</span>{{ link.label }}</a><a href="#lebih" class="flex items-baseline gap-4 border-b border-sht-stone py-5 font-heading text-3xl" @click="isOpen = false"><span class="font-sans text-xs tracking-[0.2em] text-sht-sage">06</span>Cari</a></nav></div>
   </header>
+  <MediaSearchModal v-model="isSearchOpen" @update:model-value="(open) => { if (!open) closeSearch() }" />
 </template>
