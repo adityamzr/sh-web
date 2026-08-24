@@ -24,12 +24,12 @@ const situations = [
           :key="item.number"
           class="group relative min-h-[230px] overflow-hidden rounded-3xl border p-6 transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-1 hover:shadow-[0_14px_30px_-20px_rgba(45,53,31,0.6)] lg:p-8"
           :class="[
-            index === 0 ? 'lg:col-span-5' : index === 1 ? 'lg:col-span-7' : index === 2 || index === 3 || index === 4 ? 'lg:col-span-4' : 'lg:col-span-8',
+            index === 0 ? 'lg:col-span-5' : index === 1 ? 'lg:col-span-7' : index === 2 || index === 3 ? 'lg:col-span-4' : index === 4 ? 'lg:col-span-4 lg:row-span-2 lg:min-h-[480px]' : 'lg:col-span-8',
             item.tone === 'dark' ? 'border-sht-olive bg-sht-olive text-sht-off-white' : item.tone === 'gold' ? 'border-sht-gold/40 bg-sht-gold/25 text-sht-olive-dark' : item.tone === 'sage' ? 'border-sht-sage/35 bg-sht-sage/20 text-sht-olive-dark' : item.tone === 'image' ? 'border-sht-olive-dark bg-sht-olive-dark text-white' : 'border-sht-stone bg-sht-off-white text-sht-olive-dark',
           ]"
           :style="item.image ? { backgroundImage: `linear-gradient(110deg, rgba(45,53,31,.88), rgba(45,53,31,.25)), url(${item.image})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined"
         >
-          <span class="pointer-events-none absolute -right-2 -top-7 select-none font-sans text-[9rem] font-bold leading-none tracking-[-0.08em] opacity-[0.1]" :class="item.tone === 'dark' || item.tone === 'image' ? 'text-white' : 'text-sht-olive-dark'" aria-hidden="true">{{ item.number }}</span>
+          <span class="pointer-events-none absolute right-5 top-4 select-none font-sans text-[11rem] font-bold leading-none tracking-[-0.08em] opacity-[0.12]" :class="item.tone === 'dark' || item.tone === 'image' ? 'text-white' : 'text-sht-olive-dark'" aria-hidden="true">{{ item.number }}</span>
           <div class="relative flex h-full min-h-[180px] flex-col justify-between">
             <span class="text-sm font-semibold tracking-[0.16em] opacity-60">{{ item.number }}</span>
             <div>
