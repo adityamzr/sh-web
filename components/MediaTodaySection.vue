@@ -18,7 +18,7 @@ const supportingUpdates = [
     <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <div class="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
         <div>
-          <p class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-sht-olive-dark"><span class="h-1.5 w-1.5 rounded-full bg-sht-gold" aria-hidden="true" />HARI INI</p>
+          <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-sht-olive-dark sm:text-xs"><span class="h-px w-8 bg-sht-olive-dark" aria-hidden="true" />HARI INI</p>
           <h2 id="today-heading" class="mt-3 font-hero text-4xl font-bold italic leading-[0.98] text-sht-olive-dark sm:text-5xl">Hari Ini di Haramain</h2>
           <p class="mt-4 max-w-xl text-base leading-relaxed text-sht-charcoal/70">Catatan terbaru, kondisi lapangan, dan informasi yang relevan dari Makkah dan Madinah.</p>
         </div>
