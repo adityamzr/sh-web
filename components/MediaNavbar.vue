@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import blackLogo from '~/assets/images/sht_horizontal_black_logo.png'
+import whiteLogo from '~/assets/images/sht_horizontal_white_logo.png'
+
 const isOpen = ref(false)
 const isScrolled = ref(false)
 const isSearchOpen = ref(false)
@@ -20,10 +23,10 @@ onBeforeUnmount(() => window.removeEventListener('scroll', updateScroll))
 </script>
 
 <template>
-  <header class="fixed inset-x-0 top-0 md:top-3 z-50 transition-[background-color,border-color,backdrop-filter] duration-300" :class="isScrolled ? 'border-sht-stone/80 bg-sht-off-white/95 text-sht-olive-dark backdrop-blur-md' : 'border-white/20 bg-transparent text-white backdrop-blur-sm'">
+  <header class="fixed inset-x-0 py-2 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300" :class="isScrolled ? 'border-sht-stone/80 bg-sht-off-white/95 text-sht-olive-dark backdrop-blur-md' : 'border-white/20 bg-transparent text-white backdrop-blur-sm'">
     <div class="mx-auto flex h-[72px] max-w-[84rem] items-center justify-between gap-8 px-5 sm:px-6 lg:px-8">
       <NuxtLink to="#beranda" class="shrink-0 font-heading text-xl font-semibold tracking-wide sm:text-2xl" aria-label="Sudut Haramain — Beranda">
-        <img src="/assets/images/sht_horizontal_white_logo.png" alt="" class="h-12 w-auto" />
+        <img :src="isScrolled ? blackLogo : whiteLogo" alt="" class="h-12 w-auto" />
       </NuxtLink>
       <nav class="hidden flex-1 items-center justify-center gap-6 text-[15px] font-medium lg:flex xl:gap-8" aria-label="Navigasi Media"><a v-for="link in links" :key="link.label" :href="link.to" class="opacity-80 transition-opacity hover:opacity-100">{{ link.label }}</a></nav>
       <div class="hidden items-center lg:flex"><button ref="searchTrigger" type="button" class="inline-flex h-11 w-fit items-center gap-2 rounded-xl border border-current/35 px-5 text-left text-sm opacity-85 transition-colors hover:bg-white/10 hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold" aria-label="Cari informasi" @click="isSearchOpen = true"><svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path stroke-linecap="round" d="m16 16 5 5"/></svg><span>Cari informasi</span></button></div>
