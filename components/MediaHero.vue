@@ -52,7 +52,7 @@ onBeforeUnmount(() => {
     <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_72%_42%,rgba(127,137,104,0.42),transparent_38%),linear-gradient(90deg,rgba(45,53,31,0.93)_0%,rgba(45,53,31,0.68)_42%,rgba(58,68,40,0.35)_100%)]" aria-hidden="true" />
     <div class="absolute inset-x-0 top-0 -z-10 h-48 bg-gradient-to-b from-sht-olive-dark/40 to-transparent" aria-hidden="true" />
 
-    <div class="mx-auto grid min-h-[100svh] max-w-container items-center gap-8 px-5 pb-24 pt-32 sm:px-6 sm:pb-28 sm:pt-40 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-8 lg:pb-32 lg:pt-36">
+    <div class="mx-auto grid min-h-[100svh] max-w-container items-center gap-6 px-5 pb-24 pt-32 sm:px-6 sm:pb-28 sm:pt-40 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-8 lg:pb-32 lg:pt-36">
       <div>
         <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-sht-gold sm:text-xs"><span class="h-px w-8 bg-sht-gold" aria-hidden="true" />DARI MAKKAH &amp; MADINAH</p>
         <h1 class="mt-6 max-w-3xl font-hero text-5xl font-bold italic leading-[0.98] tracking-[-0.03em] text-white [font-optical-sizing:auto] sm:text-[4.5rem]">Apa yang sedang terjadi di Haramain?</h1>

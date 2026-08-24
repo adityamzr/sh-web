@@ -29,7 +29,7 @@ const situations = [
           ]"
           :style="item.image ? { backgroundImage: `linear-gradient(110deg, rgba(45,53,31,.88), rgba(45,53,31,.25)), url(${item.image})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined"
         >
-          <span class="pointer-events-none absolute right-5 top-4 select-none font-sans text-[11rem] font-bold leading-none tracking-[-0.08em] opacity-[0.12]" :class="item.tone === 'dark' || item.tone === 'image' ? 'text-white' : 'text-sht-olive-dark'" aria-hidden="true">{{ item.number }}</span>
+          <span class="pointer-events-none absolute right-5 top-0 select-none font-sans text-[11rem] font-bold leading-none tracking-[-0.08em] opacity-[0.12]" :class="item.tone === 'dark' || item.tone === 'image' ? 'text-white' : 'text-sht-olive-dark'" aria-hidden="true">{{ item.number }}</span>
           <div class="relative flex h-full min-h-[180px] flex-col justify-between">
             <span class="text-sm font-semibold tracking-[0.16em] opacity-60">{{ item.number }}</span>
             <div>
