@@ -19,10 +19,10 @@ const supportingUpdates = [
       <div class="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
         <div>
           <p class="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-sht-olive-dark"><span class="h-1.5 w-1.5 rounded-full bg-sht-gold" aria-hidden="true" />HARI INI</p>
-          <h2 id="today-heading" class="mt-3 font-hero text-3xl font-bold italic leading-tight text-sht-olive-dark sm:text-4xl">Hari Ini di Haramain</h2>
+          <h2 id="today-heading" class="mt-3 font-hero text-4xl font-bold italic leading-[0.98] text-sht-olive-dark sm:text-5xl">Hari Ini di Haramain</h2>
           <p class="mt-4 max-w-xl text-base leading-relaxed text-sht-charcoal/70">Catatan terbaru, kondisi lapangan, dan informasi yang relevan dari Makkah–Madinah.</p>
         </div>
-        <div class="flex items-center gap-3 text-xs uppercase tracking-[0.16em] text-sht-charcoal/50"><span class="h-1.5 w-1.5 rounded-full bg-sht-gold" aria-hidden="true" />DIPERBARUI DARI LAPANGAN<span class="hidden text-sht-olive sm:inline">Lihat Semua Update →</span></div>
+        <div class="text-xs uppercase tracking-[0.16em] text-sht-olive sm:pb-1"><span class="font-semibold">Lihat Semua Update →</span></div>
       </div>
 
       <div class="mt-12 grid gap-8 lg:grid-cols-[minmax(0,1.65fr)_minmax(20rem,0.9fr)] lg:gap-10">
@@ -31,16 +31,16 @@ const supportingUpdates = [
           <div class="absolute inset-0 bg-gradient-to-t from-sht-olive-dark/95 via-sht-olive-dark/20 to-transparent" aria-hidden="true" />
           <div class="relative flex min-h-[440px] flex-col justify-end p-6 sm:min-h-[500px] sm:p-10">
             <div class="flex flex-wrap items-center gap-3 text-xs font-semibold uppercase tracking-[0.16em] text-sht-gold"><span>{{ featuredUpdate.category }}</span><span class="h-px w-6 bg-sht-gold/60" aria-hidden="true" /><span class="text-sht-off-white/65">{{ featuredUpdate.time }}</span></div>
-            <h3 class="mt-4 max-w-2xl font-sans text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-[2.65rem]">{{ featuredUpdate.title }}</h3>
+            <h3 class="mt-4 max-w-2xl font-hero text-3xl font-bold not-italic leading-tight text-white sm:text-4xl lg:text-[2.65rem]">{{ featuredUpdate.title }}</h3>
             <p class="mt-4 max-w-xl text-sm leading-relaxed text-sht-off-white/75 sm:text-base">{{ featuredUpdate.description }}</p>
-            <span class="mt-6 inline-flex text-sm font-semibold text-sht-gold">CATATAN EDITORIAL</span>
+
           </div>
         </article>
 
         <div class="supporting-rail -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-3 sm:mx-0 sm:px-0 lg:mx-0 lg:block lg:space-y-0 lg:overflow-visible lg:pb-0" aria-label="Tiga update pendukung">
-          <article v-for="(update, index) in supportingUpdates" :key="update.title" class="group flex min-w-[84%] snap-start gap-4 border-b border-sht-stone pb-5 sm:min-w-[70%] lg:min-w-0 lg:gap-5 lg:py-5 lg:first:pt-0 lg:last:border-b-0 lg:last:pb-0">
+          <article v-for="update in supportingUpdates" :key="update.title" class="group flex min-w-[84%] snap-start gap-4 border-b border-sht-stone pb-5 sm:min-w-[70%] lg:min-w-0 lg:gap-5 lg:py-5 lg:first:pt-0 lg:last:border-b-0 lg:last:pb-0">
             <img :src="update.image" :alt="update.alt" class="h-24 w-24 shrink-0 rounded-xl object-cover grayscale-[20%] transition-[filter,transform] duration-500 group-hover:grayscale-0 group-hover:scale-[1.02] sm:h-28 sm:w-28 lg:h-24 lg:w-24" />
-            <div class="min-w-0 flex-1"><div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-semibold uppercase tracking-[0.13em] text-sht-sage"><span>{{ update.category }}</span><span aria-hidden="true">·</span><span class="text-sht-charcoal/45">{{ update.time }}</span></div><h3 class="mt-2 font-sans text-lg font-semibold leading-snug text-sht-olive-dark sm:text-xl lg:text-lg">{{ update.title }}</h3><span class="mt-3 block text-xs font-semibold text-sht-olive">Update 0{{ index + 1 }} <span aria-hidden="true">→</span></span></div>
+            <div class="min-w-0 flex-1"><div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-semibold uppercase tracking-[0.13em] text-sht-sage"><span>{{ update.category }}</span><span aria-hidden="true">·</span><span class="text-sht-charcoal/45">{{ update.time }}</span></div><h3 class="mt-2 font-hero text-lg font-bold not-italic leading-snug text-sht-olive-dark sm:text-xl lg:text-lg">{{ update.title }}</h3><span class="mt-3 block text-xs font-semibold text-sht-olive">Baca Catatan <span aria-hidden="true">→</span></span></div>
           </article>
         </div>
       </div>
