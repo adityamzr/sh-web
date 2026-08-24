@@ -62,11 +62,11 @@ onBeforeUnmount(() => {
         <a href="#hari-ini" class="mt-9 inline-flex min-h-[48px] items-center gap-2 rounded-xl bg-sht-gold px-6 py-3.5 text-sm font-semibold text-sht-olive-dark transition-colors hover:bg-[#c7b55e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold">Lihat Hari Ini <span aria-hidden="true">↓</span></a>
       </div>
 
-      <div class="min-w-0 lg:pb-2" @mouseenter="paused = true" @mouseleave="paused = false" @focusin="paused = true" @focusout="paused = false">
+      <div class="ml-0 lg:ml-12 min-w-0 lg:pb-2" @mouseenter="paused = true" @mouseleave="paused = false" @focusin="paused = true" @focusout="paused = false">
         <div class="relative h-[420px] overflow-hidden" aria-label="Topik editorial Sudut Haramain" aria-live="polite">
-          <span class="absolute left-0 top-1/2 z-10 -translate-y-1/2 text-sm text-sht-gold" aria-hidden="true">▶</span>
-          <ol class="absolute inset-x-0 top-0 space-y-0" :style="trackStyle">
-            <li v-for="item in topicItems" :key="item.absoluteIndex" class="flex h-[43px] items-center gap-4 pl-8 text-2xl transition-[opacity,color,font-weight] duration-500 sm:text-[1.7rem]" :class="item.distance === 0 ? 'font-semibold text-white opacity-100' : item.distance === 1 || item.distance === 2 ? 'text-white/65 opacity-100' : item.distance === 3 || item.distance === 4 ? 'text-white/40 opacity-100' : 'text-white/20 opacity-100'">
+          <span class="absolute left-0 top-1/2 z-10 -translate-y-1/2 text-3xl text-sht-gold" aria-hidden="true">▶</span>
+          <ol class="absolute inset-x-0 top-0 space-y-0 sm:space-y-1 lg:space-y-2" :style="trackStyle">
+            <li v-for="item in topicItems" :key="item.absoluteIndex" class="flex h-[43px] items-center gap-4 pl-8 text-2xl transition-[opacity,color,font-weight] duration-500 sm:text-[1.7rem] font-semibold" :class="item.distance === 0 ? 'text-white opacity-100' : 'text-white/30 opacity-100'">
               <span>{{ item.label }}</span>
             </li>
           </ol>
@@ -75,6 +75,15 @@ onBeforeUnmount(() => {
       </div>
     </div>
 
-    <div class="absolute inset-x-0 bottom-0 border-t border-white/15 bg-sht-olive-dark/45 backdrop-blur-sm" aria-label="Prinsip Sudut Haramain"><div class="mx-auto flex max-w-container gap-8 overflow-hidden px-5 py-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-sht-off-white/75 sm:px-6 lg:px-8"><span class="shrink-0 text-sht-gold">Observasi Langsung</span><span class="shrink-0">Faktual &amp; Proporsional</span><span class="shrink-0">Dari Makkah &amp; Madinah</span><span class="shrink-0">Tim Indonesia di Makkah</span><span class="shrink-0">Panduan Praktis</span><span class="shrink-0">Sudut Lokal</span></div></div>
+    <div class="hidden md:block absolute inset-x-0 bottom-2" aria-label="Prinsip Sudut Haramain">
+      <div class="mx-auto flex max-w-container gap-8 overflow-hidden py-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-sht-off-white/75">
+        <span class="shrink-0 text-sht-gold">Observasi Langsung</span>
+        <span class="shrink-0">Faktual &amp; Proporsional</span>
+        <span class="shrink-0">Dari Makkah &amp; Madinah</span>
+        <span class="shrink-0">Tim Indonesia di Makkah</span>
+        <span class="shrink-0">Panduan Praktis</span>
+        <span class="shrink-0">Sudut Lokal</span>
+      </div>
+    </div>
   </section>
 </template>
