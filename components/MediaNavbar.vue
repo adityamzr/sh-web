@@ -31,9 +31,5 @@ onBeforeUnmount(() => window.removeEventListener('scroll', updateScroll))
     </div>
     <div v-show="isOpen" id="media-mobile-menu" class="min-h-screen bg-sht-off-white text-sht-olive-dark lg:hidden"><nav class="mx-auto flex max-w-container flex-col px-5 py-10 sm:px-6" aria-label="Navigasi Media Seluler"><a v-for="(link, index) in links" :key="link.label" :href="link.to" class="flex items-baseline gap-4 border-b border-sht-stone py-5 font-heading text-3xl" @click="isOpen = false"><span class="font-sans text-xs tracking-[0.2em] text-sht-sage">0{{ index + 1 }}</span>{{ link.label }}</a><a href="#lebih" class="flex items-baseline gap-4 border-b border-sht-stone py-5 font-heading text-3xl" @click="isOpen = false"><span class="font-sans text-xs tracking-[0.2em] text-sht-sage">06</span>Cari</a></nav></div>
   </header>
-<<<<<<< HEAD
-</template>
-=======
   <MediaSearchModal v-model="isSearchOpen" @update:model-value="(open) => { if (!open) closeSearch() }" />
 </template>
->>>>>>> 3b0b61315e52fb039be700ec7eaccd667ea7dc79
