@@ -14,7 +14,7 @@ onBeforeUnmount(() => window.removeEventListener('scroll', updateScroll))
 </script>
 
 <template>
-  <header class="fixed inset-x-0 top-0 z-50 border-b transition-[background-color,border-color,backdrop-filter] duration-300" :class="isScrolled ? 'border-sht-stone/80 bg-sht-off-white/95 text-sht-olive-dark backdrop-blur-md' : 'border-white/20 bg-sht-olive-dark/20 text-white backdrop-blur-sm'">
+  <header class="fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300" :class="isScrolled ? 'border-sht-stone/80 bg-sht-off-white/95 text-sht-olive-dark backdrop-blur-md' : 'border-white/20 bg-transparent text-white backdrop-blur-sm'">
     <div class="mx-auto flex h-[72px] max-w-[84rem] items-center justify-between gap-8 px-5 sm:px-6 lg:px-8">
       <NuxtLink to="#beranda" class="shrink-0 font-heading text-xl font-semibold tracking-wide sm:text-2xl" aria-label="Sudut Haramain — Beranda">
         <img src="/assets/images/sht_horizontal_white_logo.png" alt="" class="h-12 w-auto" />
