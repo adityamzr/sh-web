@@ -37,7 +37,7 @@ function advanceTopic() {
 
 onMounted(() => {
   reducedMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (!reducedMotion.value) rotationTimer = setInterval(advanceTopic, 3200)
+  if (!reducedMotion.value) rotationTimer = setInterval(advanceTopic, 2000)
 })
 
 onBeforeUnmount(() => {
@@ -65,7 +65,7 @@ onBeforeUnmount(() => {
         <div class="topic-viewport relative overflow-hidden" aria-label="Topik editorial Sudut Haramain" aria-live="polite">
           <span class="topic-pointer absolute left-0 z-10 -translate-y-10 md:-translate-y-[42px] text-3xl leading-none text-sht-gold" aria-hidden="true">▶</span>
           <ol class="topic-track absolute inset-x-0 top-0 ml-1" :style="trackStyle">
-            <li v-for="item in topicItems" :key="item.absoluteIndex" class="flex h-[var(--topic-row-height)] items-center gap-4 pl-8 font-heading text-[1.7rem] leading-none transition-[opacity,color,font-weight] duration-500 font-bold" :class="item.absoluteIndex === trackIndex -1 ? 'text-white opacity-100' : 'text-white/25'">
+            <li v-for="item in topicItems" :key="item.absoluteIndex" class="flex h-[var(--topic-row-height)] items-center gap-4 pl-8 font-heading text-[1.7rem] leading-none transition-[opacity,color,font-weight] duration-500 font-bold" :class="item.absoluteIndex === trackIndex -1 ? 'text-white opacity-100' : item.absoluteIndex === trackIndex - 4 ? 'text-white/5' : 'text-white/25'">
               <span>{{ item.label }}</span>
             </li>
           </ol>
