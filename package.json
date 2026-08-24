@@ -1,0 +1,24 @@
+{
+  "name": "sh-web",
+  "private": true,
+  "type": "module",
+  "description": "Sudut Haramain — Media Digital & Informasi Praktis Makkah–Madinah",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev --host 0.0.0.0 --port 3000",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "nuxt": "3.21.11",
+    "vue": "^3.5.13",
+    "vue-router": "^4.4.5"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^6.12.2",
+    "@types/node": "^22.20.1",
+    "typescript": "^5.6.3",
+    "vue-tsc": "^2.2.12"
+  }
+}
