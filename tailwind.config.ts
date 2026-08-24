@@ -16,6 +16,7 @@ export default <Partial<Config>>{
       },
       fontFamily: {
         heading: ['Poppins', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        hero: ['Fraunces', 'serif'],
         sans: ['Inter', 'Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       maxWidth: { container: '72rem' },

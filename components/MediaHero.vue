@@ -5,7 +5,7 @@ const topics = [
   'Fasilitas Umum', 'Sudut Madinah', 'Rute & Navigasi', 'Etika Masjid',
   'Biaya Harian', 'Tempat Favorit', 'Info Musiman', 'Keseharian Saudi',
 ]
-const rowHeight = 43
+const rowHeight = 52
 const trackIndex = ref(topics.length + 4)
 const paused = ref(false)
 const reducedMotion = ref(false)
@@ -19,8 +19,8 @@ const topicItems = computed(() => Array.from({ length: topics.length * 3 }, (_, 
   absoluteIndex,
   distance: Math.abs(absoluteIndex - trackIndex.value),
 })))
-const trackStyle = computed(() => ({
-  transform: `translate3d(0, ${210 - (trackIndex.value * rowHeight)}px, 0)`,
+const trackStyle = computed<Record<string, string | number>>(() => ({
+  '--topic-track-index': trackIndex.value,
   transition: seamlessReset.value ? 'none' : 'transform 650ms cubic-bezier(0.22, 0.61, 0.36, 1)',
 }))
 
@@ -56,17 +56,17 @@ onBeforeUnmount(() => {
     <div class="mx-auto grid min-h-[100svh] max-w-container items-center gap-12 px-5 pb-24 pt-32 sm:px-6 sm:pb-28 sm:pt-40 lg:grid-cols-[1.05fr_0.95fr] lg:gap-20 lg:px-8 lg:pb-32 lg:pt-36">
       <div>
         <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-sht-gold sm:text-xs"><span class="h-px w-8 bg-sht-gold" aria-hidden="true" />DARI MAKKAH &amp; MADINAH</p>
-        <h1 class="mt-6 max-w-3xl font-heading text-5xl font-semibold leading-[0.98] tracking-tight text-white sm:text-[4.5rem]">Apa yang sedang terjadi di Haramain?</h1>
+        <h1 class="mt-6 max-w-3xl font-hero text-5xl font-bold italic leading-[0.98] tracking-[-0.03em] text-white [font-optical-sizing:auto] sm:text-[4.5rem]">Apa yang sedang terjadi di Haramain?</h1>
         <p class="mt-7 max-w-xl text-lg leading-relaxed text-sht-off-white/90 sm:text-xl">Panduan, suasana, kultur, dan informasi praktis langsung dari Makkah–Madinah.</p>
         <p class="mt-4 text-sm text-sht-off-white/70">Dilihat dari dekat oleh tim Indonesia yang tinggal di Makkah.</p>
         <a href="#hari-ini" class="mt-9 inline-flex min-h-[48px] items-center gap-2 rounded-xl bg-sht-gold px-6 py-3.5 text-sm font-semibold text-sht-olive-dark transition-colors hover:bg-[#c7b55e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold">Lihat Hari Ini <span aria-hidden="true">↓</span></a>
       </div>
 
       <div class="ml-0 lg:ml-12 min-w-0 lg:pb-2" @mouseenter="paused = true" @mouseleave="paused = false" @focusin="paused = true" @focusout="paused = false">
-        <div class="relative h-[420px] overflow-hidden" aria-label="Topik editorial Sudut Haramain" aria-live="polite">
-          <span class="absolute left-0 top-1/2 z-10 -translate-y-1/2 text-3xl text-sht-gold" aria-hidden="true">▶</span>
-          <ol class="absolute inset-x-0 top-0 space-y-0 sm:space-y-1 lg:space-y-2" :style="trackStyle">
-            <li v-for="item in topicItems" :key="item.absoluteIndex" class="flex h-[43px] items-center gap-4 pl-8 text-2xl transition-[opacity,color,font-weight] duration-500 sm:text-[1.7rem] font-semibold" :class="item.distance === 0 ? 'text-white opacity-100' : 'text-white/30 opacity-100'">
+        <div class="topic-viewport relative overflow-hidden" aria-label="Topik editorial Sudut Haramain" aria-live="polite">
+          <span class="topic-pointer absolute left-0 z-10 -translate-y-1/2 text-sm leading-none text-sht-gold" aria-hidden="true">▶</span>
+          <ol class="topic-track absolute inset-x-0 top-0" :style="trackStyle">
+            <li v-for="item in topicItems" :key="item.absoluteIndex" class="flex h-[var(--topic-row-height)] items-center gap-4 pl-8 font-heading text-[1.7rem] leading-none transition-[opacity,color,font-weight] duration-500" :class="item.distance === 0 ? 'font-semibold text-white opacity-100' : item.distance === 1 ? 'text-white/60' : item.distance === 2 ? 'text-white/45' : 'text-white/25'">
               <span>{{ item.label }}</span>
             </li>
           </ol>
@@ -87,3 +87,27 @@ onBeforeUnmount(() => {
     </div>
   </section>
 </template>
+
+<style scoped>
+.topic-viewport {
+  --topic-row-height: 52px;
+  --topic-active-center: calc(var(--topic-row-height) * 3.5);
+  height: calc(var(--topic-row-height) * 7);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%);
+}
+.topic-track {
+  transform: translate3d(0, calc(var(--topic-active-center) - (var(--topic-track-index) * var(--topic-row-height))), 0);
+  will-change: transform;
+}
+.topic-pointer { top: var(--topic-active-center); }
+@media (max-width: 767px) {
+  .topic-viewport {
+    --topic-row-height: 43px;
+    --topic-active-center: calc(var(--topic-row-height) * 4.5);
+    height: calc(var(--topic-row-height) * 9);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .topic-track { transition: none !important; }
+}
+</style>
