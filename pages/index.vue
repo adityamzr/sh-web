@@ -4,15 +4,6 @@ useSeoMeta({
   description: 'Informasi praktis Makkah dan Madinah, panduan perjalanan, kultur lokal, literasi ibadah, navigasi, dan pembaruan kondisi langsung dari Sudut Haramain.',
 })
 
-const situations = [
-  { title: 'Baru Sampai', text: 'Hal-hal pertama yang perlu Anda tahu.' },
-  { title: 'Mau ke Masjidil Haram', text: 'Orientasi rute dan persiapan singkat.' },
-  { title: 'Bingung Transportasi', text: 'Memahami pilihan perjalanan di Saudi.' },
-  { title: 'Lagi Cari Makan', text: 'Cerita rasa dan kebiasaan lokal.' },
-  { title: 'Persiapan Umrah', text: 'Checklist praktis sebelum berangkat.' },
-  { title: 'Lagi di Madinah', text: 'Panduan kecil untuk hari yang tenang.' },
-]
-
 const localNotes = ['Apa yang biasanya luput dari jamaah pertama kali?', 'Membaca ritme kota dari sudut pandang orang yang tinggal di sini.', 'Catatan kecil tentang bahasa, kebiasaan, dan cara bergerak.']
 </script>
 
@@ -24,8 +15,8 @@ const localNotes = ['Apa yang biasanya luput dari jamaah pertama kali?', 'Membac
     <!-- 2. Hari Ini di Haramain -->
     <MediaTodaySection />
 
-    <!-- 3. Situational discovery -->
-    <section class="bg-sht-stone/25 py-16 sm:py-20"><div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8"><p class="text-xs font-semibold uppercase tracking-[0.22em] text-sht-olive-dark">LAGI BUTUH APA?</p><h2 class="mt-4 max-w-2xl font-heading text-3xl font-semibold leading-tight text-sht-olive-dark sm:text-4xl">Mulai dari situasi Anda.</h2><div class="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-12"><div v-for="(item, index) in situations" :key="item.title" class="group rounded-2xl border border-sht-stone bg-sht-off-white p-5 transition-colors hover:border-sht-gold lg:col-span-4" :class="index === 0 ? 'lg:col-span-5' : index === 1 ? 'lg:col-span-7' : ''"><span class="text-xs font-semibold tracking-[0.16em] text-sht-sage">0{{ index + 1 }}</span><h3 class="mt-8 font-heading text-2xl font-semibold text-sht-olive-dark">{{ item.title }}</h3><p class="mt-2 text-sm text-sht-charcoal/65">{{ item.text }}</p><span class="mt-5 block text-sm font-semibold text-sht-olive opacity-0 transition-opacity group-hover:opacity-100">Jelajahi nanti →</span></div></div></div></section>
+    <!-- 3. Lagi Butuh Apa? -->
+    <MediaSituationalSection />
 
     <!-- 4. Editorial mosaic -->
     <section class="py-16 sm:py-24"><div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8"><div class="flex items-end justify-between"><div><p class="text-xs font-semibold uppercase tracking-[0.22em] text-sht-sage">PILIHAN DARI SUDUT HARAMAIN</p><h2 class="mt-4 font-heading text-3xl font-semibold text-sht-olive-dark sm:text-4xl">Hal kecil yang memberi gambaran lebih besar.</h2></div><span class="hidden text-sm text-sht-charcoal/50 sm:block">Ruang editorial / segera hadir</span></div><div class="mt-10 grid gap-4 lg:grid-cols-12 lg:grid-rows-[220px_180px]"><div class="relative min-h-[300px] overflow-hidden rounded-3xl bg-sht-olive p-6 text-sht-off-white lg:col-span-7 lg:row-span-2 sm:p-8"><img src="/images/makkah-editorial.jpg" alt="Suasana Makkah" class="absolute inset-0 h-full w-full object-cover opacity-50" /><div class="absolute inset-0 bg-gradient-to-t from-sht-olive-dark/90 to-transparent" /><div class="relative flex h-full flex-col justify-end"><span class="text-xs uppercase tracking-[0.18em] text-sht-gold">FEATURE / 01</span><h3 class="mt-3 max-w-xl font-heading text-3xl leading-tight sm:text-4xl">Membaca Haramain melalui hal-hal yang praktis.</h3></div></div><div class="rounded-3xl border border-sht-stone bg-sht-gold/20 p-6 lg:col-span-5"><span class="text-xs uppercase tracking-[0.18em] text-sht-olive">INSIGHT</span><p class="mt-8 max-w-sm font-heading text-2xl text-sht-olive-dark">“Informasi yang baik memberi ruang untuk mengambil keputusan dengan tenang.”</p></div><div class="rounded-3xl border border-sht-stone bg-sht-stone/35 p-6 lg:col-span-5"><span class="text-xs uppercase tracking-[0.18em] text-sht-sage">PRACTICAL NOTE</span><p class="mt-8 font-heading text-2xl text-sht-olive-dark">Cerita rute, istilah, dan kebiasaan lokal—tanpa berlebihan.</p></div></div></div></section>
