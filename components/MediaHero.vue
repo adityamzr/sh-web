@@ -5,7 +5,6 @@ const topics = [
   'Fasilitas Umum', 'Sudut Madinah', 'Rute & Navigasi', 'Etika Masjid',
   'Biaya Harian', 'Tempat Favorit', 'Info Musiman', 'Keseharian Saudi',
 ]
-const rowHeight = 52
 const trackIndex = ref(topics.length + 4)
 const paused = ref(false)
 const reducedMotion = ref(false)
