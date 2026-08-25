@@ -12,7 +12,7 @@ const isSearchOpen = ref(false)
 const searchTrigger = ref<HTMLButtonElement | null>(null)
 const links = [
   { key: 'hari-ini', label: 'Hari Ini', to: '#hari-ini', icon: Newspaper },
-  { key: 'makkah', label: 'Makkah', to: '#makkah', icon: MapPinned },
+  { key: 'makkah', label: 'Makkah', to: '/makkah', icon: MapPinned },
   { key: 'madinah', label: 'Madinah', to: '#madinah', icon: MapPin },
   { key: 'panduan', label: 'Panduan', to: '#fokus-informasi', icon: BookOpen },
   { key: 'kultur', label: 'Kultur', to: '#lokal', icon: Sparkles },
@@ -52,7 +52,7 @@ onBeforeUnmount(() => {
         <img :src="isScrolled ? blackLogo : whiteLogo" alt="" class="h-12 w-auto" />
       </NuxtLink>
       <nav class="hidden flex-1 items-center justify-center gap-6 text-[15px] font-medium lg:flex xl:gap-8" aria-label="Navigasi Media">
-        <a v-for="link in links" :key="link.label" :href="link.to" class="relative py-2 transition-opacity hover:opacity-100" :class="isNavItemActive(link.key) ? 'font-semibold opacity-100' : 'opacity-80'" :aria-current="isNavItemActive(link.key) ? 'page' : undefined">{{ link.label }}<span v-if="isNavItemActive(link.key)" class="absolute inset-x-1 -bottom-0.5 h-px bg-sht-gold" aria-hidden="true" /></a>
+        <template v-for="link in links" :key="link.label"><NuxtLink v-if="link.to.startsWith('/')" :to="link.to" class="relative py-2 transition-opacity hover:opacity-100" :class="isNavItemActive(link.key) ? 'font-semibold opacity-100' : 'opacity-80'" :aria-current="isNavItemActive(link.key) ? 'page' : undefined">{{ link.label }}<span v-if="isNavItemActive(link.key)" class="absolute inset-x-1 -bottom-0.5 h-px bg-sht-gold" aria-hidden="true" /></NuxtLink><a v-else :href="link.to" class="relative py-2 transition-opacity hover:opacity-100" :class="isNavItemActive(link.key) ? 'font-semibold opacity-100' : 'opacity-80'" :aria-current="isNavItemActive(link.key) ? 'page' : undefined">{{ link.label }}<span v-if="isNavItemActive(link.key)" class="absolute inset-x-1 -bottom-0.5 h-px bg-sht-gold" aria-hidden="true" /></a></template>
       <div class="relative hidden lg:block" @mouseenter="openServicesMenu" @mouseleave="scheduleServicesClose" @focusin="openServicesMenu" @focusout="scheduleServicesClose">
         <button type="button" class="inline-flex items-center gap-1.5 text-[15px] font-medium opacity-80 transition-opacity hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold" :aria-expanded="isServicesOpen" aria-controls="media-services-menu" :class="isServicesOpen ? 'opacity-100' : 'opacity-80'" @click="isServicesOpen = !isServicesOpen" @keydown.esc="isServicesOpen = false">Layanan Kami <ChevronDown class="h-4 w-4 transition-transform duration-200" :class="isServicesOpen ? 'rotate-180' : ''" aria-hidden="true" /></button>
         <div v-if="isServicesOpen" id="media-services-menu" class="absolute right-0 top-full mt-4 w-72 rounded-2xl border border-sht-stone bg-sht-off-white p-3 text-sht-olive-dark shadow-xl before:absolute before:-top-4 before:left-0 before:right-0 before:h-4" role="menu" aria-label="Layanan Kami">
@@ -67,10 +67,7 @@ onBeforeUnmount(() => {
     </div>
     <div v-show="isOpen" id="media-mobile-menu" class="min-h-screen bg-sht-off-white text-sht-olive-dark lg:hidden">
       <nav class="mx-auto flex max-w-container flex-col px-5 py-8 sm:px-6" aria-label="Navigasi Media Seluler">
-        <a v-for="link in links" :key="link.label" :href="link.to" class="flex min-h-[64px] items-center gap-4 border-b border-sht-stone px-1 py-4 font-sans text-base font-semibold leading-tight" :aria-current="isNavItemActive(link.key) ? 'page' : undefined" @click="isOpen = false">
-          <component :is="link.icon" class="h-5 w-5 shrink-0 text-sht-olive" :stroke-width="1.8" aria-hidden="true" />
-          <span>{{ link.label }}</span>
-        </a>
+        <template v-for="link in links" :key="link.label"><NuxtLink v-if="link.to.startsWith('/')" :to="link.to" class="flex min-h-[64px] items-center gap-4 border-b border-sht-stone px-1 py-4 font-sans text-base font-semibold leading-tight" :aria-current="isNavItemActive(link.key) ? 'page' : undefined" @click="isOpen = false"><component :is="link.icon" class="h-5 w-5 shrink-0 text-sht-olive" :stroke-width="1.8" aria-hidden="true" /><span>{{ link.label }}</span></NuxtLink><a v-else :href="link.to" class="flex min-h-[64px] items-center gap-4 border-b border-sht-stone px-1 py-4 font-sans text-base font-semibold leading-tight" :aria-current="isNavItemActive(link.key) ? 'page' : undefined" @click="isOpen = false"><component :is="link.icon" class="h-5 w-5 shrink-0 text-sht-olive" :stroke-width="1.8" aria-hidden="true" /><span>{{ link.label }}</span></a></template>
         <div class="border-b border-sht-stone">
           <button type="button" class="flex min-h-[64px] w-full items-center gap-4 px-1 py-4 text-left font-sans text-base font-semibold leading-tight" :aria-expanded="isServicesOpen" aria-controls="media-mobile-services" @click="isServicesOpen = !isServicesOpen">
             <BriefcaseBusiness class="h-5 w-5 shrink-0 text-sht-olive" :stroke-width="1.8" aria-hidden="true" />
