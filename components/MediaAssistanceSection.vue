@@ -8,14 +8,14 @@
       </div>
 
       <div class="mt-12 grid gap-5 lg:grid-cols-2 lg:gap-6">
-        <a href="https://tour.sudutharamain.id" target="_blank" rel="noopener noreferrer" class="group relative min-h-[390px] overflow-hidden rounded-3xl border border-sht-gold/30 bg-sht-olive p-6 transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-sht-gold/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold sm:p-10">
+        <div class="group relative min-h-[390px] overflow-hidden rounded-3xl border border-sht-gold/30 bg-sht-olive p-6 sm:p-10">
           <img src="/images/makkah-editorial.jpg" alt="Suasana Makkah dari kejauhan" class="absolute inset-0 h-full w-full object-cover opacity-35 transition-transform duration-700 group-hover:scale-[1.02]" />
           <div class="absolute inset-0 bg-gradient-to-t from-sht-olive-dark/95 via-sht-olive/65 to-sht-olive/35" aria-hidden="true" />
           <div class="relative flex h-full min-h-[330px] flex-col justify-between">
-            <div class="flex items-center justify-between"><p class="text-xs font-semibold uppercase tracking-[0.2em] text-sht-gold">SUDUT HARAMAIN TOUR</p><span class="text-xs uppercase tracking-[0.14em] text-sht-off-white/55">Available ↗</span></div>
-            <div><h3 class="max-w-xl font-hero text-3xl font-bold not-italic leading-tight text-white sm:text-4xl">Persiapkan perjalanan Umrah dengan lebih tenang.</h3><p class="mt-4 max-w-lg text-sm leading-relaxed text-sht-off-white/75 sm:text-base">Umroh Mandiri &amp; Land Arrangement untuk kebutuhan hotel, transportasi, visa, muthawwif, handling, dan kebutuhan perjalanan lainnya.</p><span class="mt-7 inline-flex text-sm font-semibold text-sht-gold transition-transform duration-300 group-hover:translate-x-1">Jelajahi Sudut Haramain Tour <span class="ml-1" aria-hidden="true">→</span></span></div>
+            <div class="flex items-center justify-between"><p class="text-xs font-semibold uppercase tracking-[0.2em] text-sht-gold">SUDUT HARAMAIN TOUR</p><span class="rounded-full border border-sht-gold/40 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-sht-gold">Segera Hadir</span></div>
+            <div><h3 class="max-w-xl font-hero text-3xl font-bold not-italic leading-tight text-white sm:text-4xl">Persiapkan perjalanan Umrah dengan lebih tenang.</h3><p class="mt-4 max-w-lg text-sm leading-relaxed text-sht-off-white/75 sm:text-base">Umroh Mandiri &amp; Land Arrangement untuk kebutuhan hotel, transportasi, visa, muthawwif, handling, dan kebutuhan perjalanan lainnya.</p></div>
           </div>
-        </a>
+        </div>
 
         <div class="min-h-[390px] rounded-3xl border border-sht-off-white/15 bg-sht-olive/45 p-6 sm:p-10">
           <div class="flex items-center justify-between"><p class="text-xs font-semibold uppercase tracking-[0.2em] text-sht-gold">SUDUT HARAMAIN JASTIP</p><span class="rounded-full border border-sht-gold/40 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-sht-gold">Segera Hadir</span></div>

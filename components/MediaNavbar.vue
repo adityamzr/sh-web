@@ -4,6 +4,7 @@ import whiteLogo from '~/assets/images/sht_horizontal_white_logo.png'
 
 const isOpen = ref(false)
 const isScrolled = ref(false)
+const isServicesOpen = ref(false)
 const isSearchOpen = ref(false)
 const searchTrigger = ref<HTMLButtonElement | null>(null)
 const links = [
@@ -12,6 +13,10 @@ const links = [
   { label: 'Madinah', to: '#madinah' },
   { label: 'Panduan', to: '#fokus-informasi' },
   { label: 'Kultur', to: '#lokal' },
+]
+const serviceUnits = [
+  { name: 'Sudut Haramain Tour', subtitle: 'Umroh Mandiri & Land Arrangement' },
+  { name: 'Sudut Haramain Jastip', subtitle: 'Titip beli dari Makkah–Madinah' },
 ]
 function updateScroll() { isScrolled.value = window.scrollY > 24 }
 function closeSearch() {
@@ -29,11 +34,17 @@ onBeforeUnmount(() => window.removeEventListener('scroll', updateScroll))
         <img :src="isScrolled ? blackLogo : whiteLogo" alt="" class="h-12 w-auto" />
       </NuxtLink>
       <nav class="hidden flex-1 items-center justify-center gap-6 text-[15px] font-medium lg:flex xl:gap-8" aria-label="Navigasi Media"><a v-for="link in links" :key="link.label" :href="link.to" class="opacity-80 transition-opacity hover:opacity-100">{{ link.label }}</a></nav>
+      <div class="relative hidden lg:block">
+        <button type="button" class="inline-flex items-center gap-1.5 text-[15px] font-medium opacity-80 transition-opacity hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold" :aria-expanded="isServicesOpen" aria-controls="media-services-menu" @click="isServicesOpen = !isServicesOpen">Layanan Kami <span aria-hidden="true">⌄</span></button>
+        <div v-if="isServicesOpen" id="media-services-menu" class="absolute right-0 top-full mt-4 w-72 rounded-2xl border border-sht-stone bg-sht-off-white p-3 text-sht-olive-dark shadow-xl" role="menu" aria-label="Layanan Kami">
+          <div v-for="unit in serviceUnits" :key="unit.name" class="rounded-xl p-3" role="menuitem"><p class="font-semibold">{{ unit.name }}</p><p class="mt-1 text-xs text-sht-charcoal/60">{{ unit.subtitle }}</p><span class="mt-2 inline-flex rounded-full border border-sht-gold/50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-sht-olive">Segera Hadir</span></div>
+        </div>
+      </div>
       <div class="hidden items-center lg:flex">
         <button ref="searchTrigger" type="button" :class="isScrolled ? 'border-sht-olive' : 'border-current/35'" class="inline-flex h-11 w-fit items-center gap-2 rounded-xl border px-5 text-left text-sm opacity-85 transition-colors hover:bg-white/10 hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold" aria-label="Cari informasi" @click="isSearchOpen = true"><svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path stroke-linecap="round" d="m16 16 5 5"/></svg><span>Cari informasi</span></button></div>
       <div class="flex items-center gap-2 lg:hidden"><button ref="searchTrigger" type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-full hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold" aria-label="Cari informasi" @click="isSearchOpen = true"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path stroke-linecap="round" d="m16 16 5 5"/></svg></button><button type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-full hover:bg-white/10" :aria-expanded="isOpen" aria-controls="media-mobile-menu" aria-label="Buka menu" @click="isOpen = !isOpen"><svg v-if="!isOpen" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" /></svg><svg v-else class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" d="M6 6l12 12M18 6 6 18" /></svg></button></div>
     </div>
-    <div v-show="isOpen" id="media-mobile-menu" class="min-h-screen bg-sht-off-white text-sht-olive-dark lg:hidden"><nav class="mx-auto flex max-w-container flex-col px-5 py-10 sm:px-6" aria-label="Navigasi Media Seluler"><a v-for="(link, index) in links" :key="link.label" :href="link.to" class="flex items-baseline gap-4 border-b border-sht-stone py-5 font-heading text-3xl" @click="isOpen = false"><span class="font-sans text-xs tracking-[0.2em] text-sht-sage">0{{ index + 1 }}</span>{{ link.label }}</a><a href="#lebih" class="flex items-baseline gap-4 border-b border-sht-stone py-5 font-heading text-3xl" @click="isOpen = false"><span class="font-sans text-xs tracking-[0.2em] text-sht-sage">06</span>Cari</a></nav></div>
+    <div v-show="isOpen" id="media-mobile-menu" class="min-h-screen bg-sht-off-white text-sht-olive-dark lg:hidden"><nav class="mx-auto flex max-w-container flex-col px-5 py-10 sm:px-6" aria-label="Navigasi Media Seluler"><a v-for="(link, index) in links" :key="link.label" :href="link.to" class="flex items-baseline gap-4 border-b border-sht-stone py-5 font-heading text-3xl" @click="isOpen = false"><span class="font-sans text-xs tracking-[0.2em] text-sht-sage">0{{ index + 1 }}</span>{{ link.label }}</a><a href="#lebih" class="flex items-baseline gap-4 border-b border-sht-stone py-5 font-heading text-3xl" @click="isOpen = false"><span class="font-sans text-xs tracking-[0.2em] text-sht-sage">06</span>Cari</a><div class="mt-8 border-b border-sht-stone pb-6"><p class="text-xs font-semibold uppercase tracking-[0.2em] text-sht-sage">LAYANAN KAMI</p><div class="mt-3 space-y-3"> <div v-for="unit in serviceUnits" :key="unit.name"><p class="font-sans text-base font-semibold text-sht-olive-dark">{{ unit.name }}</p><p class="mt-1 text-xs text-sht-charcoal/60">{{ unit.subtitle }} · Segera Hadir</p></div></div></div></nav></div>
   </header>
   <MediaSearchModal v-model="isSearchOpen" @update:model-value="(open) => { if (!open) closeSearch() }" />
 </template>
