@@ -12,7 +12,7 @@
           <img src="/images/makkah-editorial.jpg" alt="Suasana Makkah dari kejauhan" class="absolute inset-0 h-full w-full object-cover opacity-35 transition-transform duration-700 group-hover:scale-[1.02]" />
           <div class="absolute inset-0 bg-gradient-to-t from-sht-olive-dark/95 via-sht-olive/65 to-sht-olive/35" aria-hidden="true" />
           <div class="relative flex h-full min-h-[330px] flex-col justify-between">
-            <div class="flex flex-col sm:flex items-start sm:items-center gap-2 justify-between">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 justify-between">
               <p class="text-xs font-semibold uppercase tracking-[0.2em] text-sht-gold">SUDUT HARAMAIN TOUR</p>
               <span class="rounded-full border border-sht-gold/40 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-sht-gold">Segera Hadir</span>
             </div>
@@ -21,7 +21,7 @@
         </div>
 
         <div class="min-h-[390px] rounded-3xl border border-sht-off-white/15 bg-sht-olive/45 p-6 sm:p-10">
-          <div class="flex flex-col sm:flex items-start sm:items-center gap-2 justify-between"><p class="text-xs font-semibold uppercase tracking-[0.2em] text-sht-gold">SUDUT HARAMAIN JASTIP</p><span class="rounded-full border border-sht-gold/40 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-sht-gold">Segera Hadir</span></div>
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 justify-between"><p class="text-xs font-semibold uppercase tracking-[0.2em] text-sht-gold">SUDUT HARAMAIN JASTIP</p><span class="rounded-full border border-sht-gold/40 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-sht-gold">Segera Hadir</span></div>
           <div class="mt-24 max-w-xl"><h3 class="font-hero text-3xl font-bold not-italic leading-tight text-white sm:text-4xl">Kebutuhan dari Haramain, lebih dekat ke Anda.</h3><p class="mt-4 text-sm leading-relaxed text-sht-off-white/70 sm:text-base">Layanan titip beli dari Makkah–Madinah yang sedang kami siapkan sebagai bagian dari layanan Sudut Haramain.</p></div>
           <div class="mt-10 h-px w-16 bg-sht-gold/70" aria-hidden="true" />
         </div>
