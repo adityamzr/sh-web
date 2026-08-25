@@ -25,7 +25,7 @@ const guideLinks = [
       <!-- Practical footer grid -->
       <div class="grid gap-12 py-14 sm:py-16 md:grid-cols-2 lg:grid-cols-[1.35fr_0.8fr_0.8fr_0.8fr] lg:gap-10">
         <div>
-          <img src="/assets/images/sht_horizontal_white_logo.png" alt="Sudut Haramain" class="h-10 w-auto" />
+          <img src="/assets/images/sht_horizontal_white_logo.png" alt="Sudut Haramain" class="h-16 w-auto" />
           <p class="mt-5 max-w-sm text-sm leading-relaxed text-sht-off-white/70">Media Digital &amp; Informasi Praktis Makkah–Madinah</p>
           <p class="mt-3 max-w-sm text-sm leading-relaxed text-sht-off-white/55">Melihat Haramain lebih dekat melalui panduan praktis, kultur lokal, dan informasi langsung dari Makkah–Madinah.</p>
         </div>

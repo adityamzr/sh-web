@@ -23,8 +23,8 @@ const latestEntries = [
         <article v-for="entry in latestEntries" :key="entry.title" class="group min-w-0">
           <div class="aspect-[4/3] overflow-hidden rounded-2xl bg-sht-stone"><img :src="entry.image" :alt="entry.alt" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]" /></div>
           <div class="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-sht-sage"><span>{{ entry.category }}</span><span aria-hidden="true">·</span><span class="text-sht-charcoal/45">{{ entry.time }}</span></div>
-          <h3 class="mt-2 font-hero text-xl font-bold not-italic leading-snug text-sht-olive-dark sm:text-2xl lg:text-xl">{{ entry.title }}</h3>
-          <span class="mt-4 inline-flex text-sm font-semibold text-sht-olive transition-transform duration-300 group-hover:translate-x-1">Baca <span class="ml-1" aria-hidden="true">→</span></span>
+          <h3 class="mt-2 text-xl font-hero font-bold not-italic leading-snug text-sht-olive-dark sm:text-2xl lg:text-xl">{{ entry.title }}</h3>
+          <span class="mt-4 inline-flex text-sm font-semibold text-sht-olive transition-transform duration-300 group-hover:translate-x-1">Baca Artikel <span class="ml-1" aria-hidden="true">→</span></span>
         </article>
       </div>
     </div>
