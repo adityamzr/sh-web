@@ -4,7 +4,7 @@
       <div class="max-w-2xl">
         <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-sht-gold sm:text-xs"><span class="h-px w-8 bg-sht-gold" aria-hidden="true" />LAYANAN SUDUT HARAMAIN</p>
         <h2 id="assistance-heading" class="mt-4 font-hero text-4xl font-bold italic leading-tight sm:text-5xl">Ada yang Bisa Kami Bantu?</h2>
-        <p class="mt-5 max-w-xl text-base leading-relaxed text-sht-off-white/75">Jika Anda membutuhkan bantuan perjalanan atau kebutuhan lain di Haramain, kami menyiapkan layanan yang tetap terhubung dengan ekosistem Sudut Haramain.</p>
+        <p class="mt-5 max-w-xl text-base leading-relaxed text-sht-off-white/75">Jika Anda membutuhkan bantuan perjalanan atau kebutuhan lain di Haramain, kami menyiapkan layanan yang tetap terhubung dengan layanan Sudut Haramain.</p>
       </div>
 
       <div class="mt-12 grid gap-5 lg:grid-cols-2 lg:gap-6">
@@ -19,7 +19,7 @@
 
         <div class="min-h-[390px] rounded-3xl border border-sht-off-white/15 bg-sht-olive/45 p-6 sm:p-10">
           <div class="flex items-center justify-between"><p class="text-xs font-semibold uppercase tracking-[0.2em] text-sht-gold">SUDUT HARAMAIN JASTIP</p><span class="rounded-full border border-sht-gold/40 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-sht-gold">Segera Hadir</span></div>
-          <div class="mt-24 max-w-xl"><h3 class="font-hero text-3xl font-bold not-italic leading-tight text-white sm:text-4xl">Kebutuhan dari Haramain, lebih dekat ke Anda.</h3><p class="mt-4 text-sm leading-relaxed text-sht-off-white/70 sm:text-base">Layanan titip beli dari Makkah–Madinah yang sedang kami siapkan sebagai bagian dari ekosistem Sudut Haramain.</p></div>
+          <div class="mt-24 max-w-xl"><h3 class="font-hero text-3xl font-bold not-italic leading-tight text-white sm:text-4xl">Kebutuhan dari Haramain, lebih dekat ke Anda.</h3><p class="mt-4 text-sm leading-relaxed text-sht-off-white/70 sm:text-base">Layanan titip beli dari Makkah–Madinah yang sedang kami siapkan sebagai bagian dari layanan Sudut Haramain.</p></div>
           <div class="mt-10 h-px w-16 bg-sht-gold/70" aria-hidden="true" />
         </div>
       </div>
