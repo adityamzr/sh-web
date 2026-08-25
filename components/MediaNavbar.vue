@@ -49,19 +49,19 @@ onBeforeUnmount(() => window.removeEventListener('scroll', updateScroll))
     </div>
     <div v-show="isOpen" id="media-mobile-menu" class="min-h-screen bg-sht-off-white text-sht-olive-dark lg:hidden">
       <nav class="mx-auto flex max-w-container flex-col px-5 py-8 sm:px-6" aria-label="Navigasi Media Seluler">
-        <a v-for="link in links" :key="link.label" :href="link.to" class="flex min-h-[64px] items-center gap-4 border-b border-sht-stone px-1 py-4 font-sans text-[22px] font-medium leading-tight" @click="isOpen = false">
+        <a v-for="link in links" :key="link.label" :href="link.to" class="flex min-h-[64px] items-center gap-4 border-b border-sht-stone px-1 py-4 font-sans text-base font-semibold leading-tight" @click="isOpen = false">
           <component :is="link.icon" class="h-5 w-5 shrink-0 text-sht-olive" :stroke-width="1.8" aria-hidden="true" />
           <span>{{ link.label }}</span>
         </a>
         <div class="border-b border-sht-stone">
-          <button type="button" class="flex min-h-[64px] w-full items-center gap-4 px-1 py-4 text-left font-sans text-[22px] font-medium leading-tight" :aria-expanded="isServicesOpen" aria-controls="media-mobile-services" @click="isServicesOpen = !isServicesOpen">
+          <button type="button" class="flex min-h-[64px] w-full items-center gap-4 px-1 py-4 text-left font-sans text-base font-semibold leading-tight" :aria-expanded="isServicesOpen" aria-controls="media-mobile-services" @click="isServicesOpen = !isServicesOpen">
             <BriefcaseBusiness class="h-5 w-5 shrink-0 text-sht-olive" :stroke-width="1.8" aria-hidden="true" />
             <span class="flex-1">Layanan Kami</span>
             <ChevronDown class="h-5 w-5 transition-transform duration-200" :class="isServicesOpen ? 'rotate-180' : ''" aria-hidden="true" />
           </button>
           <div v-show="isServicesOpen" id="media-mobile-services" class="ml-9 border-t border-sht-stone/70 py-2">
             <div v-for="unit in serviceUnits" :key="unit.name" class="py-3">
-              <p class="font-sans text-base font-semibold text-sht-olive-dark">{{ unit.name }}</p>
+              <p class="font-sans text-base text-sht-olive-dark">{{ unit.name }}</p>
               <p class="mt-1 text-xs text-sht-charcoal/60">{{ unit.subtitle }} · Segera Hadir</p>
             </div>
           </div>
