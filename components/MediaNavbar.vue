@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { BookOpen, BriefcaseBusiness, ChevronDown, MapPin, MapPinned, Menu, Newspaper, Search, Sparkles, X } from 'lucide-vue-next'
+
+const route = useRoute()
 import blackLogo from '~/assets/images/sht_horizontal_black_logo.png'
 import whiteLogo from '~/assets/images/sht_horizontal_white_logo.png'
 
@@ -9,23 +11,38 @@ const isServicesOpen = ref(false)
 const isSearchOpen = ref(false)
 const searchTrigger = ref<HTMLButtonElement | null>(null)
 const links = [
-  { label: 'Hari Ini', to: '#hari-ini', icon: Newspaper },
-  { label: 'Makkah', to: '#makkah', icon: MapPinned },
-  { label: 'Madinah', to: '#madinah', icon: MapPin },
-  { label: 'Panduan', to: '#fokus-informasi', icon: BookOpen },
-  { label: 'Kultur', to: '#lokal', icon: Sparkles },
+  { key: 'hari-ini', label: 'Hari Ini', to: '#hari-ini', icon: Newspaper },
+  { key: 'makkah', label: 'Makkah', to: '#makkah', icon: MapPinned },
+  { key: 'madinah', label: 'Madinah', to: '#madinah', icon: MapPin },
+  { key: 'panduan', label: 'Panduan', to: '#fokus-informasi', icon: BookOpen },
+  { key: 'kultur', label: 'Kultur', to: '#lokal', icon: Sparkles },
 ]
 const serviceUnits = [
   { name: 'Sudut Haramain Tour', subtitle: 'Umroh Mandiri & Land Arrangement' },
   { name: 'Sudut Haramain Jastip', subtitle: 'Titip beli dari Makkah–Madinah' },
 ]
+let servicesCloseTimer: ReturnType<typeof setTimeout> | null = null
+function openServicesMenu() {
+  if (servicesCloseTimer) clearTimeout(servicesCloseTimer)
+  isServicesOpen.value = true
+}
+function scheduleServicesClose() {
+  if (servicesCloseTimer) clearTimeout(servicesCloseTimer)
+  servicesCloseTimer = setTimeout(() => { isServicesOpen.value = false }, 100)
+}
+function isNavItemActive(key: string) {
+  return route.path === `/${key}` || route.path.startsWith(`/${key}/`) || (route.path === '/' && route.hash === `#${key}`)
+}
 function updateScroll() { isScrolled.value = window.scrollY > 24 }
 function closeSearch() {
   isSearchOpen.value = false
   nextTick(() => searchTrigger.value?.focus())
 }
 onMounted(() => { updateScroll(); window.addEventListener('scroll', updateScroll, { passive: true }) })
-onBeforeUnmount(() => window.removeEventListener('scroll', updateScroll))
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', updateScroll)
+  if (servicesCloseTimer) clearTimeout(servicesCloseTimer)
+})
 </script>
 
 <template>
@@ -34,10 +51,11 @@ onBeforeUnmount(() => window.removeEventListener('scroll', updateScroll))
       <NuxtLink to="#beranda" class="shrink-0 font-heading text-xl font-semibold tracking-wide sm:text-2xl" aria-label="Sudut Haramain — Beranda">
         <img :src="isScrolled ? blackLogo : whiteLogo" alt="" class="h-12 w-auto" />
       </NuxtLink>
-      <nav class="hidden flex-1 items-center justify-center gap-6 text-[15px] font-medium lg:flex xl:gap-8" aria-label="Navigasi Media"><a v-for="link in links" :key="link.label" :href="link.to" class="opacity-80 transition-opacity hover:opacity-100">{{ link.label }}</a>
-      <div class="relative hidden lg:block">
-        <button type="button" class="inline-flex items-center gap-1.5 text-[15px] font-medium opacity-80 transition-opacity hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold" :aria-expanded="isServicesOpen" aria-controls="media-services-menu" @click="isServicesOpen = !isServicesOpen">Layanan Kami <ChevronDown class="h-4 w-4 transition-transform duration-200" :class="isServicesOpen ? 'rotate-180' : ''" aria-hidden="true" /></button>
-        <div v-if="isServicesOpen" id="media-services-menu" class="absolute right-0 top-full mt-4 w-72 rounded-2xl border border-sht-stone bg-sht-off-white p-3 text-sht-olive-dark shadow-xl" role="menu" aria-label="Layanan Kami">
+      <nav class="hidden flex-1 items-center justify-center gap-6 text-[15px] font-medium lg:flex xl:gap-8" aria-label="Navigasi Media">
+        <a v-for="link in links" :key="link.label" :href="link.to" class="relative py-2 transition-opacity hover:opacity-100" :class="isNavItemActive(link.key) ? 'font-semibold opacity-100' : 'opacity-80'" :aria-current="isNavItemActive(link.key) ? 'page' : undefined">{{ link.label }}<span v-if="isNavItemActive(link.key)" class="absolute inset-x-1 -bottom-0.5 h-px bg-sht-gold" aria-hidden="true" /></a>
+      <div class="relative hidden lg:block" @mouseenter="openServicesMenu" @mouseleave="scheduleServicesClose" @focusin="openServicesMenu" @focusout="scheduleServicesClose">
+        <button type="button" class="inline-flex items-center gap-1.5 text-[15px] font-medium opacity-80 transition-opacity hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold" :aria-expanded="isServicesOpen" aria-controls="media-services-menu" :class="isServicesOpen ? 'opacity-100' : 'opacity-80'" @click="isServicesOpen = !isServicesOpen" @keydown.esc="isServicesOpen = false">Layanan Kami <ChevronDown class="h-4 w-4 transition-transform duration-200" :class="isServicesOpen ? 'rotate-180' : ''" aria-hidden="true" /></button>
+        <div v-if="isServicesOpen" id="media-services-menu" class="absolute right-0 top-full mt-4 w-72 rounded-2xl border border-sht-stone bg-sht-off-white p-3 text-sht-olive-dark shadow-xl before:absolute before:-top-4 before:left-0 before:right-0 before:h-4" role="menu" aria-label="Layanan Kami">
           <div v-for="unit in serviceUnits" :key="unit.name" class="rounded-xl p-3" role="menuitem"><p class="font-semibold">{{ unit.name }}</p><p class="mt-1 text-xs text-sht-charcoal/60">{{ unit.subtitle }}</p><span class="mt-2 inline-flex rounded-full border border-sht-gold/50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-sht-olive">Segera Hadir</span></div>
         </div>
       </div>
