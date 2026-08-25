@@ -37,11 +37,13 @@ const supportingUpdates = [
           </div>
         </article>
 
-        <div class="supporting-rail -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-3 sm:mx-0 sm:px-0 lg:mx-0 lg:block lg:space-y-0 lg:overflow-visible lg:pb-0" aria-label="Tiga update pendukung">
-          <article v-for="update in supportingUpdates" :key="update.title" class="group flex min-w-[84%] snap-start gap-4 border-b border-sht-stone pb-5 sm:min-w-[70%] lg:min-w-0 lg:gap-5 lg:py-5 lg:first:pt-0 lg:last:border-b-0 lg:last:pb-0">
+        <div class="supporting-rail -mx-5 overflow-x-auto snap-x snap-mandatory scroll-px-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:px-0 lg:mx-0 lg:overflow-visible lg:pb-0" aria-label="Tiga update pendukung">
+          <div class="flex w-max gap-4 px-5 lg:block lg:w-auto lg:px-0">
+          <article v-for="update in supportingUpdates" :key="update.title" class="group flex w-[calc(100vw-4rem)] flex-none snap-start gap-4 border-b border-sht-stone pb-5 sm:w-[calc(100vw-6rem)] lg:w-auto lg:min-w-0 lg:gap-5 lg:py-5 lg:first:pt-0 lg:last:border-b-0 lg:last:pb-0">
             <img :src="update.image" :alt="update.alt" class="h-24 w-24 shrink-0 rounded-xl object-cover grayscale-[20%] transition-[filter,transform] duration-500 group-hover:grayscale-0 group-hover:scale-[1.02] sm:h-28 sm:w-28 lg:h-24 lg:w-24" />
             <div class="min-w-0 flex-1"><div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-semibold uppercase tracking-[0.13em] text-sht-sage"><span>{{ update.category }}</span><span aria-hidden="true">·</span><span class="text-sht-charcoal/45">{{ update.time }}</span></div><h3 class="mt-2 text-lg font-bold not-italic leading-snug text-sht-olive-dark font-hero sm:text-xl lg:text-lg">{{ update.title }}</h3><span class="mt-3 block text-xs font-semibold text-sht-olive">Baca Artikel <span aria-hidden="true">→</span></span></div>
           </article>
+          </div>
         </div>
       </div>
       <p class="mt-4 text-center text-xs text-sht-charcoal/45 lg:hidden">Geser untuk melihat update lainnya →</p>
