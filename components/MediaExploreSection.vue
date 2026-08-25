@@ -12,7 +12,7 @@ const entries = [
   <section class="bg-sht-off-white py-20 sm:py-24 lg:py-28" aria-labelledby="explore-heading">
     <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <div class="max-w-3xl">
-        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-sht-sage">JELAJAHI</p>
+        <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-sht-sage sm:text-xs"><span class="h-px w-8 bg-sht-sage" aria-hidden="true" />JELAJAHI</p>
         <h2 id="explore-heading" class="mt-4 font-hero text-4xl font-bold italic leading-tight text-sht-olive-dark sm:text-5xl">Jelajahi Sudut Haramain</h2>
         <p class="mt-4 max-w-2xl text-base leading-relaxed text-sht-charcoal/70">Cerita, panduan, dan sudut pandang pilihan untuk melihat Makkah–Madinah lebih dekat.</p>
       </div>

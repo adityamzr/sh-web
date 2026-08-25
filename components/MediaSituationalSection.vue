@@ -13,7 +13,7 @@ const situations = [
   <section class="bg-[#EFEDE4] py-16 sm:py-24" aria-labelledby="situational-heading">
     <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <div class="max-w-2xl">
-        <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-sht-olive-dark sm:text-xs"><span class="h-px w-8 bg-sht-olive-dark" aria-hidden="true" />TEMUKAN BERDASARKAN KEBUTUHAN</p>
+        <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-sht-sage sm:text-xs"><span class="h-px w-8 bg-sht-sage" aria-hidden="true" />TEMUKAN KEBUTUHANMU</p>
         <h2 id="situational-heading" class="mt-4 font-hero text-4xl font-bold italic leading-tight text-sht-olive-dark sm:text-5xl">Lagi Butuh Apa?</h2>
         <p class="mt-4 max-w-xl text-base leading-relaxed text-sht-charcoal/70">Pilih situasi yang paling dekat dengan kebutuhan Anda sekarang.</p>
       </div>

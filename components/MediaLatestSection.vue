@@ -12,7 +12,7 @@ const latestEntries = [
     <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <div class="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
         <div>
-          <p class="text-xs font-semibold uppercase tracking-[0.22em] text-sht-sage">TERBARU</p>
+          <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-sht-sage sm:text-xs"><span class="h-px w-8 bg-sht-sage" aria-hidden="true" />TERBARU</p>
           <h2 id="latest-heading" class="mt-3 font-hero text-4xl font-bold italic leading-tight text-sht-olive-dark sm:text-5xl">Terbaru dari Sudut Haramain</h2>
           <p class="mt-4 max-w-xl text-base leading-relaxed text-sht-charcoal/70">Artikel, panduan, dan catatan terbaru dari Makkah–Madinah.</p>
         </div>

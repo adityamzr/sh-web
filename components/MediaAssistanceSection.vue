@@ -2,7 +2,7 @@
   <section id="bantuan" class="bg-sht-olive-dark py-24 text-sht-off-white sm:py-28" aria-labelledby="assistance-heading">
     <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <div class="max-w-2xl">
-        <p class="text-xs font-semibold uppercase tracking-[0.22em] text-sht-gold">EKOSISTEM SUDUT HARAMAIN</p>
+        <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-sht-gold sm:text-xs"><span class="h-px w-8 bg-sht-gold" aria-hidden="true" />LAYANAN SUDUT HARAMAIN</p>
         <h2 id="assistance-heading" class="mt-4 font-hero text-4xl font-bold italic leading-tight sm:text-5xl">Ada yang Bisa Kami Bantu?</h2>
         <p class="mt-5 max-w-xl text-base leading-relaxed text-sht-off-white/75">Jika Anda membutuhkan bantuan perjalanan atau kebutuhan lain di Haramain, kami menyiapkan layanan yang tetap terhubung dengan ekosistem Sudut Haramain.</p>
       </div>
