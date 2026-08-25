@@ -17,7 +17,8 @@ const entries = [
         <p class="mt-4 max-w-2xl text-base leading-relaxed text-sht-charcoal/70">Cerita, panduan, dan sudut pandang pilihan untuk melihat Makkah–Madinah lebih dekat.</p>
       </div>
 
-      <div class="-mx-5 mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:mx-0 lg:grid lg:overflow-visible lg:px-0 lg:pb-0 lg:grid-cols-12 lg:grid-rows-[260px_260px_220px]">
+      <div class="-mx-5 mt-12 overflow-x-auto snap-x snap-mandatory scroll-px-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:mx-0 lg:overflow-visible">
+        <div class="flex w-max gap-4 px-5 lg:grid lg:w-auto lg:grid-cols-12 lg:grid-rows-[260px_260px_220px] lg:gap-4 lg:px-0">
         <article v-for="entry in entries" :key="entry.key" class="group relative min-h-[260px] min-w-[86%] snap-start overflow-hidden lg:min-w-0 rounded-3xl border border-sht-stone p-6 transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-1 hover:shadow-[0_16px_34px_-24px_rgba(45,53,31,0.55)] sm:p-8" :class="entry.key === 'featured' ? 'bg-sht-olive text-sht-off-white lg:col-span-7 lg:row-span-2 lg:row-start-1' : entry.key === 'local' ? 'bg-sht-stone/45 text-sht-olive-dark lg:col-span-5 lg:col-start-8 lg:row-start-1' : entry.key === 'guide' ? 'bg-sht-sage/20 text-sht-olive-dark lg:col-span-5 lg:col-start-8 lg:row-start-2' : entry.key === 'makkah' ? 'text-white lg:col-span-6 lg:col-start-1 lg:row-start-3' : 'text-white lg:col-span-6 lg:col-start-7 lg:row-start-3'">
           <template v-if="entry.image">
             <img :src="entry.image" :alt="entry.alt" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]" :class="entry.key === 'featured' ? 'opacity-55' : 'opacity-65'" />
@@ -28,6 +29,7 @@ const entries = [
             <div><h3 class="max-w-2xl font-hero text-2xl font-bold not-italic leading-tight sm:text-3xl">{{ entry.title }}</h3><p class="mt-3 max-w-xl text-sm leading-relaxed" :class="entry.image ? 'text-sht-off-white/75' : 'text-sht-charcoal/70'">{{ entry.supporting }}</p><span class="mt-5 inline-flex text-sm font-semibold" :class="entry.image ? 'text-sht-gold' : 'text-sht-olive'">{{ entry.cue }} <span class="ml-1 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">→</span></span></div>
           </div>
         </article>
+        </div>
       </div>
     </div>
   </section>
