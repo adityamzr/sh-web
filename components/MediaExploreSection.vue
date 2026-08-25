@@ -32,5 +32,6 @@ const entries = [
         </div>
       </div>
     </div>
+    <p class="mt-4 text-center text-xs text-sht-charcoal/45 lg:hidden">Geser untuk melihat update lainnya →</p>
   </section>
 </template>
