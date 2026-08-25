@@ -18,7 +18,7 @@ const guideLinks = [
   <footer class="bg-sht-olive-dark text-sht-off-white">
     <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <!-- Editorial closing -->
-      <div class="border-b border-sht-off-white/15 py-20 sm:py-24">
+      <div class="hidden sm:block border-b border-sht-off-white/15 py-20 sm:py-24">
         <h2 class="max-w-2xl font-hero text-4xl font-bold italic leading-tight sm:text-6xl">Melihat Haramain<br class="hidden sm:block" /> dari lebih dekat.</h2>
       </div>
 
