@@ -14,9 +14,9 @@ const searchTrigger = ref<HTMLButtonElement | null>(null)
 const links = [
   { key: 'hari-ini', label: 'Hari Ini', to: '#hari-ini', icon: Newspaper },
   { key: 'makkah', label: 'Makkah', to: '/makkah', icon: MapPinned },
-  { key: 'madinah', label: 'Madinah', to: '#madinah', icon: MapPin },
-  { key: 'panduan', label: 'Panduan', to: '#fokus-informasi', icon: BookOpen },
-  { key: 'kultur', label: 'Kultur', to: '#lokal', icon: Sparkles },
+  { key: 'madinah', label: 'Madinah', to: '/madinah', icon: MapPin },
+  { key: 'panduan', label: 'Panduan', to: '/panduan', icon: BookOpen },
+  { key: 'visual', label: 'Visual Haramain', to: '/visual', icon: Sparkles },
 ]
 const serviceUnits = [
   { name: 'Sudut Haramain Tour', subtitle: 'Umroh Mandiri & Land Arrangement' },
@@ -63,7 +63,7 @@ onBeforeUnmount(() => {
 
       </nav>
       <div class="hidden items-center lg:flex">
-        <button ref="searchTrigger" type="button" :class="isScrolled || !isHome ? 'border-sht-olive' : 'border-current/35'" class="inline-flex h-11 w-fit items-center gap-2 rounded-xl border px-5 text-left text-sm opacity-85 transition-colors hover:bg-white/10 hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold" aria-label="Cari informasi" @click="isSearchOpen = true"><Search class="h-4 w-4 shrink-0" aria-hidden="true" /><span>Cari informasi</span></button></div>
+        <button ref="searchTrigger" type="button" :class="isScrolled || !isHome ? 'border-sht-olive' : 'border-current/35'" class="inline-flex h-11 w-fit items-center gap-2 rounded-full border px-5 text-left text-sm opacity-85 transition-colors hover:bg-white/10 hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold" aria-label="Cari informasi" @click="isSearchOpen = true"><Search class="h-4 w-4 shrink-0" aria-hidden="true" /><span>Cari informasi</span></button></div>
       <div class="flex items-center gap-2 lg:hidden"><button ref="searchTrigger" type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-full hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold" aria-label="Cari informasi" @click="isSearchOpen = true"><Search class="h-5 w-5" aria-hidden="true" /></button><button type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-full hover:bg-white/10" :aria-expanded="isOpen" aria-controls="media-mobile-menu" aria-label="Buka menu" @click="isOpen = !isOpen"><Menu v-if="!isOpen" class="h-6 w-6" aria-hidden="true" /><X v-else class="h-6 w-6" aria-hidden="true" /></button></div>
     </div>
     <div v-show="isOpen" id="media-mobile-menu" class="min-h-screen bg-sht-off-white text-sht-olive-dark lg:hidden">
