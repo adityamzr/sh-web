@@ -14,7 +14,7 @@ const searchTrigger = ref<HTMLButtonElement | null>(null)
 const links = [
   { key: 'hari-ini', label: 'Hari Ini', to: '#hari-ini', icon: Newspaper },
   { key: 'makkah', label: 'Makkah', to: '/makkah', icon: MapPinned },
-  { key: 'madinah', label: 'Madinah', to: '#madinah', icon: MapPin },
+  { key: 'madinah', label: 'Madinah', to: '/madinah', icon: MapPin },
   { key: 'panduan', label: 'Panduan', to: '#fokus-informasi', icon: BookOpen },
   { key: 'kultur', label: 'Kultur', to: '#lokal', icon: Sparkles },
 ]
