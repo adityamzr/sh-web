@@ -21,7 +21,7 @@ function focusMap(category: MakkahCategory) { mapExplorer.value?.focusCategory(c
 
 <template>
   <div class="bg-sht-off-white">
-    <section class="pt-28 pb-8 sm:pt-32 sm:pb-10" aria-labelledby="makkah-opening-heading">
+    <section class="pt-28 pb-0 sm:pt-32" aria-labelledby="makkah-opening-heading">
       <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
         <p class="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-sht-olive-dark"><span class="h-px w-8 bg-sht-gold" aria-hidden="true" />MAKKAH</p>
         <h1 id="makkah-opening-heading" class="mt-4 max-w-3xl font-hero text-4xl font-bold italic leading-tight text-sht-olive-dark sm:text-5xl">Jelajahi Makkah dari satu tempat.</h1>
