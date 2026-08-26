@@ -40,5 +40,6 @@ function focusMap(category: MakkahCategory) { mapExplorer.value?.focusCategory(c
     <MakkahCloseSection />
     <MakkahGallery />
     <MakkahContributionSection />
+    <MakkahLatestSection />
   </div>
 </template>
