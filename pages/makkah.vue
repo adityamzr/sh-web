@@ -39,5 +39,6 @@ function focusMap(category: MakkahCategory) { mapExplorer.value?.focusCategory(c
     <CityMapExplorer ref="mapExplorer" :locations="makkahLocations" :center="[39.8248709, 21.4245589]" />
     <MakkahCloseSection />
     <MakkahGallery />
+    <MakkahContributionSection />
   </div>
 </template>
