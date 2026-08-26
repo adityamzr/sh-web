@@ -16,7 +16,7 @@ const links = [
   { key: 'makkah', label: 'Makkah', to: '/makkah', icon: MapPinned },
   { key: 'madinah', label: 'Madinah', to: '/madinah', icon: MapPin },
   { key: 'panduan', label: 'Panduan', to: '/panduan', icon: BookOpen },
-  { key: 'kultur', label: 'Kultur', to: '#lokal', icon: Sparkles },
+  { key: 'visual', label: 'Visual Haramain', to: '/visual', icon: Sparkles },
 ]
 const serviceUnits = [
   { name: 'Sudut Haramain Tour', subtitle: 'Umroh Mandiri & Land Arrangement' },
