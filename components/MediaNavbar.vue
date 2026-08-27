@@ -47,7 +47,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <header class="fixed inset-x-0 py-2 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300" :class="isScrolled || !isHome ? 'border-sht-stone/80 shadow-sm bg-sht-off-white/95 text-sht-olive-dark backdrop-blur-md' : 'border-white/20 bg-transparent text-white backdrop-blur-sm'">
+  <header class="fixed inset-x-0 py-2 top-8 z-50 transition-[background-color,border-color,backdrop-filter] duration-300" :class="isScrolled || !isHome ? 'border-sht-stone/80 shadow-sm bg-sht-off-white/95 text-sht-olive-dark backdrop-blur-md' : 'border-white/20 bg-transparent text-white backdrop-blur-sm'">
     <div class="mx-auto flex h-[72px] max-w-[84rem] items-center justify-between gap-8 px-5 sm:px-6 lg:px-8">
       <NuxtLink to="/" class="shrink-0 font-heading text-xl font-semibold tracking-wide sm:text-2xl" aria-label="Sudut Haramain — Beranda">
         <img :src="isScrolled || !isHome ? blackLogo : whiteLogo" alt="" class="h-12 w-auto" />
