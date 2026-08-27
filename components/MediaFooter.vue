@@ -2,10 +2,10 @@
 import { ChevronDown } from 'lucide-vue-next'
 
 const explorationLinks = [
-  { label: 'Hari Ini', to: '#hari-ini' },
-  { label: 'Makkah', to: '#makkah' },
-  { label: 'Madinah', to: '#madinah' },
-  { label: 'Kultur', to: '#lokal' },
+  { label: 'Hari Ini', to: '/hari-ini' },
+  { label: 'Makkah', to: '/makkah' },
+  { label: 'Madinah', to: '/madinah' },
+  { label: 'Visual Haramain', to: '/visual' },
 ]
 const guideLinks = [
   { label: 'Ibadah', to: '#fokus-informasi' },
@@ -44,7 +44,7 @@ function toggleGroup(group: string) { accordionOpen.value = accordionOpen.value 
         </div>
       </div>
 
-      <div class="flex flex-col gap-4 border-t border-sht-off-white/15 py-7 text-xs text-sht-off-white/50 sm:flex-row sm:items-center sm:justify-between"><div class="flex flex-wrap gap-x-4 gap-y-2"><span>© 2026 Sudut Haramain</span><a href="#tentang" class="hover:text-sht-gold">Tentang</a><span>Kebijakan Privasi</span><span>Syarat &amp; Ketentuan</span></div><p class="text-sht-off-white/60">Dari Makkah, untuk jamaah Indonesia.</p></div>
+      <div class="flex flex-col gap-4 border-t border-sht-off-white/15 py-7 text-xs text-sht-off-white/50 sm:flex-row sm:items-center sm:justify-between"><div class="flex flex-wrap gap-x-4 gap-y-2"><span>© 2026 Sudut Haramain</span><a href="#tentang" class="hover:text-sht-gold">Tentang Kami</a><span>Kebijakan Privasi</span><span>Syarat &amp; Ketentuan</span></div><p class="text-sht-off-white/60">Dari Makkah, untuk jamaah Indonesia.</p></div>
     </div>
   </footer>
 </template>
