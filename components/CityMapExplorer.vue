@@ -36,6 +36,7 @@ const mapError = ref(false)
 const MAP_STYLE_URL = 'https://tiles.openfreemap.org/styles/liberty'
 let styleLoaded = false
 let resizeObserver: ResizeObserver | null = null
+let styleLoadTimeout: ReturnType<typeof setTimeout> | null = null
 
 const visibleLocations = computed(() => activeCategory.value === 'Semua' ? props.locations : props.locations.filter((location) => location.category === activeCategory.value))
 const selectedLocation = computed(() => props.locations.find((location) => location.id === selectedId.value) ?? visibleLocations.value[0] ?? null)
@@ -105,12 +106,17 @@ onMounted(async () => {
     map.value.addControl(new maplibre.AttributionControl({ compact: true }), 'bottom-right')
     map.value.once('load', () => {
       styleLoaded = true
+      mapError.value = false
+      if (styleLoadTimeout) clearTimeout(styleLoadTimeout)
+      styleLoadTimeout = null
       map.value?.resize()
       renderMarkers()
     })
-    map.value.on('error', (event) => {
-      if (!styleLoaded && event.error) mapError.value = true
-    })
+    // Tile, glyph, or sprite failures can be non-fatal. Do not cover a usable map
+    // with the fallback merely because one resource emitted an error.
+    styleLoadTimeout = setTimeout(() => {
+      if (!styleLoaded) mapError.value = true
+    }, 12_000)
     requestAnimationFrame(() => map.value?.resize())
     resizeObserver = new ResizeObserver(() => map.value?.resize())
     resizeObserver.observe(mapElement.value)
@@ -122,6 +128,8 @@ onMounted(async () => {
 onBeforeUnmount(() => {
   resizeObserver?.disconnect()
   resizeObserver = null
+  if (styleLoadTimeout) clearTimeout(styleLoadTimeout)
+  styleLoadTimeout = null
   clearMarkers()
   map.value?.remove()
   map.value = null
