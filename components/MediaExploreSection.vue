@@ -1,15 +1,15 @@
 <script setup lang="ts">
 const entries = [
   { key: 'featured', label: 'KULTUR · MAKKAH', title: 'Melihat Makkah dari ritme keseharian orang yang tinggal di dalamnya.', supporting: 'Kota ini tidak hanya bergerak mengikuti musim jamaah.', image: '/images/makkah-editorial.jpg', alt: 'Suasana Makkah dari kejauhan', cue: 'Baca pilihan' },
-  { key: 'makkah', label: 'MAKKAH', title: 'Jelajahi Makkah', supporting: 'Transportasi, kuliner, Masjidil Haram, fasilitas, dan kehidupan kota.', image: '/images/makkah-editorial.jpg', alt: 'Makkah dari kejauhan', cue: 'Jelajahi Makkah' },
-  { key: 'madinah', label: 'MADINAH', title: 'Jelajahi Madinah', supporting: 'Masjid Nabawi, transportasi, ziarah, kuliner, dan kehidupan sekitar kota.', image: '/images/madinah-editorial.jpg', alt: 'Madinah dari kejauhan', cue: 'Jelajahi Madinah' },
+  { key: 'makkah', label: 'MAKKAH', title: 'Jelajahi Makkah', supporting: 'Transportasi, kuliner, Masjidil Haram, fasilitas, dan kehidupan kota.', image: '/images/makkah-editorial.jpg', alt: 'Makkah dari kejauhan', cue: 'Jelajahi Makkah', href: '/makkah' },
+  { key: 'madinah', label: 'MADINAH', title: 'Jelajahi Madinah', supporting: 'Masjid Nabawi, transportasi, ziarah, kuliner, dan kehidupan sekitar kota.', image: '/images/madinah-editorial.jpg', alt: 'Madinah dari kejauhan', cue: 'Jelajahi Madinah', href: '/madinah' },
   { key: 'local', label: 'SUDUT LOKAL', title: 'Hal-hal kecil yang biasanya baru terlihat setelah tinggal di sini.', supporting: 'Kebiasaan, ritme kota, dan detail yang sering terlewat jamaah.', cue: 'Baca sudut lokal' },
-  { key: 'guide', label: 'PANDUAN', title: 'Panduan praktis untuk perjalanan dan keseharian di Haramain.', supporting: 'Rute, fasilitas, transportasi, ibadah, dan kebutuhan harian.', cue: 'Lihat panduan' },
+  { key: 'guide', label: 'PANDUAN', title: 'Panduan praktis untuk perjalanan dan keseharian di Haramain.', supporting: 'Rute, fasilitas, transportasi, ibadah, dan kebutuhan harian.', cue: 'Lihat panduan', href: '/panduan' },
 ]
 </script>
 
 <template>
-  <section class="bg-sht-off-white py-20 sm:py-24 lg:py-28" aria-labelledby="explore-heading">
+  <section class="bg-sht-off-white py-14 sm:py-24 lg:py-28" aria-labelledby="explore-heading">
     <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <div class="max-w-3xl">
         <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-sht-sage sm:text-xs"><span class="h-px w-8 bg-sht-sage" aria-hidden="true" />JELAJAHI</p>
@@ -26,7 +26,7 @@ const entries = [
           </template>
           <div class="relative flex h-full min-h-[210px] flex-col justify-between">
             <p class="text-xs font-semibold uppercase tracking-[0.18em]" :class="entry.image ? 'text-sht-gold' : 'text-sht-sage'">{{ entry.label }}</p>
-            <div><h3 class="max-w-2xl font-hero text-2xl font-bold not-italic leading-tight sm:text-3xl">{{ entry.title }}</h3><p class="mt-3 max-w-xl text-sm leading-relaxed" :class="entry.image ? 'text-sht-off-white/75' : 'text-sht-charcoal/70'">{{ entry.supporting }}</p><span class="mt-5 inline-flex text-sm font-semibold" :class="entry.image ? 'text-sht-gold' : 'text-sht-olive'">{{ entry.cue }} <span class="ml-1 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">→</span></span></div>
+            <div><h3 class="max-w-2xl font-hero text-2xl font-bold not-italic leading-tight sm:text-3xl">{{ entry.title }}</h3><p class="mt-3 max-w-xl text-sm leading-relaxed" :class="entry.image ? 'text-sht-off-white/75' : 'text-sht-charcoal/70'">{{ entry.supporting }}</p><NuxtLink v-if="entry.href" :to="entry.href" class="mt-5 inline-flex text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold" :class="entry.image ? 'text-sht-gold' : 'text-sht-olive'">{{ entry.cue }} <span class="ml-1 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">→</span></NuxtLink><span v-else class="mt-5 inline-flex text-sm opacity-70" :class="entry.image ? 'text-sht-gold' : 'text-sht-olive'">{{ entry.cue }}</span></div>
           </div>
         </article>
         </div>

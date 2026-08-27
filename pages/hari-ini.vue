@@ -7,6 +7,7 @@ useSeoMeta({
 })
 
 const tabs: Array<'Semua' | ArticleCategory> = ['Semua', 'Makkah', 'Madinah', 'Transportasi', 'Masjid', 'Kehidupan', 'Panduan']
+const route = useRoute()
 const activeTab = ref<'Semua' | ArticleCategory>('Semua')
 const latestVisibleLimit = ref(9)
 
@@ -20,6 +21,12 @@ const supportingStories = computed(() => filteredArticles.value.slice(1, 4))
 const latestCandidates = computed(() => filteredArticles.value.slice(4))
 const visibleLatest = computed(() => latestCandidates.value.slice(0, latestVisibleLimit.value))
 
+function queryCityTab(value: unknown): 'Makkah' | 'Madinah' | null {
+  if (value === 'makkah') return 'Makkah'
+  if (value === 'madinah') return 'Madinah'
+  return null
+}
+
 function selectTab(tab: 'Semua' | ArticleCategory) {
   activeTab.value = tab
   latestVisibleLimit.value = 9
@@ -28,6 +35,10 @@ function showMore() { latestVisibleLimit.value += 6 }
 function typeLabel(type: Article['type']) {
   return type === 'update' ? 'UPDATE LAPANGAN' : type === 'practical' ? 'PANDUAN' : 'ARTIKEL'
 }
+
+watch(() => route.query.city, (city) => {
+  activeTab.value = queryCityTab(city) ?? 'Semua'
+}, { immediate: true })
 </script>
 
 <template>
@@ -60,7 +71,7 @@ function typeLabel(type: Article['type']) {
 
     <section v-else class="mx-auto max-w-container px-5 pt-10 sm:px-6 lg:px-8" aria-live="polite"><div class="border-t border-sht-stone py-16 text-center"><h2 class="font-hero text-2xl font-bold text-sht-olive-dark">Belum ada artikel dalam kategori ini.</h2><button type="button" class="mt-4 text-sm font-semibold text-sht-olive underline underline-offset-4" @click="selectTab('Semua')">Lihat Semua</button></div></section>
 
-    <section v-if="headline" class="pb-24 pt-24 sm:pb-28 sm:pt-28" aria-labelledby="latest-hari-ini-heading">
+    <section v-if="headline" class="pb-16 pt-16 sm:pb-28 sm:pt-28" aria-labelledby="latest-hari-ini-heading">
       <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8"><div class="flex items-end justify-between gap-6"><div><p class="text-xs font-semibold uppercase tracking-[0.22em] text-sht-sage">TERBARU</p><h2 id="latest-hari-ini-heading" class="mt-4 font-hero text-4xl font-bold italic leading-tight text-sht-olive-dark sm:text-5xl">Artikel terbaru</h2><p class="mt-4 max-w-2xl text-base leading-relaxed text-sht-charcoal/70">Artikel dan catatan terbaru dari Sudut Haramain.</p></div></div><div v-if="latestCandidates.length" class="mt-10 grid gap-x-6 gap-y-12 md:grid-cols-2 lg:grid-cols-3"><article v-for="article in visibleLatest" :key="article.id" class="group min-w-0"><NuxtLink :to="`/artikel/${article.slug}`" class="block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold"><div class="overflow-hidden rounded-2xl bg-sht-stone"><img :src="article.image" :alt="article.imageAlt" class="aspect-[3/2] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" /></div><p class="mt-4 text-[0.68rem] font-semibold uppercase tracking-[0.15em] text-sht-sage">{{ article.city }} · {{ article.category }} <span class="text-sht-stone">·</span> <span class="text-sht-charcoal/50">{{ article.publishedAt }}</span></p><h3 class="mt-2 font-hero text-xl font-bold not-italic leading-snug text-sht-olive-dark sm:text-2xl">{{ article.title }}</h3><p class="mt-3 text-sm leading-relaxed text-sht-charcoal/65">{{ article.excerpt }}</p><p class="mt-4 text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-sht-charcoal/45">{{ typeLabel(article.type) }}</p></NuxtLink></article></div><p v-else class="mt-10 border-t border-sht-stone pt-8 text-sm text-sht-charcoal/60">Belum ada artikel lain dalam kategori ini.</p><div v-if="visibleLatest.length < latestCandidates.length" class="mt-12 text-center"><button type="button" class="inline-flex min-h-[46px] items-center justify-center rounded-full bg-sht-olive px-6 py-3 text-sm font-semibold text-sht-off-white transition-colors hover:bg-sht-olive-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold" @click="showMore">Tampilkan Lebih Banyak <span class="ml-2 text-sht-gold">{{ visibleLatest.length }} dari {{ latestCandidates.length }}</span></button></div></div>
     </section>
   </div>

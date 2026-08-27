@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ThumbsDown, ThumbsUp } from 'lucide-vue-next'
 import { articleBySlug, articles } from '~/data/articles'
 
 const route = useRoute()
@@ -31,7 +32,7 @@ function selectFeedback(value: 'helpful' | 'not-helpful') { feedback.value = val
 </script>
 
 <template>
-  <div v-if="article" class="bg-sht-off-white pb-24 pt-28 sm:pb-28 sm:pt-32">
+  <div v-if="article" class="bg-sht-off-white pb-16 pt-28 sm:pb-28 sm:pt-32">
     <article class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <header class="max-w-[820px]">
         <p class="text-xs font-semibold uppercase tracking-[0.18em] text-sht-sage">{{ article.city }} · {{ article.category }} <span class="text-sht-stone">·</span> <span class="text-sht-charcoal/50">{{ article.publishedAt }} · {{ article.readingTime }}</span></p>
@@ -56,7 +57,7 @@ function selectFeedback(value: 'helpful' | 'not-helpful') { feedback.value = val
 
       <section v-if="article.references?.length" class="mt-12 max-w-[760px] border-t border-sht-stone pt-7" aria-labelledby="references-heading"><h2 id="references-heading" class="font-hero text-2xl font-bold text-sht-olive-dark">Referensi</h2><ul class="mt-4 list-disc space-y-2 pl-5 text-sm text-sht-charcoal/70"><li v-for="reference in article.references" :key="reference">{{ reference }}</li></ul></section>
 
-      <section class="mt-14 max-w-[760px] border-t border-sht-stone pt-8" aria-labelledby="feedback-heading"><h2 id="feedback-heading" class="font-hero text-2xl font-bold text-sht-olive-dark">Apakah informasi ini membantu?</h2><div v-if="!feedback" class="mt-5 flex flex-wrap gap-3"><button type="button" class="inline-flex min-h-[44px] items-center rounded-full border border-sht-olive/25 px-5 py-2 text-sm font-semibold text-sht-olive" @click="selectFeedback('helpful')">Membantu</button><button type="button" class="inline-flex min-h-[44px] items-center rounded-full border border-sht-olive/25 px-5 py-2 text-sm font-semibold text-sht-olive" @click="selectFeedback('not-helpful')">Kurang membantu</button></div><div v-else class="mt-5 border-l-2 border-sht-gold pl-4 text-sm leading-relaxed text-sht-charcoal/70" role="status">Terima kasih atas masukannya.<br /><span class="text-xs text-sht-charcoal/50">Masukan ini hanya tersimpan selama sesi ini.</span></div></section>
+      <section class="mt-14 max-w-[760px] border-t border-sht-stone pt-8" aria-labelledby="feedback-heading"><h2 id="feedback-heading" class="font-hero text-2xl font-bold text-sht-olive-dark">Apakah informasi ini membantu?</h2><div v-if="!feedback" class="mt-5 flex flex-wrap gap-3"><button type="button" class="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-sht-olive/25 px-5 py-2 text-sm font-semibold text-sht-olive" @click="selectFeedback('helpful')"><ThumbsUp class="h-4 w-4" aria-hidden="true" />Membantu</button><button type="button" class="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-sht-olive/25 px-5 py-2 text-sm font-semibold text-sht-olive" @click="selectFeedback('not-helpful')"><ThumbsDown class="h-4 w-4" aria-hidden="true" />Kurang membantu</button></div><div v-else class="mt-5 border-l-2 border-sht-gold pl-4 text-sm leading-relaxed text-sht-charcoal/70" role="status">Terima kasih atas masukannya.<br /><span class="text-xs text-sht-charcoal/50">Masukan ini hanya tersimpan selama sesi ini.</span></div></section>
 
       <section v-if="relatedArticles.length" class="mt-16 border-t border-sht-stone pt-8" aria-labelledby="related-heading"><h2 id="related-heading" class="font-hero text-3xl font-bold text-sht-olive-dark">Baca Selanjutnya</h2><div class="mt-7 grid gap-8 md:grid-cols-3"><article v-for="related in relatedArticles" :key="related.slug" class="group"><NuxtLink :to="`/artikel/${related.slug}`" class="block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold"><div class="overflow-hidden rounded-xl bg-sht-stone"><img :src="related.image" :alt="related.imageAlt" class="aspect-[3/2] w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" /></div><p class="mt-4 text-[0.68rem] font-semibold uppercase tracking-[0.15em] text-sht-sage">{{ related.city }} · {{ related.category }}</p><h3 class="mt-2 font-hero text-xl font-bold not-italic leading-snug text-sht-olive-dark group-hover:text-sht-olive">{{ related.title }}</h3></NuxtLink></article></div></section>
     </article>

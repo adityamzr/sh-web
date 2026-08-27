@@ -5,7 +5,7 @@ const latestArticles = articles.filter((article) => article.city === 'makkah').s
 </script>
 
 <template>
-  <section class="bg-sht-off-white py-24 sm:py-28" aria-labelledby="makkah-latest-heading">
+  <section class="bg-sht-off-white py-16 sm:py-28" aria-labelledby="makkah-latest-heading">
     <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <div class="flex items-end justify-between gap-6">
         <div>
@@ -13,7 +13,7 @@ const latestArticles = articles.filter((article) => article.city === 'makkah').s
           <h2 id="makkah-latest-heading" class="mt-4 font-hero text-4xl font-bold italic leading-tight text-sht-olive-dark sm:text-5xl">Terbaru dari Makkah</h2>
           <p class="mt-4 max-w-2xl text-base leading-relaxed text-sht-charcoal/70">Catatan, panduan, dan informasi terbaru yang berkaitan dengan kota Makkah.</p>
         </div>
-        <span class="hidden shrink-0 pb-1 text-sm font-semibold text-sht-olive-dark lg:inline-flex lg:items-center lg:gap-1">Lihat Semua Makkah <span class="text-sht-gold" aria-hidden="true">→</span></span>
+        <NuxtLink to="/hari-ini?city=makkah" class="hidden shrink-0 pb-1 text-sm font-semibold text-sht-olive-dark hover:text-sht-olive lg:inline-flex lg:items-center lg:gap-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold">Lihat Semua Makkah <span class="text-sht-gold" aria-hidden="true">→</span></NuxtLink>
       </div>
 
       <div class="mt-10 hidden gap-x-5 gap-y-12 md:grid md:grid-cols-2 lg:mt-12 lg:grid-cols-4">
@@ -41,7 +41,7 @@ const latestArticles = articles.filter((article) => article.city === 'makkah').s
       </div>
 
       <div class="mt-8 lg:hidden">
-        <span class="inline-flex items-center gap-1 text-sm font-semibold text-sht-olive-dark">Lihat Semua Makkah <span class="text-sht-gold" aria-hidden="true">→</span></span>
+        <NuxtLink to="/hari-ini?city=makkah" class="inline-flex items-center gap-1 text-sm font-semibold text-sht-olive-dark hover:text-sht-olive focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold">Lihat Semua Makkah <span class="text-sht-gold" aria-hidden="true">→</span></NuxtLink>
       </div>
     </div>
   </section>

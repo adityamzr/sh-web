@@ -10,7 +10,7 @@ const situations = [
 </script>
 
 <template>
-  <section class="bg-[#EFEDE4] py-16 sm:py-24" aria-labelledby="situational-heading">
+  <section class="bg-[#EFEDE4] py-12 sm:py-24" aria-labelledby="situational-heading">
     <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <div class="max-w-2xl">
         <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-sht-sage sm:text-xs"><span class="h-px w-8 bg-sht-sage" aria-hidden="true" />TEMUKAN KEBUTUHANMU</p>

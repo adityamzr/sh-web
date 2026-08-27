@@ -5,7 +5,7 @@ const latestArticles = articles.filter((article) => article.city === 'madinah').
 </script>
 
 <template>
-  <section class="bg-sht-off-white py-24 sm:py-28" aria-labelledby="madinah-latest-heading">
+  <section class="bg-sht-off-white py-16 sm:py-28" aria-labelledby="madinah-latest-heading">
     <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <div class="flex items-end justify-between gap-6">
         <div>
@@ -13,7 +13,7 @@ const latestArticles = articles.filter((article) => article.city === 'madinah').
           <h2 id="madinah-latest-heading" class="mt-4 font-hero text-4xl font-bold italic leading-tight text-sht-olive-dark sm:text-5xl">Terbaru dari Madinah</h2>
           <p class="mt-4 max-w-2xl text-base leading-relaxed text-sht-charcoal/70">Catatan, panduan, dan informasi terbaru yang berkaitan dengan kota Madinah.</p>
         </div>
-        <span class="hidden shrink-0 pb-1 text-sm font-semibold text-sht-olive-dark lg:inline-flex lg:items-center lg:gap-1">Lihat Semua Madinah <span class="text-sht-gold" aria-hidden="true">→</span></span>
+        <NuxtLink to="/hari-ini?city=madinah" class="hidden shrink-0 pb-1 text-sm font-semibold text-sht-olive-dark hover:text-sht-olive lg:inline-flex lg:items-center lg:gap-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold">Lihat Semua Madinah <span class="text-sht-gold" aria-hidden="true">→</span></NuxtLink>
       </div>
 
       <div class="mt-10 hidden gap-x-5 gap-y-12 md:grid md:grid-cols-2 lg:mt-12 lg:grid-cols-4">
@@ -36,7 +36,7 @@ const latestArticles = articles.filter((article) => article.city === 'madinah').
         </div>
       </div>
 
-      <div class="mt-8 lg:hidden"><span class="inline-flex items-center gap-1 text-sm font-semibold text-sht-olive-dark">Lihat Semua Madinah <span class="text-sht-gold" aria-hidden="true">→</span></span></div>
+      <div class="mt-8 lg:hidden"><NuxtLink to="/hari-ini?city=madinah" class="inline-flex items-center gap-1 text-sm font-semibold text-sht-olive-dark hover:text-sht-olive focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold">Lihat Semua Madinah <span class="text-sht-gold" aria-hidden="true">→</span></NuxtLink></div>
     </div>
   </section>
 </template>

@@ -14,7 +14,7 @@ const supportingUpdates = [
 </script>
 
 <template>
-  <section id="hari-ini" class="bg-sht-off-white py-20 sm:py-24 lg:py-28" aria-labelledby="today-heading">
+  <section id="hari-ini" class="bg-sht-off-white py-14 sm:py-24 lg:py-28" aria-labelledby="today-heading">
     <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <div class="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
         <div>
@@ -22,7 +22,7 @@ const supportingUpdates = [
           <h2 id="today-heading" class="mt-3 font-hero text-4xl font-bold italic leading-[0.98] text-sht-olive-dark sm:text-5xl">Hari Ini di Haramain</h2>
           <p class="mt-4 max-w-xl text-base leading-relaxed text-sht-charcoal/70">Catatan terbaru, kondisi lapangan, dan informasi yang relevan dari Makkah dan Madinah.</p>
         </div>
-        <div class="text-xs uppercase tracking-[0.16em] text-sht-olive sm:pb-1"><span class="font-semibold">Lihat Semua Update →</span></div>
+        <NuxtLink to="/hari-ini" class="text-xs font-semibold uppercase tracking-[0.16em] text-sht-olive hover:text-sht-olive-dark sm:pb-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold">Lihat Semua Update →</NuxtLink>
       </div>
 
       <div class="mt-12 grid gap-8 lg:grid-cols-[minmax(0,1.65fr)_minmax(20rem,0.9fr)] lg:gap-10">
@@ -41,7 +41,7 @@ const supportingUpdates = [
           <div class="flex w-max gap-4 px-5 lg:block lg:w-auto lg:px-0">
           <article v-for="update in supportingUpdates" :key="update.title" class="group flex w-[calc(100vw-4rem)] flex-none snap-start gap-4 border-sht-stone pb-5 sm:w-[calc(100vw-6rem)] lg:w-auto lg:min-w-0 lg:gap-5 lg:py-5 lg:first:pt-0 lg:last:border-b-0 lg:last:pb-0">
             <img :src="update.image" :alt="update.alt" class="h-24 w-24 shrink-0 rounded-xl object-cover grayscale-[20%] transition-[filter,transform] duration-500 group-hover:grayscale-0 group-hover:scale-[1.02] sm:h-28 sm:w-28 lg:h-24 lg:w-24" />
-            <div class="min-w-0 flex-1"><div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-semibold uppercase tracking-[0.13em] text-sht-sage"><span>{{ update.category }}</span><span aria-hidden="true">·</span><span class="text-sht-charcoal/45">{{ update.time }}</span></div><h3 class="mt-2 text-lg font-bold not-italic leading-snug text-sht-olive-dark font-hero sm:text-xl lg:text-lg">{{ update.title }}</h3><span class="mt-3 block text-xs font-semibold text-sht-olive">Baca Artikel <span aria-hidden="true">→</span></span></div>
+            <div class="min-w-0 flex-1"><div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-semibold uppercase tracking-[0.13em] text-sht-sage"><span>{{ update.category }}</span><span aria-hidden="true">·</span><span class="text-sht-charcoal/45">{{ update.time }}</span></div><h3 class="mt-2 text-lg font-bold not-italic leading-snug text-sht-olive-dark font-hero sm:text-xl lg:text-lg">{{ update.title }}</h3></div>
           </article>
           </div>
         </div>
