@@ -1,5 +1,5 @@
 <template>
-  <section id="bantuan" class="bg-sht-olive-dark py-24 text-sht-off-white sm:py-28" aria-labelledby="assistance-heading">
+  <section id="bantuan" class="bg-sht-olive-dark py-16 text-sht-off-white sm:py-28" aria-labelledby="assistance-heading">
     <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <div class="max-w-2xl">
         <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-sht-gold sm:text-xs"><span class="h-px w-8 bg-sht-gold" aria-hidden="true" />LAYANAN SUDUT HARAMAIN</p>

@@ -27,7 +27,7 @@ function submit() {
 </script>
 
 <template>
-  <section class="bg-sht-off-white py-20 sm:py-28" aria-labelledby="contribution-heading">
+  <section class="bg-sht-off-white py-14 sm:py-28" aria-labelledby="contribution-heading">
     <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
         <div><p class="text-xs font-semibold uppercase tracking-[0.22em] text-sht-sage">BANTU KAMI MELENGKAPI</p><h2 id="contribution-heading" class="mt-4 font-hero text-4xl font-bold italic leading-tight text-sht-olive-dark sm:text-5xl">Ikut Lengkapi Sudut Haramain</h2><p class="mt-5 max-w-xl text-base leading-relaxed text-sht-charcoal/70">Menemukan informasi yang berubah, punya rekomendasi tempat, atau pengalaman yang mungkin bermanfaat untuk jamaah lain? Sampaikan kepada kami.</p><p class="mt-8 border-l-2 border-sht-gold pl-4 text-sm leading-relaxed text-sht-charcoal/65">Setiap masukan akan kami tinjau terlebih dahulu sebelum digunakan atau diterbitkan.</p></div>
