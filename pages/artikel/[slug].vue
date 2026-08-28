@@ -1,41 +1,18 @@
 <script setup lang="ts">
 import { ThumbsDown, ThumbsUp } from 'lucide-vue-next'
-import { articleBySlug, articles } from '~/data/articles'
-
-const route = useRoute()
-const article = articleBySlug(String(route.params.slug))
-
-if (!article) {
-  throw createError({ statusCode: 404, statusMessage: 'Artikel tidak ditemukan' })
-}
-
-useSeoMeta({
-  title: () => `${article?.title ?? 'Artikel'} — Sudut Haramain`,
-  description: () => article?.excerpt ?? '',
-  ogTitle: () => article?.title ?? 'Artikel',
-  ogDescription: () => article?.excerpt ?? '',
-  ogImage: () => article?.image ?? '',
-})
-
-const feedback = ref<'helpful' | 'not-helpful' | null>(null)
-const relatedArticles = computed(() => {
-  if (!article) return []
-  const candidates = articles.filter((item) => item.slug !== article.slug)
-  const scored = candidates.map((item) => ({
-    item,
-    score: (item.city === article.city ? 3 : 0) + (item.category === article.category ? 2 : 0) + item.tags.filter((tag) => article.tags.includes(tag)).length,
-  }))
-  return scored.sort((a, b) => b.score - a.score || b.item.priority - a.item.priority).slice(0, 3).map(({ item }) => item)
-})
-
-function selectFeedback(value: 'helpful' | 'not-helpful') { feedback.value = value }
+import { useMediaArticle, useMediaArticles, formatMediaArticleDate } from '~/composables/useMediaArticles'
+const route=useRoute(); const {article,pending,error}=await useMediaArticle(String(route.params.slug));
+if(error.value||!article.value) throw createError({statusCode:404,statusMessage:'Artikel tidak ditemukan'})
+const {articles: allArticles}=await useMediaArticles({limit:100}); const current=article.value
+useSeoMeta({ title:()=>`${current?.seoTitle||current?.title||'Artikel'} — Sudut Haramain`, description:()=>current?.seoDescription||current?.excerpt||'', ogTitle:()=>current?.seoTitle||current?.title||'Artikel', ogDescription:()=>current?.seoDescription||current?.excerpt||'', ogImage:()=>current?.ogImage||current?.image||'' })
+const feedback=ref<'helpful'|'not-helpful'|null>(null); const relatedArticles=computed(()=>{if(!current)return[];return allArticles.value.filter(x=>x.slug!==current.slug).map(item=>({item,score:(item.city===current.city?3:0)+(item.category===current.category?2:0)+item.tags.filter(t=>current.tags.includes(t)).length})).sort((a,b)=>b.score-a.score||b.item.priority-a.item.priority).slice(0,3).map(x=>x.item)});function selectFeedback(value:'helpful'|'not-helpful'){feedback.value=value}
 </script>
 
 <template>
   <div v-if="article" class="bg-sht-off-white pb-16 pt-28 sm:pb-28 sm:pt-32">
     <article class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <header class="max-w-[820px]">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-sht-sage">{{ article.city }} · {{ article.category }} <span class="text-sht-stone">·</span> <span class="text-sht-charcoal/50">{{ article.publishedAt }} · {{ article.readingTime }}</span></p>
+        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-sht-sage">{{ article.city }} · {{ article.category }} <span class="text-sht-stone">·</span> <span class="text-sht-charcoal/50">{{ formatMediaArticleDate(article.publishedAt) }} · {{ article.readingTime }}</span></p>
         <h1 class="mt-5 font-hero text-4xl font-bold not-italic leading-tight text-sht-olive-dark sm:text-5xl lg:text-6xl">{{ article.title }}</h1>
         <p class="mt-5 max-w-3xl text-lg leading-relaxed text-sht-charcoal/70 sm:text-xl">{{ article.excerpt }}</p>
       </header>
@@ -43,7 +20,7 @@ function selectFeedback(value: 'helpful' | 'not-helpful') { feedback.value = val
       <div class="mt-10 max-w-5xl overflow-hidden rounded-2xl bg-sht-stone"><img :src="article.image" :alt="article.imageAlt" class="max-h-[620px] w-full object-cover" /></div>
 
       <div class="mt-12 max-w-[760px]">
-        <template v-for="(block, index) in article.content" :key="`${article.id}-${index}`">
+        <template v-for="(block, index) in article.body" :key="`${article.id}-${index}`">
           <p v-if="block.type === 'paragraph'" class="mb-6 text-base leading-[1.85] text-sht-charcoal/80">{{ block.text }}</p>
           <h2 v-else-if="block.type === 'heading' && block.level === 2" class="mb-4 mt-12 font-hero text-3xl font-bold text-sht-olive-dark">{{ block.text }}</h2>
           <h3 v-else-if="block.type === 'heading'" class="mb-3 mt-8 font-hero text-2xl font-bold text-sht-olive-dark">{{ block.text }}</h3>
