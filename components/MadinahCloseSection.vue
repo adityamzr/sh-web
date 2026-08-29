@@ -1,11 +1,8 @@
 <script setup lang="ts">
-const stories = [
-  { key: 'primary', category: 'KOTA · MADINAH', title: 'Madinah yang terasa berbeda ketika dilihat di luar pelataran Masjid Nabawi.', summary: 'Kota ini bergerak dengan ritme yang lebih tenang, tetapi menyimpan banyak detail yang sering luput dari perhatian jamaah.', image: '/images/madinah-street.jpg', alt: 'Detail jalan di kawasan Madinah', variant: 'primary' },
-  { key: 'nabawi', category: 'NABAWI · KESEHARIAN', title: 'Bagaimana suasana sekitar Nabawi berubah setelah salat berjamaah?', summary: '', image: '/images/madinah-editorial.jpg', alt: 'Suasana Masjid Nabawi dari kejauhan', variant: 'image' },
-  { key: 'movement', category: 'TRANSPORTASI', title: 'Cara jamaah bergerak antara kawasan hotel dan Masjid Nabawi.', summary: 'Membaca kota dari rute dan kebiasaan sehari-hari.', image: '', alt: '', variant: 'text' },
-  { key: 'local', category: 'SUDUT LOKAL', title: 'Sudut kota yang sering dilewati saat menuju lokasi ziarah.', summary: 'Catatan kecil tentang tempat, ritme, dan detail kota.', image: '/images/madinah-quba.jpg', alt: 'Suasana kawasan Quba di Madinah', variant: 'wide' },
-  { key: 'daily', category: 'KESEHARIAN · MADINAH', title: 'Ritme keseharian Madinah di luar pusat keramaian jamaah.', summary: 'Madinah berubah perlahan dari satu kawasan ke kawasan lainnya.', image: '', alt: '', variant: 'daily' },
-]
+import { useMediaArticles } from '~/composables/useMediaArticles'
+import { useMediaPageSettings } from '~/composables/useMediaPageSettings'
+const { articles } = await useMediaArticles({ limit: 100, city: 'MADINAH' }); const { settings } = await useMediaPageSettings('madinah')
+const variants=['primary','image','text','wide','daily']; const stories=computed(()=>{const ids=settings.value?.editorialArticleIds||[];const manual=ids.map((id:number)=>articles.value.find((a:any)=>a.id===id)).filter((a:any):a is NonNullable<typeof a>=>Boolean(a));const used=new Set(manual.map((a:any)=>a.id));const fallback=articles.value.filter((a:any)=>!used.has(a.id));const selected=[...manual,...fallback].slice(0,5);return selected.map((a:any,i)=>({key:a.id,category:`${a.city.toUpperCase()} · ${a.category.toUpperCase()}`,title:a.title,summary:a.excerpt,image:a.image,alt:a.imageAlt,variant:variants[i]}))})
 </script>
 
 <template>
