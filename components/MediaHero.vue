@@ -3,22 +3,23 @@ const { settings: homeSettings } = await useMediaHomeSettings()
 const heroImage = computed(() => homeSettings.value?.heroImageUrl || '/images/makkah-editorial.jpg')
 const heroHeadline = computed(() => homeSettings.value?.heroHeadline || 'Apa yang sedang terjadi di Haramain?')
 const heroSubheadline = computed(() => homeSettings.value?.heroSubheadline || 'Panduan, suasana, kultur, dan informasi praktis langsung dari Makkah–Madinah.')
-const topics = [
+const defaultTopics = [
   'Rekomendasi Kuliner', 'Tren Sosial', 'Transportasi Publik', 'Literasi Ibadah',
   'Kondisi Harian', 'Kultur Lokal', 'Tips Jamaah', 'Panduan Umrah',
   'Fasilitas Umum', 'Sudut Madinah', 'Rute & Navigasi', 'Etika Masjid',
   'Biaya Harian', 'Tempat Favorit', 'Info Musiman', 'Keseharian Saudi',
 ]
-const trackIndex = ref(topics.length + 4)
+const topics = computed(() => homeSettings.value?.heroTopicOverride === null || homeSettings.value?.heroTopicOverride === undefined ? defaultTopics : homeSettings.value.heroTopicOverride.filter((topic: any) => topic.isActive).sort((a: any, b: any) => a.sortOrder - b.sortOrder).map((topic: any) => topic.label))
+const trackIndex = ref(topics.value.length + 4)
 const paused = ref(false)
 const reducedMotion = ref(false)
 const seamlessReset = ref(false)
 let rotationTimer: ReturnType<typeof setInterval> | null = null
 
-const activeTopic = computed(() => trackIndex.value % topics.length)
-const activeLabel = computed(() => topics[activeTopic.value])
-const topicItems = computed(() => Array.from({ length: topics.length * 3 }, (_, absoluteIndex) => ({
-  label: topics[absoluteIndex % topics.length],
+const activeTopic = computed(() => topics.value.length ? trackIndex.value % topics.value.length : 0)
+const activeLabel = computed(() => topics.value[activeTopic.value])
+const topicItems = computed(() => Array.from({ length: Math.max(topics.value.length * 3, 1) }, (_, absoluteIndex) => ({
+  label: topics.value.length ? topics.value[absoluteIndex % topics.value.length] : '',
   absoluteIndex,
   distance: Math.abs(absoluteIndex - trackIndex.value),
 })))
@@ -30,10 +31,10 @@ const trackStyle = computed<Record<string, string | number>>(() => ({
 function advanceTopic() {
   if (paused.value) return
   trackIndex.value += 1
-  if (trackIndex.value >= topics.length * 2) {
+  if (topics.value.length && trackIndex.value >= topics.value.length * 2) {
     window.setTimeout(() => {
       seamlessReset.value = true
-      trackIndex.value = topics.length
+      trackIndex.value = topics.value.length
       requestAnimationFrame(() => { seamlessReset.value = false })
     }, 700)
   }
@@ -68,7 +69,7 @@ onBeforeUnmount(() => {
       <div class="ml-0 lg:ml-8 min-w-0 lg:pb-2" @mouseenter="paused = true" @mouseleave="paused = false" @focusin="paused = true" @focusout="paused = false">
         <div class="topic-viewport relative overflow-hidden" aria-label="Topik editorial Sudut Haramain" aria-live="polite">
           <span class="topic-pointer absolute left-0 z-10 -translate-y-10 md:-translate-y-[42px] text-3xl leading-none text-sht-gold" aria-hidden="true">▶</span>
-          <ol class="topic-track absolute inset-x-0 top-0 ml-1" :style="trackStyle">
+          <ol v-if="topics.length" class="topic-track absolute inset-x-0 top-0 ml-1" :style="trackStyle">
             <li v-for="item in topicItems" :key="item.absoluteIndex" class="flex h-[var(--topic-row-height)] items-center gap-4 pl-8 font-heading text-[1.7rem] leading-none transition-[opacity,color,font-weight] duration-500 font-bold" :class="item.absoluteIndex === trackIndex -1 ? 'text-white opacity-100' : item.absoluteIndex === trackIndex - 4 ? 'text-white/5' : 'text-white/25'">
               <span>{{ item.label }}</span>
             </li>

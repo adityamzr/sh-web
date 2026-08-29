@@ -1,3 +1,3 @@
-export type MediaHomeSettings={heroImageUrl:string|null;heroHeadline:string|null;heroSubheadline:string|null;featuredArticleId:number|null;supportingArticleIds:number[];editorialArticleIds:number[]}
+export type MediaHomeSettings={heroImageUrl:string|null;heroHeadline:string|null;heroSubheadline:string|null;heroTopicOverride:Array<{id:string;label:string;isActive:boolean;sortOrder:number}>|null;featuredArticleId:number|null;supportingArticleIds:number[];editorialArticleIds:number[]}
 export async function fetchMediaHomeSettings(){const c=useRuntimeConfig();const base=String(c.public.mediaApiBaseUrl||'').replace(/\/$/,'');try{const r=await $fetch<{data:MediaHomeSettings}>(`${base}/api/v1/media/page-settings/home`);return r.data}catch{return null}}
 export async function useMediaHomeSettings(){const {data,pending,error}=await useAsyncData('media-home-settings',fetchMediaHomeSettings,{default:()=>null});return {settings:data,pending,error}}
