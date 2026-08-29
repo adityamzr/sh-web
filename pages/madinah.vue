@@ -1,23 +1,25 @@
 <script setup lang="ts">
 import { BusFront, CircleParking, Flower2, Landmark, MapPinned, Utensils } from 'lucide-vue-next'
-import { madinahLocations, type MadinahCategory } from '~/data/madinah'
+import { useMediaLocations, type MediaLocation } from '~/composables/useMediaLocations'
 
 useSeoMeta({
   title: 'Madinah — Sudut Haramain',
   description: 'Panduan kota, ziarah, transportasi, fasilitas, dan catatan praktis untuk memahami Madinah dari sudut yang lebih dekat.',
 })
 
+const { locations, error: locationError, pending: locationsPending } = await useMediaLocations('MADINAH')
+
 const mapExplorer = ref<{ focusCategory: (category: string) => void } | null>(null)
 const quickActions = [
-  { label: 'Ke Masjid Nabawi', icon: Landmark, category: 'Nabawi' as MadinahCategory },
-  { label: 'Rawdhah', icon: Flower2, category: 'Rawdhah' as MadinahCategory },
-  { label: 'Cari Transportasi', icon: BusFront, category: 'Transportasi' as MadinahCategory },
-  { label: 'Cari Makan', icon: Utensils, category: 'Kuliner' as MadinahCategory },
-  { label: 'Ziarah Madinah', icon: MapPinned, category: 'Ziarah' as MadinahCategory },
-  { label: 'Cari Fasilitas', icon: CircleParking, category: 'Fasilitas' as MadinahCategory },
+  { label: 'Ke Masjid Nabawi', icon: Landmark, category: 'Nabawi' as string },
+  { label: 'Rawdhah', icon: Flower2, category: 'Rawdhah' as string },
+  { label: 'Cari Transportasi', icon: BusFront, category: 'Transportasi' as string },
+  { label: 'Cari Makan', icon: Utensils, category: 'Kuliner' as string },
+  { label: 'Ziarah Madinah', icon: MapPinned, category: 'Ziarah' as string },
+  { label: 'Cari Fasilitas', icon: CircleParking, category: 'Fasilitas' as string },
 ]
 
-function focusMap(category: MadinahCategory) {
+function focusMap(category: string) {
   mapExplorer.value?.focusCategory(category)
 }
 </script>
@@ -39,7 +41,8 @@ function focusMap(category: MadinahCategory) {
       </div>
     </section>
 
-    <CityMapExplorer ref="mapExplorer" :locations="madinahLocations" :center="[39.611121, 24.46721]" city-name="Madinah" explorer-id="madinah-explorer" map-description="Tempat penting, fasilitas, transportasi, dan titik yang berguna selama berada di Madinah." :categories="['Semua', 'Nabawi', 'Rawdhah', 'Ziarah', 'Transportasi', 'Kuliner', 'Fasilitas']" />
+    <CityMapExplorer ref="mapExplorer" :locations="locations" :center="[39.611121, 24.46721]" city-name="Madinah" explorer-id="madinah-explorer" map-description="Tempat penting, fasilitas, transportasi, dan titik yang berguna selama berada di Madinah." :categories="['Semua', 'Nabawi', 'Rawdhah', 'Ziarah', 'Transportasi', 'Kuliner', 'Fasilitas']" />
+    <p v-if="locationError" class="mx-auto max-w-container px-5 py-3 text-sm text-sht-charcoal/60 sm:px-6 lg:px-8">Data lokasi belum dapat dimuat. Peta dasar tetap tersedia.</p>
     <MadinahCloseSection />
     <MadinahGallery />
     <MadinahContributionSection />

@@ -43,6 +43,8 @@ let resizeObserver: ResizeObserver | null = null
 let styleLoadTimeout: ReturnType<typeof setTimeout> | null = null
 
 const visibleLocations = computed(() => activeCategory.value === 'Semua' ? props.locations : props.locations.filter((location) => location.category === activeCategory.value))
+
+watch(() => props.locations, (locations) => { selectedId.value = locations[0]?.id ?? ''; nextTick(() => renderMarkers()) }, { deep: true })
 const selectedLocation = computed(() => props.locations.find((location) => location.id === selectedId.value) ?? visibleLocations.value[0] ?? null)
 
 function markerClass(location: CityLocation) {
