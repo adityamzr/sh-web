@@ -1,46 +1,15 @@
 <script setup lang="ts">
 import { ChevronLeft, ChevronRight, Download, ExternalLink, Heart, X } from 'lucide-vue-next'
-import { visualGalleryData } from '~/data/visual'
-
-interface GalleryItem {
-  id: string
-  src: string
-  alt: string
-  locationName: string
-  date: string
-  description: string
-  orientation: 'portrait' | 'landscape'
-  explorerId?: string
-}
-
-const galleryItems = visualGalleryData.filter((item) => item.city === 'makkah').slice(0, 9)
-
-const selectedIndex = ref<number | null>(null)
-const lightboxContent = ref<HTMLElement | null>(null)
-const liked = ref<Set<string>>(new Set())
-const selectedItem = computed(() => selectedIndex.value === null ? null : galleryItems[selectedIndex.value])
-const selectedMapUrl = computed(() => selectedItem.value?.mapUrl)
-
-function resetLightboxScroll() {
-  nextTick(() => {
-    if (lightboxContent.value) lightboxContent.value.scrollTop = 0
-  })
-}
-function openLightbox(index: number) { selectedIndex.value = index; document.body.style.overflow = 'hidden'; resetLightboxScroll() }
-function closeLightbox() { selectedIndex.value = null; document.body.style.overflow = '' }
-function toggleLike(id: string) { const next = new Set(liked.value); next.has(id) ? next.delete(id) : next.add(id); liked.value = next }
-function previous() { if (selectedIndex.value !== null) { selectedIndex.value = (selectedIndex.value + galleryItems.length - 1) % galleryItems.length; resetLightboxScroll() } }
-function next() { if (selectedIndex.value !== null) { selectedIndex.value = (selectedIndex.value + 1) % galleryItems.length; resetLightboxScroll() } }
-function onKeydown(event: KeyboardEvent) { if (event.key === 'Escape') closeLightbox(); if (event.key === 'ArrowLeft') previous(); if (event.key === 'ArrowRight') next() }
-onMounted(() => window.addEventListener('keydown', onKeydown))
-onBeforeUnmount(() => { window.removeEventListener('keydown', onKeydown); document.body.style.overflow = '' })
+import { useMediaGallery } from '~/composables/useMediaGallery'
+const { items: apiItems } = await useMediaGallery({ city: 'MAKKAH' })
+const galleryItems = computed(() => apiItems.value.slice(0,9)); const selectedIndex=ref<number|null>(null); const lightboxContent=ref<HTMLElement|null>(null); const liked=ref<Set<number>>(new Set()); const selectedItem=computed(()=>selectedIndex.value===null?null:galleryItems.value[selectedIndex.value]); const selectedMapUrl=computed(()=>selectedItem.value?.mapUrl); function resetLightboxScroll(){nextTick(()=>{if(lightboxContent.value)lightboxContent.value.scrollTop=0})} function openLightbox(i:number){selectedIndex.value=i;document.body.style.overflow='hidden';resetLightboxScroll()} function closeLightbox(){selectedIndex.value=null;document.body.style.overflow=''} function toggleLike(id:number){const n=new Set(liked.value);n.has(id)?n.delete(id):n.add(id);liked.value=n} function previous(){if(selectedIndex.value!==null)selectedIndex.value=(selectedIndex.value+galleryItems.value.length-1)%galleryItems.value.length} function next(){if(selectedIndex.value!==null)selectedIndex.value=(selectedIndex.value+1)%galleryItems.value.length} function onKeydown(e:KeyboardEvent){if(e.key==='Escape')closeLightbox();if(e.key==='ArrowLeft')previous();if(e.key==='ArrowRight')next()} onMounted(()=>window.addEventListener('keydown',onKeydown));onBeforeUnmount(()=>{window.removeEventListener('keydown',onKeydown);document.body.style.overflow=''})
 </script>
 
 <template>
   <section class="bg-sht-off-white py-14 sm:py-28" aria-labelledby="makkah-gallery-heading">
     <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <div class="max-w-3xl"><p class="text-xs font-semibold uppercase tracking-[0.22em] text-sht-sage">VISUAL MAKKAH</p><h2 id="makkah-gallery-heading" class="mt-4 font-hero text-4xl font-bold italic leading-tight text-sht-olive-dark sm:text-5xl">Sudut-Sudut Makkah</h2><p class="mt-4 max-w-2xl text-base leading-relaxed text-sht-charcoal/70">Potongan kota, jalan, suasana, dan detail yang sering terlewat ketika Makkah dilihat terlalu cepat.</p></div>
-      <div class="mt-12 columns-2 gap-2 sm:columns-2 sm:gap-3 lg:columns-3 lg:gap-4"><figure v-for="(item, index) in galleryItems" :key="item.id" class="group relative mb-2 max-h-[380px] break-inside-avoid overflow-hidden sm:mb-3 sm:max-h-[520px] lg:mb-4 lg:max-h-[600px]"><button type="button" class="block w-full cursor-zoom-in text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold" :aria-label="`Buka foto ${item.locationName}`" @click="openLightbox(index)"><img :src="item.src" :alt="item.alt" loading="lazy" width="800" :height="item.orientation === 'portrait' ? 1000 : 600" class="block h-auto max-h-[380px] w-full object-cover transition-transform duration-700 group-hover:scale-[1.02] sm:max-h-[520px] lg:max-h-[600px]" /><span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-sht-olive-dark/75 to-transparent p-4 pt-12 text-xs font-semibold uppercase tracking-[0.14em] text-white opacity-0 transition-opacity group-hover:opacity-100">{{ item.locationName }} <span aria-hidden="true">↗</span></span></button></figure></div>
+      <div class="mt-12 columns-2 gap-2 sm:columns-2 sm:gap-3 lg:columns-3 lg:gap-4"><figure v-for="(item, index) in galleryItems" :key="item.id" class="group relative mb-2 max-h-[380px] break-inside-avoid overflow-hidden sm:mb-3 sm:max-h-[520px] lg:mb-4 lg:max-h-[600px]"><button type="button" class="block w-full cursor-zoom-in text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold" :aria-label="`Buka foto ${item.locationName}`" @click="openLightbox(index)"><img :src="item.src" :alt="item.alt" loading="lazy" width="800" :height="1000" class="block h-auto max-h-[380px] w-full object-cover transition-transform duration-700 group-hover:scale-[1.02] sm:max-h-[520px] lg:max-h-[600px]" /><span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-sht-olive-dark/75 to-transparent p-4 pt-12 text-xs font-semibold uppercase tracking-[0.14em] text-white opacity-0 transition-opacity group-hover:opacity-100">{{ item.locationName }} <span aria-hidden="true">↗</span></span></button></figure></div>
       <NuxtLink to="/visual?city=makkah" class="mt-8 inline-flex items-center text-sm font-semibold text-sht-olive transition-colors hover:text-sht-olive-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold">Lihat Semua Visual Haramain <span class="ml-1 text-sht-gold" aria-hidden="true">→</span></NuxtLink>
     </div>
 

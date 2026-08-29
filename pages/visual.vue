@@ -1,68 +1,8 @@
 <script setup lang="ts">
 import { ChevronLeft, ChevronRight, Download, ExternalLink, Heart, Search, X } from 'lucide-vue-next'
-import { visualGalleryData, type VisualCategory } from '~/data/visual'
-
-useSeoMeta({
-  title: 'Visual Haramain — Sudut Haramain',
-  description: 'Jelajahi foto Makkah dan Madinah melalui suasana kota, masjid, jalan, arsitektur, lanskap, dan kehidupan sehari-hari.',
-})
-
-type VisualFilter = 'Semua' | VisualCategory | 'Makkah' | 'Madinah'
-
-const route = useRoute()
-const router = useRouter()
-const searchQuery = ref('')
-const activeFilter = ref<VisualFilter>('Semua')
-const visibleLimit = ref(18)
-const selectedIndex = ref<number | null>(null)
-const lightboxContent = ref<HTMLElement | null>(null)
-const liked = ref<Set<string>>(new Set())
-const filters: VisualFilter[] = ['Semua', 'Masjid', 'Landscape', 'Arsitektur', 'Jalan', 'Transportasi', 'Kuliner', 'Makkah', 'Madinah']
-const selectedItem = computed(() => selectedIndex.value === null ? null : filteredVisuals.value[selectedIndex.value])
-
-const filteredVisuals = computed(() => {
-  const query = searchQuery.value.trim().toLocaleLowerCase()
-  return visualGalleryData.filter((item) => {
-    const matchesFilter = activeFilter.value === 'Semua' || (activeFilter.value === 'Makkah' || activeFilter.value === 'Madinah' ? item.city === activeFilter.value.toLocaleLowerCase() : item.category === activeFilter.value)
-    const searchText = [item.title, item.locationName, item.city, item.category, ...item.tags].join(' ').toLocaleLowerCase()
-    return matchesFilter && (!query || searchText.includes(query))
-  })
-})
-
-const visibleVisuals = computed(() => filteredVisuals.value.slice(0, visibleLimit.value))
-
-function queryFilter(value: unknown): VisualFilter {
-  const city = typeof value === 'string' ? value.toLowerCase() : ''
-  return city === 'makkah' ? 'Makkah' : city === 'madinah' ? 'Madinah' : 'Semua'
-}
-
-function showMore() { visibleLimit.value += 12 }
-
-function selectFilter(filter: VisualFilter) {
-  visibleLimit.value = 18
-  activeFilter.value = filter
-  router.replace({ query: filter === 'Makkah' || filter === 'Madinah' ? { city: filter.toLocaleLowerCase() } : {} })
-}
-
-function resetFilters() {
-  visibleLimit.value = 18
-  searchQuery.value = ''
-  activeFilter.value = 'Semua'
-  router.replace({ query: {} })
-}
-
-function resetLightboxScroll() { nextTick(() => { if (lightboxContent.value) lightboxContent.value.scrollTop = 0 }) }
-function openLightbox(index: number) { selectedIndex.value = index; document.body.style.overflow = 'hidden'; resetLightboxScroll() }
-function closeLightbox() { selectedIndex.value = null; document.body.style.overflow = '' }
-function toggleLike(id: string) { const next = new Set(liked.value); next.has(id) ? next.delete(id) : next.add(id); liked.value = next }
-function previous() { if (selectedIndex.value !== null && filteredVisuals.value.length) { selectedIndex.value = (selectedIndex.value + filteredVisuals.value.length - 1) % filteredVisuals.value.length; resetLightboxScroll() } }
-function next() { if (selectedIndex.value !== null && filteredVisuals.value.length) { selectedIndex.value = (selectedIndex.value + 1) % filteredVisuals.value.length; resetLightboxScroll() } }
-function onKeydown(event: KeyboardEvent) { if (event.key === 'Escape') closeLightbox(); if (event.key === 'ArrowLeft') previous(); if (event.key === 'ArrowRight') next() }
-
-watch(() => route.query.city, (city) => { activeFilter.value = queryFilter(city); visibleLimit.value = 18 }, { immediate: true })
-watch(searchQuery, () => { visibleLimit.value = 18 })
-onMounted(() => window.addEventListener('keydown', onKeydown))
-onBeforeUnmount(() => { window.removeEventListener('keydown', onKeydown); document.body.style.overflow = '' })
+import { useMediaGallery, type MediaGalleryItem } from '~/composables/useMediaGallery'
+useSeoMeta({title:'Visual Haramain — Sudut Haramain',description:'Jelajahi foto Makkah dan Madinah melalui suasana kota, masjid, jalan, arsitektur, lanskap, dan kehidupan sehari-hari.'})
+type VisualFilter='Semua'|'Masjid'|'Landscape'|'Arsitektur'|'Jalan'|'Transportasi'|'Kuliner'|'Makkah'|'Madinah';const route=useRoute(),router=useRouter(),searchQuery=ref(''),activeFilter=ref<VisualFilter>('Semua'),visibleLimit=ref(18),selectedIndex=ref<number|null>(null),lightboxContent=ref<HTMLElement|null>(null),liked=ref<Set<number>>(new Set());const {items:galleryItems}=await useMediaGallery();const filters:VisualFilter[]=['Semua','Masjid','Landscape','Arsitektur','Jalan','Transportasi','Kuliner','Makkah','Madinah'];const filteredVisuals=computed(()=>{const q=searchQuery.value.trim().toLowerCase();return [...galleryItems.value].sort((a,b)=>b.priority-a.priority||new Date(b.publishedAt||0).getTime()-new Date(a.publishedAt||0).getTime()).filter(x=>(activeFilter.value==='Semua'||activeFilter.value==='Makkah'||activeFilter.value==='Madinah'?activeFilter.value==='Semua'||x.city===activeFilter.value.toLowerCase():x.category===activeFilter.value)&&(!q||[x.title,x.locationName,x.city,x.category,...x.tags].join(' ').toLowerCase().includes(q)))});const visibleVisuals=computed(()=>filteredVisuals.value.slice(0,visibleLimit.value));const selectedItem=computed(()=>selectedIndex.value===null?null:visibleVisuals.value[selectedIndex.value]);function queryFilter(v:unknown):VisualFilter{return v==='makkah'?'Makkah':v==='madinah'?'Madinah':'Semua'}function showMore(){visibleLimit.value+=12}function selectFilter(f:VisualFilter){activeFilter.value=f;visibleLimit.value=18;router.replace({query:f==='Makkah'||f==='Madinah'?{city:f.toLowerCase()}: {}})}function resetFilters(){searchQuery.value='';activeFilter.value='Semua';visibleLimit.value=18;router.replace({query:{}})}function resetLightboxScroll(){nextTick(()=>{if(lightboxContent.value)lightboxContent.value.scrollTop=0})}function openLightbox(i:number){selectedIndex.value=i;document.body.style.overflow='hidden';resetLightboxScroll()}function closeLightbox(){selectedIndex.value=null;document.body.style.overflow=''}function toggleLike(id:number){const n=new Set(liked.value);n.has(id)?n.delete(id):n.add(id);liked.value=n}function previous(){if(selectedIndex.value!==null&&visibleVisuals.value.length)selectedIndex.value=(selectedIndex.value+visibleVisuals.value.length-1)%visibleVisuals.value.length}function next(){if(selectedIndex.value!==null&&visibleVisuals.value.length)selectedIndex.value=(selectedIndex.value+1)%visibleVisuals.value.length}function onKeydown(e:KeyboardEvent){if(e.key==='Escape')closeLightbox();if(e.key==='ArrowLeft')previous();if(e.key==='ArrowRight')next()}watch(()=>route.query.city,v=>{activeFilter.value=queryFilter(v)},{immediate:true});watch(searchQuery,()=>visibleLimit.value=18);onMounted(()=>window.addEventListener('keydown',onKeydown));onBeforeUnmount(()=>{window.removeEventListener('keydown',onKeydown);document.body.style.overflow=''})
 </script>
 
 <template>
