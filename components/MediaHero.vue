@@ -1,4 +1,8 @@
 <script setup lang="ts">
+const { settings: homeSettings } = await useMediaHomeSettings()
+const heroImage = computed(() => homeSettings.value?.heroImageUrl || '/images/makkah-editorial.jpg')
+const heroHeadline = computed(() => homeSettings.value?.heroHeadline || 'Apa yang sedang terjadi di Haramain?')
+const heroSubheadline = computed(() => homeSettings.value?.heroSubheadline || 'Panduan, suasana, kultur, dan informasi praktis langsung dari Makkah–Madinah.')
 const topics = [
   'Rekomendasi Kuliner', 'Tren Sosial', 'Transportasi Publik', 'Literasi Ibadah',
   'Kondisi Harian', 'Kultur Lokal', 'Tips Jamaah', 'Panduan Umrah',
@@ -47,7 +51,7 @@ onBeforeUnmount(() => {
 
 <template>
   <section class="relative isolate overflow-hidden bg-sht-olive-dark text-sht-off-white">
-    <img src="/images/makkah-editorial.jpg" alt="Suasana Makkah dari kejauhan" class="absolute inset-0 -z-20 h-full w-full object-cover object-center" />
+    <img  :src="heroImage" alt="Suasana Makkah dari kejauhan" class="absolute inset-0 -z-20 h-full w-full object-cover object-center" />
     <div class="absolute inset-0 -z-10 bg-sht-olive-dark/55" aria-hidden="true" />
     <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_72%_42%,rgba(127,137,104,0.42),transparent_38%),linear-gradient(90deg,rgba(45,53,31,0.93)_0%,rgba(45,53,31,0.68)_42%,rgba(58,68,40,0.35)_100%)]" aria-hidden="true" />
     <div class="absolute inset-x-0 top-0 -z-10 h-48 bg-gradient-to-b from-sht-olive-dark/40 to-transparent" aria-hidden="true" />
@@ -55,8 +59,8 @@ onBeforeUnmount(() => {
     <div class="mx-auto grid min-h-[100svh] max-w-container items-center gap-6 px-5 pb-24 pt-32 sm:px-6 sm:pb-28 sm:pt-40 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-8 lg:pb-32 lg:pt-36">
       <div>
         <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-sht-gold sm:text-xs"><span class="h-px w-8 bg-sht-gold" aria-hidden="true" />DARI MAKKAH &amp; MADINAH</p>
-        <h1 class="mt-6 max-w-3xl font-hero text-5xl font-bold italic leading-[0.98] tracking-[-0.03em] text-white [font-optical-sizing:auto] sm:text-[4.5rem]">Apa yang sedang terjadi di Haramain?</h1>
-        <p class="mt-7 max-w-2xl text-lg leading-relaxed text-sht-off-white/90 sm:text-xl">Panduan, suasana, kultur, dan informasi praktis langsung dari Makkah–Madinah.</p>
+        <h1 class="mt-6 max-w-3xl font-hero text-5xl font-bold italic leading-[0.98] tracking-[-0.03em] text-white [font-optical-sizing:auto] sm:text-[4.5rem]">{{ heroHeadline }}</h1>
+        <p class="mt-7 max-w-2xl text-lg leading-relaxed text-sht-off-white/90 sm:text-xl">{{ heroSubheadline }}</p>
         <p class="mt-4 text-sm text-sht-off-white/70">Dilihat dari dekat oleh tim Indonesia yang tinggal di Makkah.</p>
         <a href="#hari-ini" class="mt-9 inline-flex min-h-[48px] items-center gap-2 rounded-full bg-sht-gold px-6 py-3.5 text-sm font-semibold text-sht-olive-dark transition-colors hover:bg-[#c7b55e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold">Lihat Sorotan <span aria-hidden="true">↓</span></a>
       </div>
