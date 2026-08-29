@@ -1,0 +1,2 @@
+export type PublicContributionPayload={type:'INFORMATION_CORRECTION'|'PLACE_RECOMMENDATION'|'TIP_EXPERIENCE';city:'MAKKAH'|'MADINAH';subject?:string|null;message:string;name?:string|null;contact?:string|null;sourcePage?:string|null;sourceUrl?:string|null;mapsUrl?:string|null}
+export async function submitMediaContribution(payload:PublicContributionPayload){const config=useRuntimeConfig();const base=String(config.public.mediaApiBaseUrl||'').replace(/\/$/,'');return await $fetch(`${base}/api/v1/media/contributions`,{method:'POST',body:payload})}
