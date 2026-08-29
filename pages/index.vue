@@ -12,7 +12,7 @@ const localNotes = ['Apa yang biasanya luput dari jamaah pertama kali?', 'Membac
     <!-- 1. Hero / Haramain opening -->
     <MediaHero />
 
-    <!-- 2. Hari Ini di Haramain -->
+    <!-- 2. Sorotan Haramain -->
     <MediaTodaySection />
 
     <!-- 3. Lagi Butuh Apa? -->

@@ -2,7 +2,7 @@
 import { ChevronDown } from 'lucide-vue-next'
 
 const explorationLinks = [
-  { label: 'Hari Ini', to: '/hari-ini' },
+  { label: 'Sorotan', to: '/hari-ini' },
   { label: 'Makkah', to: '/makkah' },
   { label: 'Madinah', to: '/madinah' },
   { label: 'Visual Haramain', to: '/visual' },

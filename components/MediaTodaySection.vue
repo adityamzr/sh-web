@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useMediaArticles, formatMediaArticleDate } from '~/composables/useMediaArticles'
 const { articles } = await useMediaArticles({ limit: 4 })
-const featuredUpdate = computed(() => { const a=articles.value[0]; return { category:a?`${a.city.toUpperCase()} · ${a.category.toUpperCase()}`:'HARI INI', title:a?.title||'Belum ada update hari ini.', description:a?.excerpt||'Belum ada artikel terbit.', time:a?formatMediaArticleDate(a.publishedAt):'—', image:a?.image||'/images/makkah-editorial.jpg', alt:a?.imageAlt||'Sudut Haramain' ,slug:a?.slug||''} })
+const featuredUpdate = computed(() => { const a=articles.value[0]; return { category:a?`${a.city.toUpperCase()} · ${a.category.toUpperCase()}`:'SOROTAN', title:a?.title||'Belum ada sorotan terbaru.', description:a?.excerpt||'Belum ada artikel terbit.', time:a?formatMediaArticleDate(a.publishedAt):'—', image:a?.image||'/images/makkah-editorial.jpg', alt:a?.imageAlt||'Sudut Haramain' ,slug:a?.slug||''} })
 const supportingUpdates = computed(() => articles.value.slice(1,4).map(a=>({category:a.category.toUpperCase(),title:a.title,time:formatMediaArticleDate(a.publishedAt),image:a.image,alt:a.imageAlt,slug:a.slug})))
 </script>
 
@@ -10,8 +10,8 @@ const supportingUpdates = computed(() => articles.value.slice(1,4).map(a=>({cate
     <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <div class="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
         <div>
-          <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-sht-sage sm:text-xs"><span class="h-px w-8 bg-sht-sage" aria-hidden="true" />HARI INI</p>
-          <h2 id="today-heading" class="mt-3 font-hero text-4xl font-bold italic leading-[0.98] text-sht-olive-dark sm:text-5xl">Hari Ini di Haramain</h2>
+          <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-sht-sage sm:text-xs"><span class="h-px w-8 bg-sht-sage" aria-hidden="true" />SOROTAN</p>
+          <h2 id="today-heading" class="mt-3 font-hero text-4xl font-bold italic leading-[0.98] text-sht-olive-dark sm:text-5xl">Sorotan Haramain</h2>
           <p class="mt-4 max-w-xl text-base leading-relaxed text-sht-charcoal/70">Catatan terbaru, kondisi lapangan, dan informasi yang relevan dari Makkah dan Madinah.</p>
         </div>
         <NuxtLink to="/hari-ini" class="text-xs font-semibold uppercase tracking-[0.16em] text-sht-olive hover:text-sht-olive-dark sm:pb-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold">Lihat Semua Update →</NuxtLink>

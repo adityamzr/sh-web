@@ -11,7 +11,7 @@ const isSearchOpen = ref(false)
 const isHome = computed(() => route.path === '/')
 const searchTrigger = ref<HTMLButtonElement | null>(null)
 const links = [
-  { key: 'hari-ini', label: 'Hari Ini', to: '/hari-ini', icon: Newspaper },
+  { key: 'hari-ini', label: 'Sorotan', to: '/hari-ini', icon: Newspaper },
   { key: 'makkah', label: 'Makkah', to: '/makkah', icon: MapPinned },
   { key: 'madinah', label: 'Madinah', to: '/madinah', icon: MapPin },
   { key: 'visual', label: 'Visual Haramain', to: '/visual', icon: Sparkles },
