@@ -1,11 +1,8 @@
 <script setup lang="ts">
-const stories = [
-  { key: 'primary', category: 'KOTA · MAKKAH', title: 'Makkah yang tidak terlihat dari pelataran Masjidil Haram.', summary: 'Di luar arus jamaah, kota ini memiliki ritme, kawasan, dan keseharian yang berjalan dengan caranya sendiri.', image: '/images/saudi-local-detail.jpg', alt: 'Detail lingkungan kota Makkah', variant: 'primary' },
-  { key: 'haram', category: 'HARAM · KESEHARIAN', title: 'Kenapa ritme sekitar Haram berubah setelah waktu Isya?', summary: '', image: '/images/makkah-editorial.jpg', alt: 'Suasana Makkah dari kejauhan', variant: 'image' },
-  { key: 'movement', category: 'TRANSPORTASI', title: 'Cara warga melihat jarak dan pergerakan di Makkah.', summary: 'Membaca kota dari rute dan kebiasaan sehari-hari.', image: '', alt: '', variant: 'text' },
-  { key: 'local', category: 'SUDUT LOKAL', title: 'Area yang sering dilewati jamaah, tetapi jarang benar-benar diperhatikan.', summary: 'Catatan kecil tentang tempat, ritme, dan detail kota.', image: '/images/madinah-editorial.jpg', alt: 'Suasana kawasan kota dari kejauhan', variant: 'wide' },
-  { key: 'daily', category: 'KESEHARIAN · MAKKAH', title: 'Kota ini mulai terasa berbeda ketika jamaah mulai meninggalkan pusat keramaian.', summary: 'Ritme Makkah berubah dari satu kawasan ke kawasan lainnya.', image: '', alt: '', variant: 'daily' },
-]
+import { useMediaArticles } from '~/composables/useMediaArticles'
+import { useMediaPageSettings } from '~/composables/useMediaPageSettings'
+const { articles } = await useMediaArticles({ limit: 100, city: 'MAKKAH' }); const { settings } = await useMediaPageSettings('makkah')
+const variants=['primary','image','text','wide','daily']; const stories=computed(()=>{const ids=settings.value?.editorialArticleIds||[];const manual=ids.map((id:number)=>articles.value.find((a:any)=>a.id===id)).filter((a:any):a is NonNullable<typeof a>=>Boolean(a));const used=new Set(manual.map((a:any)=>a.id));const fallback=articles.value.filter((a:any)=>!used.has(a.id));const selected=[...manual,...fallback].slice(0,5);return selected.map((a:any,i)=>({key:a.id,category:`${a.city.toUpperCase()} · ${a.category.toUpperCase()}`,title:a.title,summary:a.excerpt,image:a.image,alt:a.imageAlt,variant:variants[i]}))})
 </script>
 
 <template>
