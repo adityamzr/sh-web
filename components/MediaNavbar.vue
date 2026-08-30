@@ -29,9 +29,24 @@ const links = [
   { key: "panduan", label: "Panduan", to: "/panduan", icon: BookOpen },
 ];
 const serviceUnits = [
-  { name: "Apa itu Sudut Haramain?", subtitle: "Mengenal media digital Sudut Haramain.", href: "/tentang-kami" },
-  { name: "Sudut Haramain Tour", subtitle: "Umroh Mandiri & Land Arrangement", href: "https://tour.sudutharamain.id" },
-  { name: "Sudut Haramain Jastip", subtitle: "Titip beli dari Makkah–Madinah", href: "https://jastip.sudutharamain.id" },
+  {
+    id: 1,
+    name: "Apa itu Sudut Haramain?",
+    subtitle: "Mengenal media digital Sudut Haramain.",
+    href: "/tentang-kami",
+  },
+  {
+    id: 2,
+    name: "Sudut Haramain Tour",
+    subtitle: "Umroh Mandiri & Land Arrangement",
+    href: "https://tour.sudutharamain.id",
+  },
+  {
+    id: 3,
+    name: "Sudut Haramain Jastip",
+    subtitle: "Titip beli dari Makkah–Madinah",
+    href: "https://jastip.sudutharamain.id",
+  },
 ];
 let servicesCloseTimer: ReturnType<typeof setTimeout> | null = null;
 function openServicesMenu() {
@@ -153,18 +168,43 @@ onBeforeUnmount(() => {
             role="menu"
             aria-label="Tentang Kami"
           >
-            <a
-              v-for="unit in serviceUnits"
-              :key="unit.name"
-              :href="unit.href"
-              :target="unit.href.startsWith('http') ? '_blank' : undefined"
-              :rel="unit.href.startsWith('http') ? 'noopener noreferrer' : undefined"
-              class="block rounded-xl p-3 transition-colors hover:bg-sht-stone/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-sht-gold"
-              role="menuitem"
-            >
-              <p class="font-semibold">{{ unit.name }}</p>
-              <p class="mt-1 text-xs text-sht-charcoal/60">{{ unit.subtitle }}</p>
-            </a>
+            <div>
+              <a
+                v-for="unit in serviceUnits"
+                :key="unit.id"
+                :href="unit.id === 1 ? unit.href : undefined"
+                :target="
+                  unit.id === 1 && unit.href.startsWith('http')
+                    ? '_blank'
+                    : undefined
+                "
+                :rel="
+                  unit.id === 1 && unit.href.startsWith('http')
+                    ? 'noopener noreferrer'
+                    : undefined
+                "
+                :aria-disabled="unit.id !== 1"
+                :tabindex="unit.id !== 1 ? -1 : undefined"
+                :class="[
+                  'block rounded-xl p-3 transition-colors',
+                  unit.id === 1
+                    ? 'hover:bg-sht-stone/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-sht-gold'
+                    : 'cursor-not-allowed opacity-60',
+                ]"
+                role="menuitem"
+                @click="unit.id !== 1 && $event.preventDefault()"
+              >
+                <p class="font-semibold">{{ unit.name }}</p>
+                <p class="mt-1 text-xs text-sht-charcoal/60">
+                  {{ unit.subtitle }}
+                </p>
+                <span
+                  v-if="unit.id !== 1"
+                  class="mt-2 inline-flex rounded-full border border-sht-gold/50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-sht-olive"
+                  >Segera Hadir</span
+                >
+              </a>
+            </div>
           </div>
         </div>
       </nav>
@@ -272,7 +312,24 @@ onBeforeUnmount(() => {
             id="media-mobile-services"
             class="ml-9 border-t border-sht-stone/70 py-2"
           >
-            <a v-for="unit in serviceUnits" :key="unit.name" :href="unit.href" :target="unit.href.startsWith('http') ? '_blank' : undefined" :rel="unit.href.startsWith('http') ? 'noopener noreferrer' : undefined" class="block border-b border-sht-stone/60 py-3 last:border-0" @click="isOpen = false"><p class="font-sans text-base text-sht-olive-dark">{{ unit.name }}</p><p class="mt-1 text-xs text-sht-charcoal/60">{{ unit.subtitle }}</p></a></div>
+            <a
+              v-for="unit in serviceUnits"
+              :key="unit.name"
+              :href="unit.href"
+              :target="unit.href.startsWith('http') ? '_blank' : undefined"
+              :rel="
+                unit.href.startsWith('http') ? 'noopener noreferrer' : undefined
+              "
+              class="block border-b border-sht-stone/60 py-3 last:border-0"
+              @click="isOpen = false"
+              ><p class="font-sans text-base text-sht-olive-dark">
+                {{ unit.name }}
+              </p>
+              <p class="mt-1 text-xs text-sht-charcoal/60">
+                {{ unit.subtitle }}
+              </p></a
+            >
+          </div>
         </div>
       </nav>
     </div>
