@@ -23,18 +23,20 @@ const props = withDefaults(defineProps<{
   explorerId?: string
   mapDescription?: string
   categories?: string[]
+  initialCategory?: string
 }>(), {
   cityName: 'Makkah',
   explorerId: 'makkah-explorer',
   mapDescription: 'Tempat penting, fasilitas, transportasi, dan titik yang berguna selama berada di Makkah.',
   categories: () => ['Semua', 'Haram', 'Transportasi', 'Miqat', 'Kuliner', 'Fasilitas', 'Ziarah'],
+  initialCategory: 'Semua',
 })
 
 const mapElement = ref<HTMLElement | null>(null)
 const map = shallowRef<Map | null>(null)
 const markerConstructor = shallowRef<typeof import('maplibre-gl').Marker | null>(null)
 const markers: Marker[] = []
-const activeCategory = ref('Semua')
+const activeCategory = ref(props.initialCategory)
 const selectedId = ref(props.locations[0]?.id ?? '')
 const mapError = ref(false)
 const MAP_STYLE_URL = 'https://tiles.openfreemap.org/styles/liberty'

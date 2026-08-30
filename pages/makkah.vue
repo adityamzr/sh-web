@@ -9,6 +9,7 @@ useSeoMeta({
 
 const { locations, error: locationError, pending: locationsPending } = await useMediaLocations('MAKKAH')
 
+const route = useRoute()
 const mapExplorer = ref<{ focusCategory: (category: string) => void } | null>(null)
 const quickActions = [
   { label: 'Ke Masjidil Haram', icon: Landmark, category: 'Haram' as string },
@@ -38,7 +39,7 @@ function focusMap(category: string) { mapExplorer.value?.focusCategory(category)
       </div>
     </section>
 
-    <CityMapExplorer ref="mapExplorer" :locations="locations" :center="[39.8248709, 21.4245589]" />
+    <CityMapExplorer ref="mapExplorer" :initial-category="typeof route.query.category === 'string' ? route.query.category : 'Semua'" :locations="locations" :center="[39.8248709, 21.4245589]" />
     <p v-if="locationError" class="mx-auto max-w-container px-5 py-3 text-sm text-sht-charcoal/60 sm:px-6 lg:px-8">Data lokasi belum dapat dimuat. Peta dasar tetap tersedia.</p>
     <MakkahCloseSection />
     <MakkahGallery />
