@@ -3,9 +3,8 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss'],
   runtimeConfig: {
-    public: {
-      mediaApiBaseUrl: process.env.NUXT_PUBLIC_MEDIA_API_BASE_URL || '',
-    },
+    apiBaseUrl: process.env.NUXT_API_BASE_URL || '',
+    public: {},
   },
   tailwindcss: { cssPath: '~/assets/css/main.css' },
   app: {
