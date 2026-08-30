@@ -29,9 +29,9 @@ const links = [
   { key: "panduan", label: "Panduan", to: "/panduan", icon: BookOpen },
 ];
 const serviceUnits = [
-  { name: "Apa itu Sudut Haramain?", subtitle: "" },
-  { name: "Sudut Haramain Tour", subtitle: "Umroh Mandiri & Land Arrangement" },
-  { name: "Sudut Haramain Jastip", subtitle: "Titip beli dari Makkah–Madinah" },
+  { name: "Apa itu Sudut Haramain?", subtitle: "Mengenal media digital Sudut Haramain.", href: "/tentang-kami" },
+  { name: "Sudut Haramain Tour", subtitle: "Umroh Mandiri & Land Arrangement", href: "https://tour.sudutharamain.id" },
+  { name: "Sudut Haramain Jastip", subtitle: "Titip beli dari Makkah–Madinah", href: "https://jastip.sudutharamain.id" },
 ];
 let servicesCloseTimer: ReturnType<typeof setTimeout> | null = null;
 function openServicesMenu() {
@@ -153,21 +153,18 @@ onBeforeUnmount(() => {
             role="menu"
             aria-label="Tentang Kami"
           >
-            <div
+            <a
               v-for="unit in serviceUnits"
               :key="unit.name"
-              class="rounded-xl p-3"
+              :href="unit.href"
+              :target="unit.href.startsWith('http') ? '_blank' : undefined"
+              :rel="unit.href.startsWith('http') ? 'noopener noreferrer' : undefined"
+              class="block rounded-xl p-3 transition-colors hover:bg-sht-stone/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-sht-gold"
               role="menuitem"
             >
               <p class="font-semibold">{{ unit.name }}</p>
-              <p class="mt-1 text-xs text-sht-charcoal/60">
-                {{ unit.subtitle }}
-              </p>
-              <span
-                class="mt-2 inline-flex rounded-full border border-sht-gold/50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-sht-olive"
-                >Segera Hadir</span
-              >
-            </div>
+              <p class="mt-1 text-xs text-sht-charcoal/60">{{ unit.subtitle }}</p>
+            </a>
           </div>
         </div>
       </nav>
@@ -275,18 +272,7 @@ onBeforeUnmount(() => {
             id="media-mobile-services"
             class="ml-9 border-t border-sht-stone/70 py-2"
           >
-            <div v-for="unit in serviceUnits" :key="unit.name" class="py-3">
-              <p class="font-sans text-base text-sht-olive-dark">
-                Apa itu Sudut Haramain?
-              </p>
-              <p class="font-sans text-base text-sht-olive-dark">
-                {{ unit.name }}
-              </p>
-              <p class="mt-1 text-xs text-sht-charcoal/60">
-                {{ unit.subtitle }} · Segera Hadir
-              </p>
-            </div>
-          </div>
+            <a v-for="unit in serviceUnits" :key="unit.name" :href="unit.href" :target="unit.href.startsWith('http') ? '_blank' : undefined" :rel="unit.href.startsWith('http') ? 'noopener noreferrer' : undefined" class="block border-b border-sht-stone/60 py-3 last:border-0" @click="isOpen = false"><p class="font-sans text-base text-sht-olive-dark">{{ unit.name }}</p><p class="mt-1 text-xs text-sht-charcoal/60">{{ unit.subtitle }}</p></a></div>
         </div>
       </nav>
     </div>
