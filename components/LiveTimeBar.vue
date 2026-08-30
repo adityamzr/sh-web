@@ -30,7 +30,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="fixed inset-x-0 top-0 z-[60] flex h-8 items-center justify-center bg-[#111111] px-4 text-[11px] font-medium tracking-[0.04em] text-sht-off-white sm:text-xs" :aria-label="accessibleLabel" role="status">
-    <span>Makkah {{ makkahTime }}</span><span class="mx-2 text-sht-gold" aria-hidden="true">·</span><span>WIB {{ wibTime }}</span>
+  <div class="fixed inset-x-0 top-0 z-[60] flex h-8 items-center justify-center bg-sht-sage px-4 text-[11px] font-bold tracking-[0.04em] text-sht-off-white sm:text-xs" :aria-label="accessibleLabel" role="status">
+    <span>Makkah {{ makkahTime }}</span><span class="mx-2" aria-hidden="true">·</span><span>WIB {{ wibTime }}</span>
   </div>
 </template>

@@ -1,22 +1,25 @@
 <script setup lang="ts">
 import { BusFront, CircleParking, Landmark, MapPinned, PlaneLanding, Utensils } from 'lucide-vue-next'
-import { makkahLocations, type MakkahCategory } from '~/data/makkah'
+import { useMediaLocations, type MediaLocation } from '~/composables/useMediaLocations'
 
 useSeoMeta({
   title: 'Makkah — Sudut Haramain',
   description: 'Panduan kota, rute, kultur, dan catatan praktis untuk memahami Makkah dari sudut yang lebih dekat.',
 })
 
-const mapExplorer = ref<{ focusCategory: (category: MakkahCategory) => void } | null>(null)
+const { locations, error: locationError, pending: locationsPending } = await useMediaLocations('MAKKAH')
+
+const route = useRoute()
+const mapExplorer = ref<{ focusCategory: (category: string) => void } | null>(null)
 const quickActions = [
-  { label: 'Ke Masjidil Haram', icon: Landmark, category: 'Haram' as MakkahCategory },
-  { label: 'Cari Transportasi', icon: BusFront, category: 'Transportasi' as MakkahCategory },
-  { label: 'Cari Makan', icon: Utensils, category: 'Kuliner' as MakkahCategory },
-  { label: 'Baru Sampai', icon: PlaneLanding, category: 'Transportasi' as MakkahCategory },
-  { label: 'Cari Fasilitas', icon: CircleParking, category: 'Fasilitas' as MakkahCategory },
-  { label: 'Mau Keliling', icon: MapPinned, category: 'Ziarah' as MakkahCategory },
+  { label: 'Ke Masjidil Haram', icon: Landmark, category: 'Haram' as string },
+  { label: 'Cari Transportasi', icon: BusFront, category: 'Transportasi' as string },
+  { label: 'Cari Makan', icon: Utensils, category: 'Kuliner' as string },
+  { label: 'Baru Sampai', icon: PlaneLanding, category: 'Transportasi' as string },
+  { label: 'Cari Fasilitas', icon: CircleParking, category: 'Fasilitas' as string },
+  { label: 'Mau Keliling', icon: MapPinned, category: 'Ziarah' as string },
 ]
-function focusMap(category: MakkahCategory) { mapExplorer.value?.focusCategory(category) }
+function focusMap(category: string) { mapExplorer.value?.focusCategory(category) }
 </script>
 
 <template>
@@ -36,7 +39,8 @@ function focusMap(category: MakkahCategory) { mapExplorer.value?.focusCategory(c
       </div>
     </section>
 
-    <CityMapExplorer ref="mapExplorer" :locations="makkahLocations" :center="[39.8248709, 21.4245589]" />
+    <CityMapExplorer ref="mapExplorer" :initial-category="typeof route.query.category === 'string' ? route.query.category : 'Semua'" :locations="locations" :center="[39.8248709, 21.4245589]" />
+    <p v-if="locationError" class="mx-auto max-w-container px-5 py-3 text-sm text-sht-charcoal/60 sm:px-6 lg:px-8">Data lokasi belum dapat dimuat. Peta dasar tetap tersedia.</p>
     <MakkahCloseSection />
     <MakkahGallery />
     <MakkahContributionSection />

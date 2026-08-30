@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { articles } from '~/data/articles'
-
-const latestArticles = articles.filter((article) => article.city === 'madinah').slice(0, 4)
+import { useMediaArticles } from '~/composables/useMediaArticles'
+const { articles: latestArticles } = await useMediaArticles({ city: 'MADINAH', limit: 4 })
 </script>
 
 <template>

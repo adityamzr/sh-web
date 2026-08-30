@@ -1,2 +1,6 @@
-export { articles as hariIniArticles } from '~/data/articles'
-export type { Article as HariIniArticle, ArticleCategory as HariIniCategory } from '~/data/articles'
+/**
+ * Legacy type compatibility for consumers that still import Hari Ini types.
+ * Runtime article data now comes from useMediaArticles() and the public API.
+ */
+export type { MediaArticle as HariIniArticle } from '~/composables/useMediaArticles'
+export type HariIniCategory = string

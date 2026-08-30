@@ -1,10 +1,7 @@
 <script setup lang="ts">
-const latestEntries = [
-  { category: 'KULTUR', title: 'Kebiasaan kecil di Makkah yang sering baru disadari setelah tinggal lebih lama.', time: '2 HARI LALU', image: '/images/saudi-local-detail.jpg', alt: 'Detail lingkungan kota Makkah' },
-  { category: 'PANDUAN', title: 'Hal yang perlu diperhatikan sebelum menggunakan transportasi umum di Makkah.', time: '3 HARI LALU', image: '/images/makkah-editorial.jpg', alt: 'Suasana Makkah dari kejauhan' },
-  { category: 'MAKKAH', title: 'Mengenal area sekitar Haram dari sudut yang lebih praktis.', time: '4 HARI LALU', image: '/images/makkah-editorial.jpg', alt: 'Arsitektur dan suasana Makkah' },
-  { category: 'MADINAH', title: 'Cara memahami ritme kawasan sekitar Masjid Nabawi sepanjang hari.', time: '5 HARI LALU', image: '/images/madinah-editorial.jpg', alt: 'Suasana Madinah dari kejauhan' },
-]
+import { useMediaArticles, formatMediaArticleDate } from '~/composables/useMediaArticles'
+const { articles } = await useMediaArticles({ limit: 4 })
+const latestEntries = computed(() => articles.value.map(a => ({ category: a.category.toUpperCase(), title: a.title, time: formatMediaArticleDate(a.publishedAt).toUpperCase(), image: a.image, alt: a.imageAlt, slug: a.slug })))
 </script>
 
 <template>
@@ -21,12 +18,12 @@ const latestEntries = [
 
       <div class="-mx-5 mt-10 overflow-x-auto snap-x snap-mandatory scroll-px-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:mx-0 lg:overflow-visible">
         <div class="flex w-max gap-5 px-5 lg:grid lg:w-auto lg:grid-cols-4 lg:gap-x-6 lg:px-0">
-        <article v-for="entry in latestEntries" :key="entry.title" class="group w-[calc(100vw-4.5rem)] flex-none snap-start sm:w-[calc(100vw-6rem)] lg:w-auto lg:min-w-0">
+        <NuxtLink v-for="entry in latestEntries" :key="entry.title" :to="`/artikel/${entry.slug}`" class="group w-[calc(100vw-4.5rem)] flex-none snap-start sm:w-[calc(100vw-6rem)] lg:w-auto lg:min-w-0">
           <div class="aspect-[4/3] overflow-hidden rounded-2xl bg-sht-stone"><img :src="entry.image" :alt="entry.alt" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]" /></div>
           <div class="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-sht-sage"><span>{{ entry.category }}</span><span aria-hidden="true">·</span><span class="text-sht-charcoal/45">{{ entry.time }}</span></div>
           <h3 class="mt-2 text-xl font-hero font-bold not-italic leading-snug text-sht-olive-dark sm:text-2xl lg:text-xl">{{ entry.title }}</h3>
 
-        </article>
+        </NuxtLink>
         </div>
       </div>
     </div>

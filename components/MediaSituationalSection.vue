@@ -1,11 +1,11 @@
 <script setup lang="ts">
 const situations = [
-  { number: '01', title: 'Baru Sampai', description: 'Bandara, SIM, internet, transportasi awal, dan kebutuhan pertama setelah tiba.', tone: 'light' },
-  { number: '02', title: 'Mau ke Masjidil Haram', description: 'Akses, pintu masuk, rute, waktu, dan fasilitas sekitar Haram.', tone: 'image', image: '/images/makkah-editorial.jpg' },
-  { number: '03', title: 'Cari Transportasi', description: 'Bus, kereta, taksi, rute umum, dan pilihan mobilitas.', tone: 'dark' },
-  { number: '04', title: 'Lagi Cari Makan', description: 'Kuliner lokal, tempat makan, harga, dan rekomendasi sekitar.', tone: 'gold' },
-  { number: '05', title: 'Persiapan Umrah', description: 'Miqat, ihram, perlengkapan, manasik, dan hal yang perlu disiapkan.', tone: 'sage' },
-  { number: '06', title: 'Sedang di Madinah', description: 'Nabawi, transportasi, ziarah, kuliner, dan kehidupan sekitar Madinah.', tone: 'image', image: '/images/madinah-editorial.jpg' },
+  { number: '01', title: 'Baru Sampai', description: 'Bandara, SIM, internet, transportasi awal, dan kebutuhan pertama setelah tiba.', tone: 'light', href: '/panduan#dari-bandara' },
+  { number: '02', title: 'Mau ke Masjidil Haram', description: 'Akses, pintu masuk, rute, waktu, dan fasilitas sekitar Haram.', tone: 'image', image: '/images/makkah-editorial.jpg', href: '/makkah?category=Haram#explorer' },
+  { number: '03', title: 'Cari Transportasi', description: 'Bus, kereta, taksi, rute umum, dan pilihan mobilitas.', tone: 'dark', href: '/hari-ini?category=Transportasi' },
+  { number: '04', title: 'Lagi Cari Makan', description: 'Kuliner lokal, tempat makan, harga, dan rekomendasi sekitar.', tone: 'gold', href: '/hari-ini?category=Kuliner' },
+  { number: '05', title: 'Persiapan Umrah', description: 'Miqat, ihram, perlengkapan, manasik, dan hal yang perlu disiapkan.', tone: 'sage', href: '/panduan#persiapan-dasar' },
+  { number: '06', title: 'Sedang di Madinah', description: 'Nabawi, transportasi, ziarah, kuliner, dan kehidupan sekitar Madinah.', tone: 'image', image: '/images/madinah-editorial.jpg', href: '/madinah' },
 ]
 </script>
 
@@ -19,14 +19,15 @@ const situations = [
       </div>
 
       <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-12">
-        <article
+        <NuxtLink
           v-for="(item, index) in situations"
           :key="item.number"
-          class="group relative min-h-[230px] overflow-hidden rounded-3xl border p-6 transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-1 hover:shadow-[0_14px_30px_-20px_rgba(45,53,31,0.6)] lg:p-8"
+          class="group relative min-h-[230px] cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold overflow-hidden rounded-3xl border p-6 transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-1 hover:shadow-[0_14px_30px_-20px_rgba(45,53,31,0.6)] lg:p-8"
           :class="[
             index === 0 ? 'lg:col-span-5' : index === 1 ? 'lg:col-span-7' : index === 2 || index === 3 ? 'lg:col-span-4' : index === 4 ? 'lg:col-span-4 lg:row-span-2 lg:min-h-[480px]' : 'lg:col-span-8',
             item.tone === 'dark' ? 'border-sht-olive bg-sht-olive text-sht-off-white' : item.tone === 'gold' ? 'border-sht-gold/40 bg-sht-gold/25 text-sht-olive-dark' : item.tone === 'sage' ? 'border-sht-sage/35 bg-sht-sage/20 text-sht-olive-dark' : item.tone === 'image' ? 'border-sht-olive-dark bg-sht-olive-dark text-white' : 'border-sht-stone bg-sht-off-white text-sht-olive-dark',
           ]"
+          :to="item.href"
           :style="item.image ? { backgroundImage: `linear-gradient(110deg, rgba(45,53,31,.88), rgba(45,53,31,.25)), url(${item.image})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined"
         >
           <span class="pointer-events-none absolute right-5 top-0 select-none font-sans text-[11rem] font-bold leading-none tracking-[-0.08em] opacity-[0.12]" :class="item.tone === 'dark' || item.tone === 'image' ? 'text-white' : 'text-sht-olive-dark'" aria-hidden="true">{{ item.number }}</span>
@@ -38,7 +39,7 @@ const situations = [
               <span class="mt-5 block text-sm font-semibold opacity-75 transition-transform duration-300 group-hover:translate-x-1">Jelajahi <span aria-hidden="true">→</span></span>
             </div>
           </div>
-        </article>
+        </NuxtLink>
       </div>
     </div>
   </section>
