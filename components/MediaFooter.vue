@@ -44,7 +44,7 @@ function toggleGroup(group: string) { accordionOpen.value = accordionOpen.value 
         </div>
       </div>
 
-      <div class="flex flex-col gap-4 border-t border-sht-off-white/15 py-7 text-xs text-sht-off-white/50 sm:flex-row sm:items-center sm:justify-between"><div class="flex flex-wrap gap-x-4 gap-y-2"><span>© 2026 Sudut Haramain</span><span>Tentang Kami</span><span>Kebijakan Privasi</span><span>Syarat &amp; Ketentuan</span></div><p class="text-sht-off-white/60">Dari Makkah, untuk jamaah Indonesia.</p></div>
+      <div class="flex flex-col gap-4 border-t border-sht-off-white/15 py-7 text-xs text-sht-off-white/50 sm:flex-row sm:items-center sm:justify-between"><div class="flex flex-wrap gap-x-4 gap-y-2"><span>© 2026 Sudut Haramain</span><NuxtLink to="/tentang-kami" class="hover:text-sht-off-white">Tentang Kami</NuxtLink><NuxtLink to="/kebijakan-privasi" class="hover:text-sht-off-white">Kebijakan Privasi</NuxtLink><NuxtLink to="/syarat-ketentuan" class="hover:text-sht-off-white">Syarat &amp; Ketentuan</NuxtLink></div><p class="text-sht-off-white/60">Dari Makkah, untuk jamaah Indonesia.</p></div>
     </div>
   </footer>
 </template>
