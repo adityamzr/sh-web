@@ -15,31 +15,41 @@ export type MediaGalleryItem={
   orientation:'portrait'|'landscape'
 }
 
-function normalize(r:any):MediaGalleryItem{
-  return {
-    id:r.id,
-    src:r.imageUrl||'',
-    alt:r.altText||r.title||r.locationName||'Visual Haramain',
-    title:r.title||r.locationName||'Visual Haramain',
-    city:String(r.city||'makkah').toLowerCase() as 'makkah'|'madinah',
-    locationName:r.locationName||r.title||'',
-    category:String(r.category||'').toLowerCase().replace(/^./,x=>x.toUpperCase()),
-    tags:Array.isArray(r.tags)?r.tags:[],
-    date:r.publishedAt?new Date(r.publishedAt).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}):'—',
-    description:r.description||'',
-    mapUrl:r.googleMapsUrl,
-    priority:Number(r.priority||0),
-    publishedAt:r.publishedAt,
-    orientation:'landscape'
+function normalize(r:any):MediaGalleryItem | null{
+  try {
+    if (!r || typeof r !== 'object') return null
+    return {
+      id:r.id,
+      src:r.imageUrl||'',
+      alt:r.altText||r.title||r.locationName||'Visual Haramain',
+      title:r.title||r.locationName||'Visual Haramain',
+      city:String(r.city||'makkah').toLowerCase() as 'makkah'|'madinah',
+      locationName:r.locationName||r.title||'',
+      category:String(r.category||'').toLowerCase().replace(/^./,x=>x.toUpperCase()),
+      tags:Array.isArray(r.tags)?r.tags:[],
+      date:r.publishedAt?new Date(r.publishedAt).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}):'—',
+      description:r.description||'',
+      mapUrl:r.googleMapsUrl,
+      priority:Number(r.priority||0),
+      publishedAt:r.publishedAt,
+      orientation:'landscape'
+    }
+  } catch {
+    return null
   }
 }
 
-export async function fetchMediaGallery(query:Record<string,unknown>={}){
-  const r=await $fetch<{data:any[]}>('/api/media/gallery',{query:{limit:100,...query}});
-  return (r.data||[]).map(normalize)
+export async function fetchMediaGallery(query:Record<string,unknown>={}): Promise<MediaGalleryItem[]>{
+  try {
+    const r=await $fetch<{data:any[]}>('/api/media/gallery',{query:{limit:100,...query}});
+    return (r.data||[]).map(normalize).filter(Boolean) as MediaGalleryItem[]
+  } catch (e) {
+    console.warn('[useMediaGallery] fetch failed', e)
+    return []
+  }
 }
 
 export async function useMediaGallery(query:Record<string,unknown>={}){
-  const {data,pending,error}=await useAsyncData(`media-gallery-${JSON.stringify(query)}`,()=>fetchMediaGallery(query),{default:()=>[]});
+  const {data,pending,error}=await useAsyncData(`media-gallery-${JSON.stringify(query)}`,()=>fetchMediaGallery(query),{default:()=>[] as MediaGalleryItem[]});
   return {items:data,pending,error}
 }

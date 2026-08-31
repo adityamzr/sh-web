@@ -3,9 +3,10 @@ export async function useMediaPageSettings(page:string){
     try{
       const r=await $fetch<{data:any}>(`/api/media/page-settings/${encodeURIComponent(page)}`);
       return r.data
-    }catch{
+    }catch(e){
+      console.warn(`[useMediaPageSettings] ${page} fetch failed`, e)
       return null
     }
-  });
+  }, { default: () => null });
   return {settings:data,pending,error}
 }
