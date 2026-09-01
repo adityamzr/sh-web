@@ -1,3 +1,4 @@
+import { mediaCacheKey, formatMediaDate, translate, type SupportedLocale } from '~/shared/localization'
 export type MediaGalleryItem={
   id:number;
   src:string;
@@ -15,31 +16,32 @@ export type MediaGalleryItem={
   orientation:'portrait'|'landscape'
 }
 
-function normalize(r:any):MediaGalleryItem{
+export function normalizeGallery(r:any, locale: SupportedLocale):MediaGalleryItem{
   return {
     id:r.id,
     src:r.imageUrl||'',
-    alt:r.altText||r.title||r.locationName||'Visual Haramain',
-    title:r.title||r.locationName||'Visual Haramain',
+    alt:r.altText||r.title||r.locationName||translate(locale, 'Visual Haramain'),
+    title:r.title||r.locationName||translate(locale, 'Visual Haramain'),
     city:String(r.city||'makkah').toLowerCase() as 'makkah'|'madinah',
     locationName:r.locationName||r.title||'',
     category:String(r.category||'').toLowerCase().replace(/^./,x=>x.toUpperCase()),
     tags:Array.isArray(r.tags)?r.tags:[],
-    date:r.publishedAt?new Date(r.publishedAt).toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}):'—',
+    date:formatMediaDate(r.publishedAt, locale),
     description:r.description||'',
-    mapUrl:r.googleMapsUrl,
+    mapUrl:r.googleMapsUrl || (r.coordinates ? `https://www.google.com/maps/search/?api=1&query=${r.coordinates.latitude},${r.coordinates.longitude}` : undefined),
     priority:Number(r.priority||0),
     publishedAt:r.publishedAt,
     orientation:'landscape'
   }
 }
 
-export async function fetchMediaGallery(query:Record<string,unknown>={}){
-  const r=await $fetch<{data:any[]}>('/api/media/gallery',{query:{limit:100,...query}});
-  return (r.data||[]).map(normalize)
+export async function fetchMediaGallery(query:Record<string,unknown>={}, locale: SupportedLocale = 'id'){
+  const r=await $fetch<{data:any[]}>('/api/media/gallery',{query:{limit:100,...query,locale}});
+  return (r.data||[]).map(row => normalizeGallery(row, locale))
 }
 
 export async function useMediaGallery(query:Record<string,unknown>={}){
-  const {data,pending,error}=await useAsyncData(`media-gallery-${JSON.stringify(query)}`,()=>fetchMediaGallery(query),{default:()=>[]});
+  const {locale}=useLocale()
+  const {data,pending,error}=await useAsyncData(computed(()=>mediaCacheKey('gallery',locale.value,query)),()=>fetchMediaGallery(query,locale.value),{default:()=>[]});
   return {items:data,pending,error}
 }

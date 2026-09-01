@@ -5,5 +5,5 @@ export default defineEventHandler(async (event) => {
   if (!slug) {
     throw createError({ statusCode: 400, statusMessage: 'Slug is required' })
   }
-  return await mediaApiFetch(`/articles/${encodeURIComponent(slug)}`)
+  return await mediaApiFetch(`/articles/${encodeURIComponent(slug)}`, { query: getQuery(event) })
 })

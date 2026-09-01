@@ -1,4 +1,6 @@
+import { mediaCacheKey, type SupportedLocale } from '~/shared/localization'
 import type { MediaArticleBlock } from './useMediaArticles'
+import { takeMediaPreload } from '~/composables/useMediaPreload'
 
 export type MediaGuide={
   id:number;
@@ -28,12 +30,14 @@ function normalize(r:any):MediaGuide{
   }
 }
 
-export async function fetchMediaGuides(){
-  const r=await $fetch<{data:any[]}>('/api/media/guides',{query:{limit:100}});
+export async function fetchMediaGuides(locale: SupportedLocale = 'id'){
+  const r=await $fetch<{data:any[]}>('/api/media/guides',{query:{limit:100,locale}});
   return (r.data||[]).map(normalize).sort((a,b)=>groupOrder.indexOf(a.group)-groupOrder.indexOf(b.group)||a.sortOrder-b.sortOrder)
 }
 
 export async function useMediaGuides(){
-  const {data,pending,error}=await useAsyncData('media-guides',fetchMediaGuides,{default:()=>[]});
+  const {locale}=useLocale()
+  const key=computed(()=>mediaCacheKey('guides',locale.value));
+  const {data,pending,error}=await useAsyncData<MediaGuide[]>(key,async()=>{const preload=takeMediaPreload<MediaGuide[]>(key.value);return preload.used?preload.data||[]:fetchMediaGuides(locale.value)},{default:()=>[]});
   return {guides:data,pending,error,groupOrder}
 }

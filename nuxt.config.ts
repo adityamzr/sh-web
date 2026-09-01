@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss'],
   runtimeConfig: {
     apiBaseUrl: process.env.NUXT_API_BASE_URL || '',
-    public: {},
+    public: { siteUrl: 'https://sudutharamain.id' },
   },
   tailwindcss: { cssPath: '~/assets/css/main.css' },
   app: {
@@ -21,4 +21,16 @@ export default defineNuxtConfig({
     },
   },
   typescript: { strict: true, typeCheck: true },
+  hooks: {
+    'pages:extend'(pages) {
+      // Reuse each page implementation while keeping distinct locale route names.
+      const localize = (page: typeof pages[number], root = true): typeof pages[number] => ({
+        ...page,
+        name: `${page.name}-en`,
+        path: root ? (page.path === '/' ? '/en' : `/en${page.path}`) : page.path,
+        children: page.children?.map(child => localize(child, false)),
+      })
+      pages.push(...pages.map(page => localize(page)))
+    },
+  },
 })

@@ -1,7 +1,9 @@
 <script setup lang="ts">
+const { t, localePath, locale, basePath } = useLocale()
+
 useSeoMeta({
-  title: 'Sudut Haramain — Media Digital & Informasi Praktis Makkah–Madinah',
-  description: 'Informasi praktis Makkah dan Madinah, panduan perjalanan, kultur lokal, literasi ibadah, navigasi, dan pembaruan kondisi langsung dari Sudut Haramain.',
+  title: () => t('Sudut Haramain — Media Digital & Informasi Praktis Makkah–Madinah'),
+  description: () => t('Informasi praktis Makkah dan Madinah, panduan perjalanan, kultur lokal, literasi ibadah, navigasi, dan pembaruan kondisi langsung dari Sudut Haramain.'),
 })
 
 const localNotes = ['Apa yang biasanya luput dari jamaah pertama kali?', 'Membaca ritme kota dari sudut pandang orang yang tinggal di sini.', 'Catatan kecil tentang bahasa, kebiasaan, dan cara bergerak.']

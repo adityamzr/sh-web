@@ -1,3 +1,4 @@
+import { mediaCacheKey, type SupportedLocale } from '~/shared/localization'
 export type MediaLocation={
   id:string;
   name:string;
@@ -33,12 +34,13 @@ function normalize(r:any):MediaLocation{
   }
 }
 
-export async function fetchMediaLocations(city:string){
-  const r=await $fetch<{data:any[]}>('/api/media/locations',{query:{city,limit:100}});
+export async function fetchMediaLocations(city:string, locale: SupportedLocale = 'id'){
+  const r=await $fetch<{data:any[]}>('/api/media/locations',{query:{city,limit:100,locale}});
   return (r.data||[]).map(normalize).sort((a,b)=>a.sortOrder-b.sortOrder)
 }
 
 export async function useMediaLocations(city:string){
-  const {data,pending,error}=await useAsyncData(`media-locations-${city}`,()=>fetchMediaLocations(city),{default:()=>[]});
+  const {locale}=useLocale()
+  const {data,pending,error}=await useAsyncData(computed(()=>mediaCacheKey('locations',locale.value,{city})),()=>fetchMediaLocations(city,locale.value),{default:()=>[]});
   return {locations:data,pending,error}
 }

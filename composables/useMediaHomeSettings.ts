@@ -1,4 +1,7 @@
+import { mediaCacheKey, type SupportedLocale } from '~/shared/localization'
 export type MediaHomeSettings={
+  translationAvailable?:boolean;
+  availableLocales?:SupportedLocale[];
   heroImageUrl:string|null;
   heroHeadline:string|null;
   heroSubheadline:string|null;
@@ -8,9 +11,9 @@ export type MediaHomeSettings={
   editorialArticleIds:number[]
 }
 
-export async function fetchMediaHomeSettings(){
+export async function fetchMediaHomeSettings(locale: SupportedLocale = 'id'){
   try{
-    const r=await $fetch<{data:MediaHomeSettings}>('/api/media/page-settings/home');
+    const r=await $fetch<{data:MediaHomeSettings}>('/api/media/page-settings/home',{query:{locale}});
     return r.data
   }catch{
     return null
@@ -18,6 +21,7 @@ export async function fetchMediaHomeSettings(){
 }
 
 export async function useMediaHomeSettings(){
-  const {data,pending,error}=await useAsyncData('media-home-settings',fetchMediaHomeSettings,{default:()=>null});
+  const {locale}=useLocale()
+  const {data,pending,error}=await useAsyncData(computed(()=>mediaCacheKey('home-settings',locale.value)),()=>fetchMediaHomeSettings(locale.value),{default:()=>null});
   return {settings:data,pending,error}
 }
