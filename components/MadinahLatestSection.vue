@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { onImageFallback } = useImageError()
 import { formatMediaDate } from "~/shared/localization"
 const { t, localePath, locale, basePath } = useLocale()
 
@@ -20,7 +21,7 @@ const { articles: latestArticles } = await useMediaArticles({ city: 'MADINAH', l
 
       <div class="mt-10 hidden gap-x-5 gap-y-12 md:grid md:grid-cols-2 lg:mt-12 lg:grid-cols-4">
         <article v-for="article in latestArticles" :key="article.id" class="group min-w-0 snap-start md:flex md:flex-col"><NuxtLink :to="localePath(`/artikel/${article.slug}`)" class="block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold">
-          <div class="overflow-hidden rounded-2xl bg-sht-stone"><img :src="article.image" :alt="article.imageAlt" loading="lazy" class="aspect-[4/3] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]" /></div>
+          <div class="overflow-hidden rounded-2xl bg-sht-stone"><img :src="article.image" :alt="article.imageAlt" loading="lazy" class="aspect-[4/3] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]" @error="onImageFallback" /></div>
           <p class="mt-4 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-sht-sage">{{ t(article.category) }} <span class="text-sht-stone">·</span> <span class="text-sht-charcoal/50">{{ formatMediaDate(article.publishedAt, locale) }}</span></p>
           <h3 class="mt-2 font-hero text-xl font-bold not-italic leading-snug text-sht-olive-dark transition-colors duration-200 group-hover:text-sht-olive sm:text-2xl">{{ article.title }}</h3>
           <span class="mt-4 inline-flex text-sm font-semibold text-sht-olive transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">→</span>
@@ -30,7 +31,7 @@ const { articles: latestArticles } = await useMediaArticles({ city: 'MADINAH', l
       <div class="-mx-5 mt-10 overflow-x-auto px-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:hidden" :aria-label="t('Artikel terbaru dari Madinah')">
         <div class="flex w-max snap-x snap-mandatory gap-4">
           <article v-for="article in latestArticles" :key="`mobile-${article.id}`" class="group w-[82vw] max-w-[21rem] flex-none snap-start"><NuxtLink :to="localePath(`/artikel/${article.slug}`)" class="block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold">
-            <div class="overflow-hidden rounded-2xl bg-sht-stone"><img :src="article.image" :alt="article.imageAlt" loading="lazy" class="aspect-[4/3] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]" /></div>
+            <div class="overflow-hidden rounded-2xl bg-sht-stone"><img :src="article.image" :alt="article.imageAlt" loading="lazy" class="aspect-[4/3] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]" @error="onImageFallback" /></div>
             <p class="mt-4 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-sht-sage">{{ t(article.category) }} <span class="text-sht-stone">·</span> <span class="text-sht-charcoal/50">{{ formatMediaDate(article.publishedAt, locale) }}</span></p>
             <h3 class="mt-2 font-hero text-xl font-bold not-italic leading-snug text-sht-olive-dark">{{ article.title }}</h3>
             <span class="mt-4 inline-flex text-sm font-semibold text-sht-olive" aria-hidden="true">→</span>

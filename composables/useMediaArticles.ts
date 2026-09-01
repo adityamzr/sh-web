@@ -4,7 +4,8 @@ import { takeMediaPreload } from '~/composables/useMediaPreload'
 export type MediaArticleBlock = { type: string; level?: 2 | 3; text?: string; ordered?: boolean; items?: string[]; src?: string; alt?: string; caption?: string }
 export type MediaArticle = { availableLocales?: SupportedLocale[]; localizedSlugs?: Partial<Record<SupportedLocale, string>>; id: number; slug: string; title: string; excerpt: string; body: MediaArticleBlock[]; content: MediaArticleBlock[]; references?: string[]; type: 'article'|'update'|'practical'; city: 'makkah'|'madinah'|'general'; category: string; tags: string[]; contentType: 'article'|'update'|'practical'; priority: number; publishedAt: string | null; updatedAt: string | null; image: string; imageAlt: string; readingTime: string; seoTitle?: string|null; seoDescription?: string|null; ogImage?: string|null }
 
-export function normalizeArticle(row:any, locale: SupportedLocale): MediaArticle {
+export function normalizeArticle(row:any, locale: SupportedLocale): MediaArticle | null {
+  if (!row || typeof row !== 'object' || !Number.isFinite(Number(row.id)) || typeof row.slug !== 'string' || typeof row.title !== 'string') return null
   const body=Array.isArray(row.body)?row.body:[];
   const text=body.map((b:any)=>b?.text||b?.items?.join(' ')||'').join(' ');
   const minutes=Math.max(1,Math.ceil((text.length||row.excerpt?.length||0)/900));
@@ -36,12 +37,14 @@ export function normalizeArticle(row:any, locale: SupportedLocale): MediaArticle
 // Uses internal Nuxt server proxy -> private NUXT_API_BASE_URL
 export async function fetchMediaArticles(query:Record<string,unknown>={}, locale: SupportedLocale = 'id') {
   const response=await $fetch<{data:any[]}>('/api/media/articles',{query:{...query,locale}});
-  return (response.data||[]).map(row => normalizeArticle(row, locale))
+  return (response.data||[]).map(row => normalizeArticle(row, locale)).filter((row): row is MediaArticle => Boolean(row))
 }
 
 export async function fetchMediaArticle(slug:string, locale: SupportedLocale = 'id') {
   const response=await $fetch<{data:any}>(`/api/media/articles/${encodeURIComponent(slug)}`, { query: { locale } });
-  return normalizeArticle(response.data, locale)
+  const article = normalizeArticle(response.data, locale)
+  if (!article) throw createError({ statusCode: 502, statusMessage: 'Invalid Media article response' })
+  return article
 }
 
 export async function useMediaArticles(query: MaybeRefOrGetter<Record<string, unknown>> = {}) {

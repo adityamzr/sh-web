@@ -23,6 +23,7 @@ const isServicesOpen = ref(false);
 const isSearchOpen = ref(false);
 const isHome = computed(() => basePath.value === "/");
 const searchTrigger = ref<HTMLButtonElement | null>(null);
+const menuTrigger = ref<HTMLButtonElement | null>(null);
 const links = [
   { key: "hari-ini", label: "Sorotan", to: "/hari-ini", icon: Newspaper },
   { key: "makkah", label: "Makkah", to: "/makkah", icon: MapPinned },
@@ -75,6 +76,17 @@ function closeSearch() {
   isSearchOpen.value = false;
   nextTick(() => searchTrigger.value?.focus());
 }
+function closeMobileMenu(restoreFocus = false) {
+  isOpen.value = false;
+  isServicesOpen.value = false;
+  if (restoreFocus) nextTick(() => menuTrigger.value?.focus());
+}
+function handleEscape(event: KeyboardEvent) {
+  if (event.key !== 'Escape') return;
+  if (isSearchOpen.value) closeSearch();
+  else if (isOpen.value) closeMobileMenu(true);
+  else isServicesOpen.value = false;
+}
 watch(() => route.path, () => {
   isOpen.value = false
   isServicesOpen.value = false
@@ -83,9 +95,11 @@ watch(() => route.path, () => {
 onMounted(() => {
   updateScroll();
   window.addEventListener("scroll", updateScroll, { passive: true });
+  window.addEventListener("keydown", handleEscape);
 });
 onBeforeUnmount(() => {
   window.removeEventListener("scroll", updateScroll);
+  window.removeEventListener("keydown", handleEscape);
   if (servicesCloseTimer) clearTimeout(servicesCloseTimer);
 });
 </script>
@@ -243,6 +257,7 @@ onBeforeUnmount(() => {
         >
           <Search class="h-5 w-5" aria-hidden="true" /></button
         ><button
+          ref="menuTrigger"
           type="button"
           class="inline-flex h-11 w-11 items-center justify-center rounded-full hover:bg-white/10"
           :aria-expanded="isOpen"
@@ -322,19 +337,22 @@ onBeforeUnmount(() => {
             <a
               v-for="unit in serviceUnits"
               :key="unit.name"
-              :href="localePath(unit.href)"
-              :target="unit.href.startsWith('http') ? '_blank' : undefined"
+              :href="unit.id === 1 ? localePath(unit.href) : undefined"
+              :target="unit.id === 1 && unit.href.startsWith('http') ? '_blank' : undefined"
               :rel="
-                unit.href.startsWith('http') ? 'noopener noreferrer' : undefined
+                unit.id === 1 && unit.href.startsWith('http') ? 'noopener noreferrer' : undefined
               "
+              :aria-disabled="unit.id !== 1"
+              :tabindex="unit.id !== 1 ? -1 : undefined"
               class="block border-b border-sht-stone/60 py-3 last:border-0"
-              @click="isOpen = false"
+              :class="unit.id !== 1 ? 'cursor-not-allowed opacity-60' : ''"
+              @click="unit.id !== 1 ? $event.preventDefault() : closeMobileMenu()"
               ><p class="font-sans text-base text-sht-olive-dark">
                 {{ t(unit.name) }}
               </p>
               <p class="mt-1 text-xs text-sht-charcoal/60">
                 {{ t(unit.subtitle) }}
-              </p></a
+              </p><span v-if="unit.id !== 1" class="mt-2 inline-flex rounded-full border border-sht-gold/50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-sht-olive">{{ t('Segera Hadir') }}</span></a
             >
           </div>
         </div>

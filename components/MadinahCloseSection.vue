@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { onImageFallback } = useImageError()
 const { t, localePath, locale, basePath } = useLocale()
 
 import { useMediaArticles } from '~/composables/useMediaArticles'
@@ -14,7 +15,7 @@ const variants=['primary','image','text','wide','daily']; const stories=computed
 
       <div class="mt-12 grid gap-4 lg:grid-cols-12 lg:grid-rows-[260px_260px_190px]">
         <NuxtLink v-for="story in stories" :to="localePath(`/artikel/${story.slug}`)" :key="story.key" class="group relative min-h-[260px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold min-w-0 snap-start overflow-hidden rounded-3xl border border-sht-stone p-6 transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-1 hover:shadow-[0_16px_34px_-24px_rgba(45,53,31,0.55)] sm:p-8" :class="[{ 'bg-sht-olive text-sht-off-white lg:col-span-7 lg:row-span-2': story.variant === 'primary', 'text-white lg:col-span-5 lg:col-start-8 lg:row-start-1': story.variant === 'image', 'bg-sht-gold/20 text-sht-olive-dark lg:col-span-5 lg:col-start-8 lg:row-start-2': story.variant === 'text', 'bg-sht-sage/20 text-sht-olive-dark lg:col-span-5 lg:col-start-8 lg:row-start-3': story.variant === 'daily', 'text-white lg:col-span-7 lg:row-start-3': story.variant === 'wide' }, story.variant !== 'primary' ? 'hidden lg:block' : '']">
-          <template v-if="story.image"><img :src="story.image" :alt="story.alt" class="absolute inset-0 h-full w-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-[1.02]" /><div class="absolute inset-0 bg-gradient-to-t from-sht-olive-dark/90 via-sht-olive/35 to-transparent" aria-hidden="true" /></template>
+          <template v-if="story.image"><img :src="story.image" :alt="story.alt" class="absolute inset-0 h-full w-full object-cover opacity-60 transition-transform duration-700 group-hover:scale-[1.02]" @error="onImageFallback" /><div class="absolute inset-0 bg-gradient-to-t from-sht-olive-dark/90 via-sht-olive/35 to-transparent" aria-hidden="true" /></template>
           <div class="relative flex h-full min-h-[210px] flex-col justify-between"><p class="text-xs font-semibold uppercase tracking-[0.18em]" :class="story.image ? 'text-sht-gold' : 'text-sht-sage'">{{ t(story.category) }}</p><div><h3 class="max-w-2xl font-hero text-2xl font-bold not-italic leading-tight sm:text-3xl" :class="story.variant === 'primary' ? 'lg:text-4xl' : ''">{{ story.title }}</h3><p v-if="story.summary" class="mt-3 max-w-xl text-sm leading-relaxed" :class="story.image ? 'text-sht-off-white/75' : 'text-sht-charcoal/70'">{{ story.summary }}</p><span class="mt-5 inline-flex text-sm opacity-70" :class="story.image ? 'text-sht-gold' : 'text-sht-olive'">{{ t('Baca catatan') }}</span></div></div>
         </NuxtLink>
       </div>

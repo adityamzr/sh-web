@@ -16,7 +16,8 @@ export type MediaGalleryItem={
   orientation:'portrait'|'landscape'
 }
 
-export function normalizeGallery(r:any, locale: SupportedLocale):MediaGalleryItem{
+export function normalizeGallery(r:any, locale: SupportedLocale):MediaGalleryItem | null{
+  if (!r || typeof r !== 'object' || !Number.isFinite(Number(r.id))) return null
   return {
     id:r.id,
     src:r.imageUrl||'',
@@ -37,7 +38,7 @@ export function normalizeGallery(r:any, locale: SupportedLocale):MediaGalleryIte
 
 export async function fetchMediaGallery(query:Record<string,unknown>={}, locale: SupportedLocale = 'id'){
   const r=await $fetch<{data:any[]}>('/api/media/gallery',{query:{limit:100,...query,locale}});
-  return (r.data||[]).map(row => normalizeGallery(row, locale))
+  return (r.data||[]).map(row => normalizeGallery(row, locale)).filter((row): row is MediaGalleryItem => Boolean(row))
 }
 
 export async function useMediaGallery(query:Record<string,unknown>={}){

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { onImageFallback } = useImageError()
 const { t, localePath, locale, basePath } = useLocale()
 
 import { useMediaArticles, formatMediaArticleDate } from '~/composables/useMediaArticles'
@@ -21,7 +22,7 @@ const latestEntries = computed(() => articles.value.map(a => ({ category: a.cate
       <div class="-mx-5 mt-10 overflow-x-auto snap-x snap-mandatory scroll-px-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:mx-0 lg:overflow-visible">
         <div class="flex w-max gap-5 px-5 lg:grid lg:w-auto lg:grid-cols-4 lg:gap-x-6 lg:px-0">
         <NuxtLink v-for="entry in latestEntries" :key="entry.title" :to="localePath(`/artikel/${entry.slug}`)" class="group w-[calc(100vw-4.5rem)] flex-none snap-start sm:w-[calc(100vw-6rem)] lg:w-auto lg:min-w-0">
-          <div class="aspect-[4/3] overflow-hidden rounded-2xl bg-sht-stone"><img :src="entry.image" :alt="entry.alt" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]" /></div>
+          <div class="aspect-[4/3] overflow-hidden rounded-2xl bg-sht-stone"><img :src="entry.image" :alt="entry.alt" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]" @error="onImageFallback" /></div>
           <div class="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-sht-sage"><span>{{ t(entry.category) }}</span><span aria-hidden="true">·</span><span class="text-sht-charcoal/45">{{ t(entry.time) }}</span></div>
           <h3 class="mt-2 text-xl font-hero font-bold not-italic leading-snug text-sht-olive-dark sm:text-2xl lg:text-xl">{{ entry.title }}</h3>
 

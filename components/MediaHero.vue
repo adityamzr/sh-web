@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { onImageFallback } = useImageError()
 const { t, localePath, locale, basePath } = useLocale()
 
 const { settings: homeSettings } = await useMediaHomeSettings()
@@ -54,7 +55,7 @@ onBeforeUnmount(() => {
 
 <template>
   <section class="relative isolate overflow-hidden bg-sht-olive-dark text-sht-off-white">
-    <img  :src="heroImage" :alt="t('Suasana Makkah dari kejauhan')" class="absolute inset-0 -z-20 h-full w-full object-cover object-center" />
+    <img  :src="heroImage" :alt="t('Suasana Makkah dari kejauhan')" class="absolute inset-0 -z-20 h-full w-full object-cover object-center" @error="onImageFallback" />
     <div class="absolute inset-0 -z-10 bg-sht-olive-dark/55" aria-hidden="true" />
     <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_72%_42%,rgba(127,137,104,0.42),transparent_38%),linear-gradient(90deg,rgba(45,53,31,0.93)_0%,rgba(45,53,31,0.68)_42%,rgba(58,68,40,0.35)_100%)]" aria-hidden="true" />
     <div class="absolute inset-x-0 top-0 -z-10 h-48 bg-gradient-to-b from-sht-olive-dark/40 to-transparent" aria-hidden="true" />

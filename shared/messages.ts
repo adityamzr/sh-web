@@ -1,5 +1,10 @@
 // Indonesian source UI copy stays unchanged. Editorial content comes from the localized API.
 export const englishMessages: Record<string, string> = {
+  "Gangguan sementara": "Temporary issue",
+  "Belum ada konten.": "No content is available yet.",
+  "Konten belum dapat dimuat.": "Content could not be loaded.",
+  "Silakan coba lagi dalam beberapa saat.": "Please try again in a moment.",
+  "Coba lagi": "Try again",
   "Ada yang Bisa Kami Bantu?": "How Can We Help?",
   "(opsional)": "(optional)",
   "Apa yang berubah? *": "What has changed? *",

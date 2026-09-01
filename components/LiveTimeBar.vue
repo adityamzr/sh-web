@@ -6,17 +6,25 @@ const wibTime = ref('--:--')
 let timer: ReturnType<typeof setInterval> | null = null
 
 function formatTime(timeZone: string) {
-  return new Intl.DateTimeFormat('en-GB', {
-    timeZone,
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  }).format(new Date())
+  try {
+    return new Intl.DateTimeFormat('en-GB', {
+      timeZone,
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    }).format(new Date())
+  } catch {
+    return '--:--'
+  }
 }
 
 function updateTime() {
-  makkahTime.value = formatTime('Asia/Riyadh')
-  wibTime.value = formatTime('Asia/Jakarta')
+  try {
+    makkahTime.value = formatTime('Asia/Riyadh')
+    wibTime.value = formatTime('Asia/Jakarta')
+  } catch {
+    // graceful fallback if Intl fails
+  }
 }
 
 const accessibleLabel = computed(() => t('Waktu Makkah {makkah}, Waktu Indonesia Barat {wib}', { makkah: makkahTime.value, wib: wibTime.value }))

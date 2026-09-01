@@ -16,7 +16,8 @@ export type MediaGuide={
 
 const groupOrder=['MULAI DI SINI','KEHIDUPAN DI HARAMAIN','TRANSPORTASI','HOTEL','MAKKAH','MADINAH','PERJALANAN','IBADAH']
 
-function normalize(r:any):MediaGuide{
+function normalize(r:any):MediaGuide | null{
+  if (!r || typeof r !== 'object' || !Number.isFinite(Number(r.id)) || typeof r.slug !== 'string' || typeof r.title !== 'string') return null
   return {
     id:r.id,
     title:r.title,
@@ -32,7 +33,7 @@ function normalize(r:any):MediaGuide{
 
 export async function fetchMediaGuides(locale: SupportedLocale = 'id'){
   const r=await $fetch<{data:any[]}>('/api/media/guides',{query:{limit:100,locale}});
-  return (r.data||[]).map(normalize).sort((a,b)=>groupOrder.indexOf(a.group)-groupOrder.indexOf(b.group)||a.sortOrder-b.sortOrder)
+  return (r.data||[]).map(normalize).filter((guide): guide is MediaGuide => Boolean(guide)).sort((a,b)=>groupOrder.indexOf(a.group)-groupOrder.indexOf(b.group)||a.sortOrder-b.sortOrder)
 }
 
 export async function useMediaGuides(){
