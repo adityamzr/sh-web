@@ -5,5 +5,5 @@ export default defineEventHandler(async (event) => {
   if (!page) {
     throw createError({ statusCode: 400, statusMessage: 'Page key is required' })
   }
-  return await mediaApiFetch(`/page-settings/${encodeURIComponent(page)}`)
+  return await mediaApiFetch(`/page-settings/${encodeURIComponent(page)}`, { query: getQuery(event) })
 })

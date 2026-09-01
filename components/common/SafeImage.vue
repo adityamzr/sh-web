@@ -15,31 +15,13 @@ const props = withDefaults(defineProps<{
   aspect: '',
 })
 
-const hasError = ref(false)
+const failed = ref(false)
 const loaded = ref(false)
-
-const displaySrc = computed(() => {
-  if (hasError.value) {
-    return props.fallbackSrc || ''
-  }
-  return props.src || props.fallbackSrc || ''
-})
+const currentSrc = ref(props.src || props.fallbackSrc || '')
 
 function onError() {
-  if (!hasError.value && props.fallbackSrc && props.fallbackSrc !== props.src) {
-    // Try fallback first
-    hasError.value = false
-    // If current src is already fallback, mark error
-    if (displaySrc.value === props.fallbackSrc) {
-      hasError.value = true
-    }
-  } else {
-    hasError.value = true
-  }
-  // If fallback also fails, show branded placeholder
-  if (props.src && displaySrc.value === props.fallbackSrc) {
-    // will try fallback, if fails again second error will trigger hasError
-  }
+  if (props.fallbackSrc && currentSrc.value !== props.fallbackSrc) currentSrc.value = props.fallbackSrc
+  else failed.value = true
 }
 
 function onLoad() {
@@ -48,8 +30,9 @@ function onLoad() {
 
 // Reset error when src changes
 watch(() => props.src, () => {
-  hasError.value = false
+  failed.value = false
   loaded.value = false
+  currentSrc.value = props.src || props.fallbackSrc || ''
 })
 </script>
 
@@ -58,8 +41,8 @@ watch(() => props.src, () => {
     :class="['relative overflow-hidden bg-sht-stone', aspect, wrapperClass]"
   >
     <img
-      v-if="displaySrc && !hasError"
-      :src="displaySrc"
+      v-if="currentSrc && !failed"
+      :src="currentSrc"
       :alt="alt"
       :class="['h-full w-full object-cover', imgClass]"
       loading="lazy"

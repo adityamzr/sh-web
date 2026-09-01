@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { t, localePath, locale, basePath } = useLocale()
+
 import {
   BookOpen,
   BriefcaseBusiness,
@@ -19,10 +21,9 @@ const isOpen = ref(false);
 const isScrolled = ref(false);
 const isServicesOpen = ref(false);
 const isSearchOpen = ref(false);
-const isHome = computed(() => route.path === "/");
+const isHome = computed(() => basePath.value === "/");
 const searchTrigger = ref<HTMLButtonElement | null>(null);
-const mobileMenuCloseBtn = ref<HTMLButtonElement | null>(null);
-
+const menuTrigger = ref<HTMLButtonElement | null>(null);
 const links = [
   { key: "hari-ini", label: "Sorotan", to: "/hari-ini", icon: Newspaper },
   { key: "makkah", label: "Makkah", to: "/makkah", icon: MapPinned },
@@ -51,7 +52,6 @@ const serviceUnits = [
   },
 ];
 let servicesCloseTimer: ReturnType<typeof setTimeout> | null = null;
-
 function openServicesMenu() {
   if (servicesCloseTimer) clearTimeout(servicesCloseTimer);
   isServicesOpen.value = true;
@@ -60,13 +60,13 @@ function scheduleServicesClose() {
   if (servicesCloseTimer) clearTimeout(servicesCloseTimer);
   servicesCloseTimer = setTimeout(() => {
     isServicesOpen.value = false;
-  }, 150);
+  }, 100);
 }
 function isNavItemActive(key: string) {
   return (
-    route.path === `/${key}` ||
-    route.path.startsWith(`/${key}/`) ||
-    (route.path === "/" && route.hash === `#${key}`)
+    basePath.value === `/${key}` ||
+    basePath.value.startsWith(`/${key}/`) ||
+    (basePath.value === "/" && route.hash === `#${key}`)
   );
 }
 function updateScroll() {
@@ -76,36 +76,31 @@ function closeSearch() {
   isSearchOpen.value = false;
   nextTick(() => searchTrigger.value?.focus());
 }
-function toggleMobile() {
-  isOpen.value = !isOpen.value;
-  if (isOpen.value) {
-    nextTick(() => mobileMenuCloseBtn.value?.focus());
-  }
+function closeMobileMenu(restoreFocus = false) {
+  isOpen.value = false;
+  isServicesOpen.value = false;
+  if (restoreFocus) nextTick(() => menuTrigger.value?.focus());
 }
-function onKeydown(e: KeyboardEvent) {
-  if (e.key === 'Escape') {
-    if (isOpen.value) {
-      isOpen.value = false;
-    }
-    if (isServicesOpen.value) {
-      isServicesOpen.value = false;
-    }
-  }
+function handleEscape(event: KeyboardEvent) {
+  if (event.key !== 'Escape') return;
+  if (isSearchOpen.value) closeSearch();
+  else if (isOpen.value) closeMobileMenu(true);
+  else isServicesOpen.value = false;
 }
+watch(() => route.path, () => {
+  isOpen.value = false
+  isServicesOpen.value = false
+  isSearchOpen.value = false
+})
 onMounted(() => {
   updateScroll();
   window.addEventListener("scroll", updateScroll, { passive: true });
-  window.addEventListener('keydown', onKeydown);
+  window.addEventListener("keydown", handleEscape);
 });
 onBeforeUnmount(() => {
   window.removeEventListener("scroll", updateScroll);
-  window.removeEventListener('keydown', onKeydown);
+  window.removeEventListener("keydown", handleEscape);
   if (servicesCloseTimer) clearTimeout(servicesCloseTimer);
-});
-
-watch(() => route.path, () => {
-  isOpen.value = false;
-  isServicesOpen.value = false;
 });
 </script>
 
@@ -119,46 +114,46 @@ watch(() => route.path, () => {
     "
   >
     <div
-      class="mx-auto flex h-[72px] max-w-[84rem] items-center justify-between gap-8 px-5 sm:px-6 lg:px-8"
+      class="mx-auto flex h-[72px] max-w-[84rem] items-center justify-between gap-2 px-5 sm:gap-4 lg:gap-6 sm:px-6 lg:px-8"
     >
       <NuxtLink
-        to="/"
-        class="shrink-0 font-heading text-xl font-semibold tracking-wide sm:text-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold"
-        aria-label="Sudut Haramain — Beranda"
+        :to="localePath('/')"
+        class="shrink-0 font-heading text-xl font-semibold tracking-wide sm:text-2xl"
+        :aria-label="t('Sudut Haramain — Beranda')"
       >
-        <img :src="whiteLogo" alt="Sudut Haramain" class="h-12 w-auto" />
+        <img :src="whiteLogo" alt="" class="h-9 w-auto sm:h-12" />
       </NuxtLink>
       <nav
-        class="hidden flex-1 items-center justify-center gap-6 text-[15px] font-medium lg:flex xl:gap-8"
-        aria-label="Navigasi Media"
+        class="hidden flex-1 items-center justify-center gap-4 text-[15px] font-medium lg:flex xl:gap-6"
+        :aria-label="t('Navigasi Media')"
       >
         <template v-for="link in links" :key="link.label"
           ><NuxtLink
             v-if="link.to.startsWith('/')"
-            :to="link.to"
-            class="relative py-2 transition-opacity hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold"
+            :to="localePath(link.to)"
+            class="relative py-2 transition-opacity hover:opacity-100"
             :class="
               isNavItemActive(link.key)
                 ? 'font-semibold opacity-100'
                 : 'opacity-80'
             "
             :aria-current="isNavItemActive(link.key) ? 'page' : undefined"
-            >{{ link.label
+            >{{ t(link.label)
             }}<span
               v-if="isNavItemActive(link.key)"
               class="absolute inset-x-1 -bottom-0.5 h-px bg-sht-gold"
               aria-hidden="true" /></NuxtLink
           ><a
             v-else
-            :href="link.to"
-            class="relative py-2 transition-opacity hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-sht-gold"
+            :href="localePath(link.to)"
+            class="relative py-2 transition-opacity hover:opacity-100"
             :class="
               isNavItemActive(link.key)
                 ? 'font-semibold opacity-100'
                 : 'opacity-80'
             "
             :aria-current="isNavItemActive(link.key) ? 'page' : undefined"
-            >{{ link.label
+            >{{ t(link.label)
             }}<span
               v-if="isNavItemActive(link.key)"
               class="absolute inset-x-1 -bottom-0.5 h-px bg-sht-gold"
@@ -178,9 +173,9 @@ watch(() => route.path, () => {
             aria-controls="media-services-menu"
             :class="isServicesOpen ? 'opacity-100' : 'opacity-80'"
             @click="isServicesOpen = !isServicesOpen"
-            @keydown.escape="isServicesOpen = false"
+            @keydown.esc="isServicesOpen = false"
           >
-            Tentang Kami
+            {{ t('Tentang Kami') }}
             <ChevronDown
               class="h-4 w-4 transition-transform duration-200"
               :class="isServicesOpen ? 'rotate-180' : ''"
@@ -192,43 +187,49 @@ watch(() => route.path, () => {
             id="media-services-menu"
             class="absolute right-0 top-full mt-4 w-72 rounded-2xl border border-sht-stone bg-sht-off-white p-3 text-sht-olive-dark shadow-xl before:absolute before:-top-4 before:left-0 before:right-0 before:h-4"
             role="menu"
-            aria-label="Tentang Kami"
+            :aria-label="t('Tentang Kami')"
           >
             <div>
-              <template v-for="unit in serviceUnits" :key="unit.id">
-                <NuxtLink
-                  v-if="unit.id === 1"
-                  :to="unit.href"
-                  class="block rounded-xl p-3 transition-colors hover:bg-sht-stone/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-sht-gold"
-                  role="menuitem"
-                  @click="isServicesOpen = false"
+              <a
+                v-for="unit in serviceUnits"
+                :key="unit.id"
+                :href="unit.id === 1 ? localePath(unit.href) : undefined"
+                :target="
+                  unit.id === 1 && unit.href.startsWith('http')
+                    ? '_blank'
+                    : undefined
+                "
+                :rel="
+                  unit.id === 1 && unit.href.startsWith('http')
+                    ? 'noopener noreferrer'
+                    : undefined
+                "
+                :aria-disabled="unit.id !== 1"
+                :tabindex="unit.id !== 1 ? -1 : undefined"
+                :class="[
+                  'block rounded-xl p-3 transition-colors',
+                  unit.id === 1
+                    ? 'hover:bg-sht-stone/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-sht-gold'
+                    : 'cursor-not-allowed opacity-60',
+                ]"
+                role="menuitem"
+                @click="unit.id !== 1 && $event.preventDefault()"
+              >
+                <p class="font-semibold">{{ t(unit.name) }}</p>
+                <p class="mt-1 text-xs text-sht-charcoal/60">
+                  {{ t(unit.subtitle) }}
+                </p>
+                <span
+                  v-if="unit.id !== 1"
+                  class="mt-2 inline-flex rounded-full border border-sht-gold/50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-sht-olive"
+                  >{{ t('Segera Hadir') }}</span
                 >
-                  <p class="font-semibold">{{ unit.name }}</p>
-                  <p class="mt-1 text-xs text-sht-charcoal/60">
-                    {{ unit.subtitle }}
-                  </p>
-                </NuxtLink>
-                <div
-                  v-else
-                  class="block rounded-xl p-3 opacity-60 cursor-not-allowed"
-                  role="menuitem"
-                  aria-disabled="true"
-                >
-                  <p class="font-semibold">{{ unit.name }}</p>
-                  <p class="mt-1 text-xs text-sht-charcoal/60">
-                    {{ unit.subtitle }}
-                  </p>
-                  <span
-                    class="mt-2 inline-flex rounded-full border border-sht-gold/50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-sht-olive"
-                    >Segera Hadir</span
-                  >
-                </div>
-              </template>
+              </a>
             </div>
           </div>
         </div>
       </nav>
-      <div class="hidden items-center lg:flex">
+      <div class="hidden items-center gap-2 lg:flex"><MediaLanguageSwitcher />
         <button
           ref="searchTrigger"
           type="button"
@@ -238,30 +239,31 @@ watch(() => route.path, () => {
               : 'border-sht-off-white/30'
           "
           class="inline-flex h-11 w-fit items-center gap-2 rounded-full border px-5 text-left text-sm opacity-85 transition-colors hover:bg-white/10 hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold"
-          aria-label="Cari informasi"
+          :aria-label="t('Cari informasi')"
           @click="isSearchOpen = true"
         >
-          <Search class="h-4 w-4 shrink-0" aria-hidden="true" /><span
-            >Cari informasi</span
+          <Search class="h-4 w-4 shrink-0" aria-hidden="true" /><span class="hidden xl:inline"
+            >{{ t('Cari informasi') }}</span
           >
         </button>
       </div>
-      <div class="flex items-center gap-2 lg:hidden">
+      <div class="flex items-center gap-2 lg:hidden"><MediaLanguageSwitcher />
         <button
+          ref="searchTrigger"
           type="button"
           class="inline-flex h-11 w-11 items-center justify-center rounded-full hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold"
-          aria-label="Cari informasi"
+          :aria-label="t('Cari informasi')"
           @click="isSearchOpen = true"
         >
           <Search class="h-5 w-5" aria-hidden="true" /></button
         ><button
-          ref="mobileMenuCloseBtn"
+          ref="menuTrigger"
           type="button"
-          class="inline-flex h-11 w-11 items-center justify-center rounded-full hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold"
+          class="inline-flex h-11 w-11 items-center justify-center rounded-full hover:bg-white/10"
           :aria-expanded="isOpen"
           aria-controls="media-mobile-menu"
-          :aria-label="isOpen ? 'Tutup menu' : 'Buka menu'"
-          @click="toggleMobile"
+          :aria-label="t('Buka menu')"
+          @click="isOpen = !isOpen"
         >
           <Menu v-if="!isOpen" class="h-6 w-6" aria-hidden="true" /><X
             v-else
@@ -274,16 +276,17 @@ watch(() => route.path, () => {
     <div
       v-show="isOpen"
       id="media-mobile-menu"
-      class="min-h-screen bg-sht-off-white text-sht-olive-dark lg:hidden overflow-y-auto"
+      class="min-h-screen bg-sht-off-white text-sht-olive-dark lg:hidden"
     >
       <nav
         class="mx-auto flex max-w-container flex-col px-5 py-8 sm:px-6"
-        aria-label="Navigasi Media Seluler"
+        :aria-label="t('Navigasi Media Seluler')"
       >
         <template v-for="link in links" :key="link.label"
           ><NuxtLink
-            :to="link.to"
-            class="flex min-h-[64px] items-center gap-4 border-b border-sht-stone px-1 py-4 font-sans text-base font-semibold leading-tight focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold"
+            v-if="link.to.startsWith('/')"
+            :to="localePath(link.to)"
+            class="flex min-h-[64px] items-center gap-4 border-b border-sht-stone px-1 py-4 font-sans text-base font-semibold leading-tight"
             :aria-current="isNavItemActive(link.key) ? 'page' : undefined"
             @click="isOpen = false"
             ><component
@@ -291,13 +294,25 @@ watch(() => route.path, () => {
               class="h-5 w-5 shrink-0 text-sht-olive"
               :stroke-width="1.8"
               aria-hidden="true"
-            /><span>{{ link.label }}</span></NuxtLink
+            /><span>{{ t(link.label) }}</span></NuxtLink
+          ><a
+            v-else
+            :href="localePath(link.to)"
+            class="flex min-h-[64px] items-center gap-4 border-b border-sht-stone px-1 py-4 font-sans text-base font-semibold leading-tight"
+            :aria-current="isNavItemActive(link.key) ? 'page' : undefined"
+            @click="isOpen = false"
+            ><component
+              :is="link.icon"
+              class="h-5 w-5 shrink-0 text-sht-olive"
+              :stroke-width="1.8"
+              aria-hidden="true"
+            /><span>{{ t(link.label) }}</span></a
           ></template
         >
         <div class="border-b border-sht-stone">
           <button
             type="button"
-            class="flex min-h-[64px] w-full items-center gap-4 px-1 py-4 text-left font-sans text-base font-semibold leading-tight focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold"
+            class="flex min-h-[64px] w-full items-center gap-4 px-1 py-4 text-left font-sans text-base font-semibold leading-tight"
             :aria-expanded="isServicesOpen"
             aria-controls="media-mobile-services"
             @click="isServicesOpen = !isServicesOpen"
@@ -307,7 +322,7 @@ watch(() => route.path, () => {
               :stroke-width="1.8"
               aria-hidden="true"
             />
-            <span class="flex-1">Tentang Kami</span>
+            <span class="flex-1">{{ t('Tentang Kami') }}</span>
             <ChevronDown
               class="h-5 w-5 transition-transform duration-200"
               :class="isServicesOpen ? 'rotate-180' : ''"
@@ -319,27 +334,26 @@ watch(() => route.path, () => {
             id="media-mobile-services"
             class="ml-9 border-t border-sht-stone/70 py-2"
           >
-            <NuxtLink
-              to="/tentang-kami"
-              class="block border-b border-sht-stone/60 py-3 last:border-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-sht-gold"
-              @click="isOpen = false"
+            <a
+              v-for="unit in serviceUnits"
+              :key="unit.name"
+              :href="unit.id === 1 ? localePath(unit.href) : undefined"
+              :target="unit.id === 1 && unit.href.startsWith('http') ? '_blank' : undefined"
+              :rel="
+                unit.id === 1 && unit.href.startsWith('http') ? 'noopener noreferrer' : undefined
+              "
+              :aria-disabled="unit.id !== 1"
+              :tabindex="unit.id !== 1 ? -1 : undefined"
+              class="block border-b border-sht-stone/60 py-3 last:border-0"
+              :class="unit.id !== 1 ? 'cursor-not-allowed opacity-60' : ''"
+              @click="unit.id !== 1 ? $event.preventDefault() : closeMobileMenu()"
               ><p class="font-sans text-base text-sht-olive-dark">
-                Apa itu Sudut Haramain?
+                {{ t(unit.name) }}
               </p>
               <p class="mt-1 text-xs text-sht-charcoal/60">
-                Mengenal media digital Sudut Haramain.
-              </p></NuxtLink
+                {{ t(unit.subtitle) }}
+              </p><span v-if="unit.id !== 1" class="mt-2 inline-flex rounded-full border border-sht-gold/50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-sht-olive">{{ t('Segera Hadir') }}</span></a
             >
-            <div class="block border-b border-sht-stone/60 py-3 opacity-60" aria-disabled="true">
-              <p class="font-sans text-base text-sht-olive-dark">Sudut Haramain Tour</p>
-              <p class="mt-1 text-xs text-sht-charcoal/60">Umroh Mandiri &amp; Land Arrangement</p>
-              <span class="mt-2 inline-flex rounded-full border border-sht-gold/50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em]">Segera Hadir</span>
-            </div>
-            <div class="block py-3 opacity-60" aria-disabled="true">
-              <p class="font-sans text-base text-sht-olive-dark">Sudut Haramain Jastip</p>
-              <p class="mt-1 text-xs text-sht-charcoal/60">Titip beli dari Makkah–Madinah</p>
-              <span class="mt-2 inline-flex rounded-full border border-sht-gold/50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em]">Segera Hadir</span>
-            </div>
           </div>
         </div>
       </nav>

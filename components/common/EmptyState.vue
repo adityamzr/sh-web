@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { t } = useLocale()
 withDefaults(defineProps<{
   title?: string
   description?: string
@@ -17,15 +18,15 @@ defineEmits(['action'])
       <div class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-sht-stone/60">
         <span class="text-sm font-semibold text-sht-sage">—</span>
       </div>
-      <h3 class="font-hero text-xl font-bold text-sht-olive-dark">{{ title }}</h3>
-      <p v-if="description" class="mt-2 text-sm leading-relaxed text-sht-charcoal/60">{{ description }}</p>
+      <h3 class="font-hero text-xl font-bold text-sht-olive-dark">{{ t(title) }}</h3>
+      <p v-if="description" class="mt-2 text-sm leading-relaxed text-sht-charcoal/60">{{ t(description) }}</p>
       <button
         v-if="actionLabel"
         type="button"
         class="mt-6 inline-flex min-h-[44px] items-center justify-center rounded-full border border-sht-olive/20 px-5 py-2.5 text-sm font-semibold text-sht-olive transition-colors hover:bg-sht-olive/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold"
         @click="$emit('action')"
       >
-        {{ actionLabel }}
+        {{ t(actionLabel) }}
       </button>
       <slot />
     </div>

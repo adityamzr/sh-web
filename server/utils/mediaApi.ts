@@ -25,7 +25,7 @@ export function getMediaApiBaseUrl(): string {
     console.error(`[mediaApi] Invalid NUXT_API_BASE_URL: ${base}`)
     throw createError({
       statusCode: 500,
-      statusMessage: `Invalid Media API base URL: ${base}`,
+      statusMessage: 'Invalid Media API configuration',
     })
   }
 
@@ -50,6 +50,10 @@ export async function mediaApiFetch<T>(path: string, opts: any = {}): Promise<T>
     const status = err?.statusCode || err?.response?.status || 500
     const message = err?.statusMessage || err?.data?.statusMessage || err?.message || 'Media API request failed'
     console.error(`[mediaApi] ${opts?.method || 'GET'} ${url} -> ${status}: ${message}`)
-    throw err
+    // Keep the upstream host and raw API/database error details server-side.
+    throw createError({
+      statusCode: status,
+      statusMessage: status === 404 ? 'Media content not found' : status === 400 ? 'Invalid media request' : 'Media API request failed',
+    })
   }
 }

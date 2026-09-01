@@ -1,33 +1,26 @@
 <script setup lang="ts">
-const { settings: homeSettings, pending: heroPending } = await useMediaHomeSettings()
+const { onImageFallback } = useImageError()
+const { t, localePath, locale, basePath } = useLocale()
+
+const { settings: homeSettings } = await useMediaHomeSettings()
 const heroImage = computed(() => homeSettings.value?.heroImageUrl || '/images/makkah-editorial.jpg')
-const heroHeadline = computed(() => homeSettings.value?.heroHeadline || 'Apa yang sedang terjadi di Haramain?')
-const heroSubheadline = computed(() => homeSettings.value?.heroSubheadline || 'Panduan, suasana, kultur, dan informasi praktis langsung dari Makkah–Madinah.')
+const heroHeadline = computed(() => homeSettings.value?.heroHeadline || t('Apa yang sedang terjadi di Haramain?'))
+const heroSubheadline = computed(() => homeSettings.value?.heroSubheadline || t('Panduan, suasana, kultur, dan informasi praktis langsung dari Makkah–Madinah.'))
 const defaultTopics = [
   'Rekomendasi Kuliner', 'Tren Sosial', 'Transportasi Publik', 'Literasi Ibadah',
   'Kondisi Harian', 'Kultur Lokal', 'Tips Jamaah', 'Panduan Umrah',
   'Fasilitas Umum', 'Sudut Madinah', 'Rute & Navigasi', 'Etika Masjid',
   'Biaya Harian', 'Tempat Favorit', 'Info Musiman', 'Keseharian Saudi',
 ]
-const topics = computed(() => {
-  const override = homeSettings.value?.heroTopicOverride
-  if (override === null || override === undefined) return defaultTopics
-  try {
-    const active = override.filter((topic: any) => topic?.isActive).sort((a: any, b: any) => (a?.sortOrder || 0) - (b?.sortOrder || 0)).map((topic: any) => topic?.label).filter(Boolean)
-    return active.length ? active : defaultTopics
-  } catch {
-    return defaultTopics
-  }
-})
-const trackIndex = ref(Math.max(topics.value.length + 4, 4))
+const topics = computed(() => homeSettings.value?.heroTopicOverride === null || homeSettings.value?.heroTopicOverride === undefined ? defaultTopics.map(topic => t(topic)) : homeSettings.value.heroTopicOverride.filter((topic: any) => topic.isActive).sort((a: any, b: any) => a.sortOrder - b.sortOrder).map((topic: any) => topic.label))
+const trackIndex = ref(topics.value.length + 4)
 const paused = ref(false)
 const reducedMotion = ref(false)
 const seamlessReset = ref(false)
-const heroImgError = ref(false)
 let rotationTimer: ReturnType<typeof setInterval> | null = null
 
 const activeTopic = computed(() => topics.value.length ? trackIndex.value % topics.value.length : 0)
-const activeLabel = computed(() => topics.value[activeTopic.value] || '')
+const activeLabel = computed(() => topics.value[activeTopic.value])
 const topicItems = computed(() => Array.from({ length: Math.max(topics.value.length * 3, 1) }, (_, absoluteIndex) => ({
   label: topics.value.length ? topics.value[absoluteIndex % topics.value.length] : '',
   absoluteIndex,
@@ -39,7 +32,7 @@ const trackStyle = computed<Record<string, string | number>>(() => ({
 }))
 
 function advanceTopic() {
-  if (paused.value || !topics.value.length) return
+  if (paused.value) return
   trackIndex.value += 1
   if (topics.value.length && trackIndex.value >= topics.value.length * 2) {
     window.setTimeout(() => {
@@ -50,73 +43,53 @@ function advanceTopic() {
   }
 }
 
-function onHeroError() {
-  heroImgError.value = true
-}
-
 onMounted(() => {
-  try {
-    reducedMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (!reducedMotion.value && topics.value.length) rotationTimer = setInterval(advanceTopic, 2000)
-  } catch {}
+  reducedMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (!reducedMotion.value) rotationTimer = setInterval(advanceTopic, 2000)
 })
 
 onBeforeUnmount(() => {
   if (rotationTimer) clearInterval(rotationTimer)
 })
-
-watch(topics, (newTopics) => {
-  if (newTopics.length && trackIndex.value < 4) {
-    trackIndex.value = newTopics.length + 4
-  }
-})
 </script>
 
 <template>
   <section class="relative isolate overflow-hidden bg-sht-olive-dark text-sht-off-white">
-    <img
-      v-if="!heroImgError"
-      :src="heroImage"
-      alt="Suasana Makkah dari kejauhan"
-      class="absolute inset-0 -z-20 h-full w-full object-cover object-center"
-      @error="onHeroError"
-    />
-    <div v-else class="absolute inset-0 -z-20 bg-sht-olive-dark" aria-hidden="true" />
+    <img  :src="heroImage" :alt="t('Suasana Makkah dari kejauhan')" class="absolute inset-0 -z-20 h-full w-full object-cover object-center" @error="onImageFallback" />
     <div class="absolute inset-0 -z-10 bg-sht-olive-dark/55" aria-hidden="true" />
     <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_72%_42%,rgba(127,137,104,0.42),transparent_38%),linear-gradient(90deg,rgba(45,53,31,0.93)_0%,rgba(45,53,31,0.68)_42%,rgba(58,68,40,0.35)_100%)]" aria-hidden="true" />
     <div class="absolute inset-x-0 top-0 -z-10 h-48 bg-gradient-to-b from-sht-olive-dark/40 to-transparent" aria-hidden="true" />
 
     <div class="mx-auto grid min-h-[100svh] max-w-container items-center gap-6 px-5 pb-24 pt-32 sm:px-6 sm:pb-28 sm:pt-40 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-8 lg:pb-32 lg:pt-36">
       <div>
-        <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-sht-gold sm:text-xs"><span class="h-px w-8 bg-sht-gold" aria-hidden="true" />DARI MAKKAH &amp; MADINAH</p>
-        <h1 class="mt-6 max-w-3xl font-hero text-5xl font-bold italic leading-[0.98] tracking-[-0.03em] text-white [font-optical-sizing:auto] sm:text-[4.5rem] break-words">{{ heroHeadline }}</h1>
-        <p class="mt-7 max-w-2xl text-lg leading-relaxed text-sht-off-white/90 sm:text-xl break-words">{{ heroSubheadline }}</p>
-        <p class="mt-4 text-sm text-sht-off-white/70">Dilihat dari dekat oleh tim Indonesia yang tinggal di Makkah.</p>
-        <a href="#hari-ini" class="mt-9 inline-flex min-h-[48px] items-center gap-2 rounded-full bg-sht-gold px-6 py-3.5 text-sm font-semibold text-sht-olive-dark transition-colors hover:bg-[#c7b55e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold">Lihat Sorotan <span aria-hidden="true">↓</span></a>
+        <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-sht-gold sm:text-xs"><span class="h-px w-8 bg-sht-gold" aria-hidden="true" />{{ t('DARI MAKKAH & MADINAH') }}</p>
+        <h1 class="mt-6 max-w-3xl font-hero text-5xl font-bold italic leading-[0.98] tracking-[-0.03em] text-white [font-optical-sizing:auto] sm:text-[4.5rem]">{{ heroHeadline }}</h1>
+        <p class="mt-7 max-w-2xl text-lg leading-relaxed text-sht-off-white/90 sm:text-xl">{{ heroSubheadline }}</p>
+        <p class="mt-4 text-sm text-sht-off-white/70">{{ t('Dilihat dari dekat oleh tim Indonesia yang tinggal di Makkah.') }}</p>
+        <a href="#hari-ini" class="mt-9 inline-flex min-h-[48px] items-center gap-2 rounded-full bg-sht-gold px-6 py-3.5 text-sm font-semibold text-sht-olive-dark transition-colors hover:bg-[#c7b55e] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold">{{ t('Lihat Sorotan') }} <span aria-hidden="true">↓</span></a>
       </div>
 
       <div class="ml-0 lg:ml-8 min-w-0 lg:pb-2" @mouseenter="paused = true" @mouseleave="paused = false" @focusin="paused = true" @focusout="paused = false">
-        <div class="topic-viewport relative overflow-hidden" aria-label="Topik editorial Sudut Haramain" aria-live="polite">
+        <div class="topic-viewport relative overflow-hidden" :aria-label="t('Topik editorial Sudut Haramain')" aria-live="polite">
           <span class="topic-pointer absolute left-0 z-10 -translate-y-10 md:-translate-y-[42px] text-3xl leading-none text-sht-gold" aria-hidden="true">▶</span>
           <ol v-if="topics.length" class="topic-track absolute inset-x-0 top-0 ml-1" :style="trackStyle">
-            <li v-for="item in topicItems" :key="item.absoluteIndex" class="flex h-[var(--topic-row-height)] items-center gap-4 pl-8 font-heading text-[1.7rem] leading-none transition-[opacity,color,font-weight] duration-500 font-bold break-words" :class="item.absoluteIndex === trackIndex -1 ? 'text-white opacity-100' : item.absoluteIndex === trackIndex - 4 ? 'text-white/5' : 'text-white/25'">
-              <span class="line-clamp-1">{{ item.label }}</span>
+            <li v-for="item in topicItems" :key="item.absoluteIndex" class="flex h-[var(--topic-row-height)] items-center gap-4 pl-8 font-heading text-[1.7rem] leading-none transition-[opacity,color,font-weight] duration-500 font-bold" :class="item.absoluteIndex === trackIndex -1 ? 'text-white opacity-100' : item.absoluteIndex === trackIndex - 4 ? 'text-white/5' : 'text-white/25'">
+              <span>{{ item.label }}</span>
             </li>
           </ol>
-          <div v-else class="py-10 text-sm text-sht-off-white/50">Topik editorial belum tersedia.</div>
-          <span class="sr-only">Topik aktif: {{ activeLabel }}</span>
+          <span class="sr-only">{{ t('Topik aktif:') }} {{ activeLabel }}</span>
         </div>
       </div>
     </div>
 
-    <div class="hidden md:block absolute inset-x-0 bottom-2" aria-label="Prinsip Sudut Haramain">
+    <div class="hidden md:block absolute inset-x-0 bottom-2" :aria-label="t('Prinsip Sudut Haramain')">
       <div class="mx-auto flex max-w-container gap-8 overflow-hidden py-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-sht-off-white/75">
-        <span class="shrink-0 text-sht-gold">Observasi Langsung</span>
-        <span class="shrink-0">Faktual &amp; Proporsional</span>
-        <span class="shrink-0">Dari Makkah &amp; Madinah</span>
-        <span class="shrink-0">Tim Indonesia di Makkah</span>
-        <span class="shrink-0">Panduan Praktis</span>
-        <span class="shrink-0">Sudut Lokal</span>
+        <span class="shrink-0 text-sht-gold">{{ t('Observasi Langsung') }}</span>
+        <span class="shrink-0">{{ t('Faktual & Proporsional') }}</span>
+        <span class="shrink-0">{{ t('Dari Makkah & Madinah') }}</span>
+        <span class="shrink-0">{{ t('Tim Indonesia di Makkah') }}</span>
+        <span class="shrink-0">{{ t('Panduan Praktis') }}</span>
+        <span class="shrink-0">{{ t('Sudut Lokal') }}</span>
       </div>
     </div>
   </section>

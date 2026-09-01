@@ -1,7 +1,9 @@
 <script setup lang="ts">
+const { t, localePath, locale, basePath } = useLocale()
+
 const situations = [
   { number: '01', title: 'Baru Sampai', description: 'Bandara, SIM, internet, transportasi awal, dan kebutuhan pertama setelah tiba.', tone: 'light', href: '/panduan#dari-bandara' },
-  { number: '02', title: 'Mau ke Masjidil Haram', description: 'Akses, pintu masuk, rute, waktu, dan fasilitas sekitar Haram.', tone: 'image', image: '/images/makkah-editorial.jpg', href: '/makkah?category=Haram' },
+  { number: '02', title: 'Mau ke Masjidil Haram', description: 'Akses, pintu masuk, rute, waktu, dan fasilitas sekitar Haram.', tone: 'image', image: '/images/makkah-editorial.jpg', href: '/makkah?category=Haram#explorer' },
   { number: '03', title: 'Cari Transportasi', description: 'Bus, kereta, taksi, rute umum, dan pilihan mobilitas.', tone: 'dark', href: '/hari-ini?category=Transportasi' },
   { number: '04', title: 'Lagi Cari Makan', description: 'Kuliner lokal, tempat makan, harga, dan rekomendasi sekitar.', tone: 'gold', href: '/hari-ini?category=Kuliner' },
   { number: '05', title: 'Persiapan Umrah', description: 'Miqat, ihram, perlengkapan, manasik, dan hal yang perlu disiapkan.', tone: 'sage', href: '/panduan#persiapan-dasar' },
@@ -10,12 +12,12 @@ const situations = [
 </script>
 
 <template>
-  <section class="bg-[#EFEDE4] py-12 sm:py-24 overflow-x-hidden" aria-labelledby="situational-heading">
+  <section class="bg-[#EFEDE4] py-12 sm:py-24" aria-labelledby="situational-heading">
     <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <div class="max-w-2xl">
-        <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-sht-sage sm:text-xs"><span class="h-px w-8 bg-sht-sage" aria-hidden="true" />TEMUKAN KEBUTUHANMU</p>
-        <h2 id="situational-heading" class="mt-4 font-hero text-4xl font-bold italic leading-tight text-sht-olive-dark sm:text-5xl break-words">Lagi Butuh Apa?</h2>
-        <p class="mt-4 max-w-xl text-base leading-relaxed text-sht-charcoal/70 break-words">Pilih situasi yang paling dekat dengan kebutuhan Anda sekarang.</p>
+        <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-sht-sage sm:text-xs"><span class="h-px w-8 bg-sht-sage" aria-hidden="true" />{{ t('TEMUKAN KEBUTUHANMU') }}</p>
+        <h2 id="situational-heading" class="mt-4 font-hero text-4xl font-bold italic leading-tight text-sht-olive-dark sm:text-5xl">{{ t('Lagi Butuh Apa?') }}</h2>
+        <p class="mt-4 max-w-xl text-base leading-relaxed text-sht-charcoal/70">{{ t('Pilih situasi yang paling dekat dengan kebutuhan Anda sekarang.') }}</p>
       </div>
 
       <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-12">
@@ -27,16 +29,16 @@ const situations = [
             index === 0 ? 'lg:col-span-5' : index === 1 ? 'lg:col-span-7' : index === 2 || index === 3 ? 'lg:col-span-4' : index === 4 ? 'lg:col-span-4 lg:row-span-2 lg:min-h-[480px]' : 'lg:col-span-8',
             item.tone === 'dark' ? 'border-sht-olive bg-sht-olive text-sht-off-white' : item.tone === 'gold' ? 'border-sht-gold/40 bg-sht-gold/25 text-sht-olive-dark' : item.tone === 'sage' ? 'border-sht-sage/35 bg-sht-sage/20 text-sht-olive-dark' : item.tone === 'image' ? 'border-sht-olive-dark bg-sht-olive-dark text-white' : 'border-sht-stone bg-sht-off-white text-sht-olive-dark',
           ]"
-          :to="item.href"
+          :to="localePath(item.href)"
           :style="item.image ? { backgroundImage: `linear-gradient(110deg, rgba(45,53,31,.88), rgba(45,53,31,.25)), url(${item.image})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined"
         >
-          <span class="pointer-events-none absolute right-5 top-0 select-none font-sans text-[11rem] font-bold leading-none tracking-[-0.08em] opacity-[0.12]" :class="item.tone === 'dark' || item.tone === 'image' ? 'text-white' : 'text-sht-olive-dark'" aria-hidden="true">{{ item.number }}</span>
+          <span class="pointer-events-none absolute right-5 top-0 select-none font-sans text-[11rem] font-bold leading-none tracking-[-0.08em] opacity-[0.12]" :class="item.tone === 'dark' || item.tone === 'image' ? 'text-white' : 'text-sht-olive-dark'" aria-hidden="true">{{ t(item.number) }}</span>
           <div class="relative flex h-full min-h-[180px] flex-col justify-between">
-            <span class="text-sm font-semibold tracking-[0.16em] opacity-60">{{ item.number }}</span>
-            <div class="min-w-0">
-              <h3 class="max-w-lg font-hero text-2xl font-bold not-italic leading-tight break-words line-clamp-3">{{ item.title }}</h3>
-              <p class="mt-3 max-w-md text-sm leading-relaxed opacity-75 break-words line-clamp-3">{{ item.description }}</p>
-              <span class="mt-5 block text-sm font-semibold opacity-75 transition-transform duration-300 group-hover:translate-x-1">Jelajahi <span aria-hidden="true">→</span></span>
+            <span class="text-sm font-semibold tracking-[0.16em] opacity-60">{{ t(item.number) }}</span>
+            <div>
+              <h3 class="max-w-lg font-hero text-2xl font-bold not-italic leading-tight">{{ t(item.title) }}</h3>
+              <p class="mt-3 max-w-md text-sm leading-relaxed opacity-75">{{ t(item.description) }}</p>
+              <span class="mt-5 block text-sm font-semibold opacity-75 transition-transform duration-300 group-hover:translate-x-1">{{ t('Jelajahi') }} <span aria-hidden="true">→</span></span>
             </div>
           </div>
         </NuxtLink>

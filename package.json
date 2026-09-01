@@ -4,6 +4,9 @@
   "type": "module",
   "description": "Sudut Haramain — Media Digital & Informasi Praktis Makkah–Madinah",
   "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "test:ssr": "node --test tests/ssr/*.test.mjs",
+    "typecheck": "nuxt prepare && vue-tsc --noEmit",
     "build": "nuxt build",
     "dev": "nuxt dev --host localhost --port 3003",
     "generate": "nuxt generate",
