@@ -4,6 +4,7 @@ const { t, localePath, locale, basePath } = useLocale()
 import {
   BookOpen,
   BriefcaseBusiness,
+  Check,
   ChevronDown,
   MapPin,
   MapPinned,
@@ -21,6 +22,20 @@ const isOpen = ref(false);
 const isScrolled = ref(false);
 const isServicesOpen = ref(false);
 const isSearchOpen = ref(false);
+const contentLinks = useContentLocaleLinks();
+const clientHash = ref('');
+const mobileLanguages = [
+  { code: 'id' as const, flag: '🇮🇩', label: 'Indonesia' },
+  { code: 'en' as const, flag: '🇬🇧', label: 'English' },
+] as const;
+function getMobileLangHref(target: 'id' | 'en') {
+  const cur = contentLinks.value?.key === route.path ? contentLinks.value : null
+  if (cur) {
+    return (cur.paths[target] as string) ?? (cur.fallback?.[target] as string) ?? localePath('/hari-ini?translation=unavailable', target)
+  }
+  const base = route.fullPath.split('#')[0]
+  return localePath(base, target) + clientHash.value
+}
 const isHome = computed(() => basePath.value === "/");
 const searchTrigger = ref<HTMLButtonElement | null>(null);
 const menuTrigger = ref<HTMLButtonElement | null>(null);
@@ -87,21 +102,38 @@ function handleEscape(event: KeyboardEvent) {
   else if (isOpen.value) closeMobileMenu(true);
   else isServicesOpen.value = false;
 }
+function closeLanguageDropdown() {
+  window.dispatchEvent(new CustomEvent('close-language-dropdown'))
+}
 watch(() => route.path, () => {
   isOpen.value = false
   isServicesOpen.value = false
   isSearchOpen.value = false
+  closeLanguageDropdown()
+})
+watch(isOpen, (open) => {
+  if (open) {
+    closeLanguageDropdown()
+    isServicesOpen.value = false
+  }
+})
+watch(isServicesOpen, (open) => {
+  if (open) closeLanguageDropdown()
 })
 onMounted(() => {
   updateScroll();
+  clientHash.value = route.hash
   window.addEventListener("scroll", updateScroll, { passive: true });
   window.addEventListener("keydown", handleEscape);
+  window.addEventListener('close-services-menu', (() => { isServicesOpen.value = false }) as EventListener)
 });
 onBeforeUnmount(() => {
   window.removeEventListener("scroll", updateScroll);
   window.removeEventListener("keydown", handleEscape);
+  window.removeEventListener('close-services-menu', (() => { isServicesOpen.value = false }) as EventListener)
   if (servicesCloseTimer) clearTimeout(servicesCloseTimer);
 });
+watch(() => route.hash, h => { clientHash.value = h })
 </script>
 
 <template>
@@ -247,7 +279,7 @@ onBeforeUnmount(() => {
           >
         </button>
       </div>
-      <div class="flex items-center gap-2 lg:hidden"><MediaLanguageSwitcher />
+      <div class="flex items-center gap-2 lg:hidden">
         <button
           ref="searchTrigger"
           type="button"
@@ -354,6 +386,30 @@ onBeforeUnmount(() => {
                 {{ t(unit.subtitle) }}
               </p><span v-if="unit.id !== 1" class="mt-2 inline-flex rounded-full border border-sht-gold/50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-sht-olive">{{ t('Segera Hadir') }}</span></a
             >
+          </div>
+        </div>
+        <!-- Mobile Language Section -->
+        <div class="border-b border-sht-stone py-5">
+          <p class="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-sht-charcoal/50">{{ t('Bahasa') }}</p>
+          <div class="flex flex-col gap-1">
+            <NuxtLink
+              v-for="lang in mobileLanguages"
+              :key="lang.code"
+              :to="getMobileLangHref(lang.code)"
+              :lang="lang.code"
+              :hreflang="lang.code"
+              :aria-current="locale === lang.code ? 'true' : undefined"
+              :aria-label="t('Ganti bahasa ke {language}', { language: lang.label })"
+              class="flex items-center justify-between rounded-xl px-3 py-3 text-base font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-sht-gold"
+              :class="locale === lang.code ? 'bg-sht-stone/60 text-sht-olive-dark' : 'text-sht-charcoal/80 hover:bg-sht-stone/40'"
+              @click="closeMobileMenu()"
+            >
+              <span class="flex items-center gap-2.5">
+                <span aria-hidden="true" class="text-lg leading-none">{{ lang.flag }}</span>
+                <span>{{ lang.label }}</span>
+              </span>
+              <Check v-if="locale === lang.code" class="h-5 w-5 shrink-0 text-sht-olive" aria-hidden="true" />
+            </NuxtLink>
           </div>
         </div>
       </nav>
