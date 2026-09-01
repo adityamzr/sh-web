@@ -1,7 +1,7 @@
 import { mediaCacheKey, formatMediaDate, translate, type SupportedLocale } from '~/shared/localization'
 import type { MaybeRefOrGetter } from 'vue'
 import { takeMediaPreload } from '~/composables/useMediaPreload'
-export type MediaArticleBlock = { type: string; level?: 2 | 3; text?: string; ordered?: boolean; items?: string[]; src?: string; alt?: string; caption?: string }
+export type MediaArticleBlock = { type: string; level?: 2 | 3; text?: string; ordered?: boolean; items?: string[]; src?: string; alt?: string; caption?: string; displaySize?: 'small'|'medium'|'wide'|'full'; aspectRatio?: 'auto'|'16:9'|'4:5'|'1:1' }
 export type MediaArticle = { availableLocales?: SupportedLocale[]; localizedSlugs?: Partial<Record<SupportedLocale, string>>; id: number; slug: string; title: string; excerpt: string; body: MediaArticleBlock[]; content: MediaArticleBlock[]; references?: string[]; type: 'article'|'update'|'practical'; city: 'makkah'|'madinah'|'general'; category: string; tags: string[]; contentType: 'article'|'update'|'practical'; priority: number; publishedAt: string | null; updatedAt: string | null; image: string; imageAlt: string; readingTime: string; seoTitle?: string|null; seoDescription?: string|null; ogImage?: string|null }
 
 export function normalizeArticle(row:any, locale: SupportedLocale): MediaArticle | null {
