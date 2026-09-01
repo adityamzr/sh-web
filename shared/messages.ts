@@ -1,5 +1,17 @@
 // Indonesian source UI copy stays unchanged. Editorial content comes from the localized API.
 export const englishMessages: Record<string, string> = {
+  "Sains & Teknologi": "Science & Technology",
+  "Hiburan & Permainan": "Entertainment & Games",
+  "Gaya Hidup": "Lifestyle",
+  "Komunitas": "Community",
+  "Lainnya": "Others",
+  "Sosial": "Social",
+  "Ekonomi": "Economy",
+  "Bisnis": "Business",
+  "Akomodasi": "Accommodation",
+  "Budaya": "Culture",
+  "Sejarah": "History",
+  "Berita / Update": "News / Updates",
   "Gangguan sementara": "Temporary issue",
   "Belum ada konten.": "No content is available yet.",
   "Konten belum dapat dimuat.": "Content could not be loaded.",
