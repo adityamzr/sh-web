@@ -6,7 +6,7 @@ import { ThumbsDown, ThumbsUp } from 'lucide-vue-next'
 import { useMediaArticle, useMediaArticles, formatMediaArticleDate } from '~/composables/useMediaArticles'
 import { setResponseStatus } from 'h3'
 import { submitMediaFeedback, type MediaFeedbackValue } from '~/composables/useMediaFeedback'
-import { articleImageFigureClass, articleImageObjectClass, articleImageRatioClass } from '~/shared/article-block-presentation'
+import { articleImageFigureStyle, articleImageObjectStyle, articleImageRatioStyle } from '~/shared/article-block-presentation'
 const route=useRoute()
 const slug=String(route.params.slug)
 const {article,pending,error}=await useMediaArticle(slug)
@@ -49,7 +49,7 @@ async function selectFeedback(value:'helpful'|'not-helpful'){if(feedback.value||
           <ul v-else-if="block.type === 'list' && !block.ordered" class="mb-6 max-w-[760px] list-disc space-y-2 pl-6 text-base leading-relaxed text-sht-charcoal/80"><li v-for="item in block.items" :key="item">{{ item }}</li></ul>
           <ol v-else-if="block.type === 'list'" class="mb-6 max-w-[760px] list-decimal space-y-2 pl-6 text-base leading-relaxed text-sht-charcoal/80"><li v-for="item in block.items" :key="item">{{ item }}</li></ol>
           <blockquote v-else-if="block.type === 'blockquote'" class="mb-8 max-w-[760px] border-l-2 border-sht-gold pl-5 font-hero text-2xl leading-relaxed text-sht-olive-dark">{{ block.text }}</blockquote>
-          <figure v-else-if="block.type === 'image'" class="mx-auto mb-8 w-full" :class="articleImageFigureClass(block)"><div class="overflow-hidden rounded-xl" :class="articleImageRatioClass(block)"><img :src="block.src" :alt="block.alt" class="w-full" :class="articleImageObjectClass(block)" @error="onImageFallback" /></div><figcaption v-if="block.caption" class="mt-2 text-xs text-sht-charcoal/50">{{ block.caption }}</figcaption></figure>
+          <figure v-else-if="block.type === 'image'" class="mx-auto mb-8 w-full" :style="articleImageFigureStyle(block)"><div class="overflow-hidden rounded-xl" :style="articleImageRatioStyle(block)"><img :src="block.src" :alt="block.alt" class="w-full" :style="articleImageObjectStyle(block)" @error="onImageFallback" /></div><figcaption v-if="block.caption" class="mt-2 text-xs text-sht-charcoal/50">{{ block.caption }}</figcaption></figure>
           <aside v-else-if="block.type === 'callout'" class="mb-8 max-w-[760px] border-l-2 border-sht-gold bg-sht-gold/10 px-5 py-4 text-sm leading-relaxed text-sht-charcoal/70">{{ block.text }}</aside>
         </template>
       </div>

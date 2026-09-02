@@ -14,7 +14,7 @@ const { articles: latestArticles } = await useMediaArticles({ city: 'MAKKAH', li
         <div>
           <p class="text-xs font-semibold uppercase tracking-[0.22em] text-sht-sage">{{ t('TERBARU') }}</p>
           <h2 id="makkah-latest-heading" class="mt-4 font-hero text-4xl font-bold italic leading-tight text-sht-olive-dark sm:text-5xl">{{ t('Terbaru dari Makkah') }}</h2>
-          <p class="mt-4 max-w-2xl text-base leading-relaxed text-sht-charcoal/70">{{ t('Catatan, panduan, dan informasi terbaru yang berkaitan dengan kota Makkah.') }}</p>
+          <p class="mt-4 max-w-2xl text-base leading-relaxed text-sht-charcoal/70">{{ t('Catatan dan informasi terbaru yang berkaitan dengan kota Makkah, dilengkapi panduan yang relevan.') }}</p>
         </div>
         <NuxtLink :to="localePath('/hari-ini?city=makkah')" class="hidden shrink-0 pb-1 text-sm font-semibold text-sht-olive-dark hover:text-sht-olive lg:inline-flex lg:items-center lg:gap-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold">{{ t('Lihat Semua Makkah') }} <span class="text-sht-gold" aria-hidden="true">→</span></NuxtLink>
       </div>

@@ -12,7 +12,7 @@ export const legalEnglish: Record<string, Section[]> = {
       'Sudut Haramain brings this information together from a practical perspective that is easy to explore.',
       'Our aim is simple: to help readers understand Haramain better before travelling, during their stay, and after returning home.',
     ] },
-    { id: 'yang-ditemukan', title: 'What you can find on Sudut Haramain', paragraphs: ['Practical guides, daily life and culture, information about Makkah and Madinah, travel, worship, and stories and highlights from Haramain.'] },
+    { id: 'yang-ditemukan', title: 'What you can find on Sudut Haramain', paragraphs: ['Daily life and culture, information about Makkah and Madinah, travel, worship, stories and highlights from Haramain, as well as practical guides.'] },
     { id: 'prinsip', title: 'Information grounded in real needs.', paragraphs: [
       'We aim to present information in accessible language, with clear context and practical value for readers.',
       'We also recognise that conditions in Makkah and Madinah can change. Schedules, rules, access, transport, prices, and local policies may be updated over time. Readers are therefore encouraged to check official information and current conditions when making decisions on the ground.',

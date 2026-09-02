@@ -3,7 +3,7 @@ const { t, localePath, locale, basePath } = useLocale()
 
 useSeoMeta({
   title: () => t('Sudut Haramain — Media Digital & Informasi Praktis Makkah–Madinah'),
-  description: () => t('Informasi praktis Makkah dan Madinah, panduan perjalanan, kultur lokal, literasi ibadah, navigasi, dan pembaruan kondisi langsung dari Sudut Haramain.'),
+  description: () => t('Informasi praktis Makkah dan Madinah, kultur lokal, literasi ibadah, navigasi, pembaruan kondisi langsung, dan panduan perjalanan dari Sudut Haramain.'),
 })
 </script>
 

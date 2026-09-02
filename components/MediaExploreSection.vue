@@ -15,7 +15,7 @@ const entries=computed(()=>{const ids=settings.value?.editorialArticleIds||[];co
       <div class="max-w-3xl">
         <p class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-sht-sage sm:text-xs"><span class="h-px w-8 bg-sht-sage" aria-hidden="true" />{{ t('JELAJAHI') }}</p>
         <h2 id="explore-heading" class="mt-4 font-hero text-4xl font-bold italic leading-tight text-sht-olive-dark sm:text-5xl">{{ t('Jelajahi Sudut Haramain') }}</h2>
-        <p class="mt-4 max-w-2xl text-base leading-relaxed text-sht-charcoal/70">{{ t('Cerita, panduan, dan sudut pandang pilihan untuk melihat Makkah–Madinah lebih dekat.') }}</p>
+        <p class="mt-4 max-w-2xl text-base leading-relaxed text-sht-charcoal/70">{{ t('Cerita dan sudut pandang pilihan untuk melihat Makkah–Madinah lebih dekat, dilengkapi panduan yang relevan.') }}</p>
       </div>
 
       <div class="-mx-5 mt-12 overflow-x-auto snap-x snap-mandatory scroll-px-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:mx-0 lg:overflow-visible">

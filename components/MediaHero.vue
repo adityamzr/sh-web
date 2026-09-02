@@ -5,7 +5,14 @@ const { t, localePath, locale, basePath } = useLocale()
 const { settings: homeSettings } = await useMediaHomeSettings()
 const heroImage = computed(() => homeSettings.value?.heroImageUrl || '/images/makkah-editorial.jpg')
 const heroHeadline = computed(() => homeSettings.value?.heroHeadline || t('Apa yang sedang terjadi di Haramain?'))
-const heroSubheadline = computed(() => homeSettings.value?.heroSubheadline || t('Panduan, suasana, kultur, dan informasi praktis langsung dari Makkah–Madinah.'))
+const legacyHeroSubheadlines: Record<string, string> = {
+  'Panduan, suasana, kultur, dan informasi praktis langsung dari Makkah–Madinah.': 'Suasana, kultur, dan informasi praktis langsung dari Makkah–Madinah, dilengkapi panduan yang relevan.',
+  'Guides, scenes, culture, and practical information directly from Makkah and Madinah.': 'Scenes, culture, and practical information directly from Makkah and Madinah, complemented by relevant guides.',
+}
+const heroSubheadline = computed(() => {
+  const configured = homeSettings.value?.heroSubheadline?.trim()
+  return configured ? (legacyHeroSubheadlines[configured] || configured) : t('Suasana, kultur, dan informasi praktis langsung dari Makkah–Madinah, dilengkapi panduan yang relevan.')
+})
 const defaultTopics = [
   'Rekomendasi Kuliner', 'Tren Sosial', 'Transportasi Publik', 'Literasi Ibadah',
   'Kondisi Harian', 'Kultur Lokal', 'Tips Jamaah', 'Panduan Umrah',
