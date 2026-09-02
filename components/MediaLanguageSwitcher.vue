@@ -94,7 +94,7 @@ defineExpose({ close });
     <button
       ref="triggerRef"
       type="button"
-      class="inline-flex h-11 items-center gap-2 rounded-full border border-white/25 bg-white/[0.06] px-3.5 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold"
+      class="inline-flex h-11 items-center gap-2 rounded-full px-3.5 text-sm font-medium text-white backdrop-blur-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold"
       :aria-expanded="isOpen"
       aria-haspopup="menu"
       :aria-controls="dropdownId"
