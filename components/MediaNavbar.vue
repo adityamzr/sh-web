@@ -25,8 +25,8 @@ const isSearchOpen = ref(false);
 const contentLinks = useContentLocaleLinks();
 const clientHash = ref('');
 const mobileLanguages = [
-  { code: 'id' as const, flag: '🇮🇩', label: 'Indonesia' },
-  { code: 'en' as const, flag: '🇬🇧', label: 'English' },
+  { code: 'id' as const, label: 'Indonesia' },
+  { code: 'en' as const, label: 'English' },
 ] as const;
 function getMobileLangHref(target: 'id' | 'en') {
   const cur = contentLinks.value?.key === route.path ? contentLinks.value : null
@@ -405,7 +405,7 @@ watch(() => route.hash, h => { clientHash.value = h })
               @click="closeMobileMenu()"
             >
               <span class="flex items-center gap-2.5">
-                <span aria-hidden="true" class="text-lg leading-none">{{ lang.flag }}</span>
+                <CommonLocaleFlag :code="lang.code" size="md" />
                 <span>{{ lang.label }}</span>
               </span>
               <Check v-if="locale === lang.code" class="h-5 w-5 shrink-0 text-sht-olive" aria-hidden="true" />

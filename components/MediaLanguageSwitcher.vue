@@ -12,8 +12,8 @@ const dropdownId = "media-language-menu";
 const clientHash = ref("");
 
 const languages = [
-  { code: "id" as const, flag: "🇮🇩", short: "ID", label: "Indonesia" },
-  { code: "en" as const, flag: "🇬🇧", short: "EN", label: "English" },
+  { code: "id" as const, short: "ID", label: "Indonesia" },
+  { code: "en" as const, short: "EN", label: "English" },
 ] as const;
 
 const currentLang = computed(
@@ -23,7 +23,6 @@ const currentLang = computed(
 function getHref(target: "id" | "en") {
   const cur = content.value?.key === route.path ? content.value : null;
   if (cur) {
-    // Preserve existing localized slug resolution logic
     return (
       (cur.paths[target] as string) ??
       (cur.fallback?.[target] as string) ??
@@ -37,7 +36,6 @@ function getHref(target: "id" | "en") {
 function toggle() {
   isOpen.value = !isOpen.value;
   if (isOpen.value) {
-    // Close other navbar dropdowns when language opens
     window.dispatchEvent(new CustomEvent("close-services-menu"));
   }
 }
@@ -96,7 +94,7 @@ defineExpose({ close });
     <button
       ref="triggerRef"
       type="button"
-      class="inline-flex h-11 items-center gap-2 rounded-full px-3.5 text-sm font-medium text-white backdrop-blur-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold"
+      class="inline-flex h-11 items-center gap-2 rounded-full border border-white/25 bg-white/[0.06] px-3.5 text-sm font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold"
       :aria-expanded="isOpen"
       aria-haspopup="menu"
       :aria-controls="dropdownId"
@@ -104,9 +102,7 @@ defineExpose({ close });
       data-testid="language-switch"
       @click="toggle"
     >
-      <span aria-hidden="true" class="text-[15px] leading-none">{{
-        currentLang.flag
-      }}</span>
+      <CommonLocaleFlag :code="currentLang.code" size="sm" />
       <span class="tracking-wide">{{ currentLang.short }}</span>
       <ChevronDown
         class="h-4 w-4 shrink-0 transition-transform duration-200"
@@ -137,9 +133,7 @@ defineExpose({ close });
         @click="onSelect"
       >
         <span class="flex items-center gap-2.5">
-          <span aria-hidden="true" class="text-base leading-none">{{
-            lang.flag
-          }}</span>
+          <CommonLocaleFlag :code="lang.code" size="md" />
           <span>{{ lang.label }}</span>
         </span>
         <Check
