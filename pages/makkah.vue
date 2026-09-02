@@ -6,7 +6,7 @@ import { useMediaLocations, type MediaLocation } from '~/composables/useMediaLoc
 
 useSeoMeta({
   title: () => t('Makkah — Sudut Haramain'),
-  description: () => t('Panduan kota, rute, kultur, dan catatan praktis untuk memahami Makkah dari sudut yang lebih dekat.'),
+  description: () => t('Rute, kultur, dan catatan praktis untuk memahami Makkah dari sudut yang lebih dekat, dilengkapi panduan kota.'),
 })
 
 const { locations, error: locationError, pending: locationsPending } = await useMediaLocations('MAKKAH')

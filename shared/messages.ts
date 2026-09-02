@@ -49,18 +49,18 @@ export const englishMessages: Record<string, string> = {
   "Cari topik panduan...": "Search guide topics...",
   "Catatan terbaru, kondisi lapangan, dan informasi yang relevan dari Makkah dan Madinah.":
     "Recent notes, on-the-ground updates, and useful information from Makkah and Madinah.",
-  "Catatan, panduan, dan informasi terbaru yang berkaitan dengan kota Madinah.":
-    "The latest notes, guides, and information about Madinah.",
-  "Catatan, panduan, dan informasi terbaru yang berkaitan dengan kota Makkah.":
-    "The latest notes, guides, and information about Makkah.",
+  "Catatan dan informasi terbaru yang berkaitan dengan kota Madinah, dilengkapi panduan yang relevan.":
+    "The latest notes and information about Madinah, complemented by relevant guides.",
+  "Catatan dan informasi terbaru yang berkaitan dengan kota Makkah, dilengkapi panduan yang relevan.":
+    "The latest notes and information about Makkah, complemented by relevant guides.",
   "Cerita Madinah lainnya": "More stories from Madinah",
   "Cerita Makkah lainnya": "More stories from Makkah",
   "Cerita, kebiasaan, dan hal-hal praktis yang sering baru terlihat ketika Madinah dilihat lebih lama.":
     "Stories, everyday customs, and practical details you discover by spending more time in Madinah.",
   "Cerita, kebiasaan, dan hal-hal praktis yang sering baru terlihat ketika Makkah dilihat lebih lama.":
     "Stories, everyday customs, and practical details you discover by spending more time in Makkah.",
-  "Cerita, panduan, dan sudut pandang pilihan untuk melihat Makkah–Madinah lebih dekat.":
-    "Selected stories, guides, and perspectives for a closer look at Makkah and Madinah.",
+  "Cerita dan sudut pandang pilihan untuk melihat Makkah–Madinah lebih dekat, dilengkapi panduan yang relevan.":
+    "Selected stories and perspectives for a closer look at Makkah and Madinah, complemented by relevant guides.",
   "DAFTAR ISI": "CONTENTS",
   "DAFTAR TOPIK": "TOPICS",
   "DARI MAKKAH & MADINAH": "FROM MAKKAH & MADINAH",
@@ -134,8 +134,8 @@ export const englishMessages: Record<string, string> = {
   "Melihat Haramain": "Seeing Haramain",
   "Melihat Haramain dari Sudut yang Lebih Dekat.":
     "A Closer Perspective on Haramain.",
-  "Melihat Haramain lebih dekat melalui panduan praktis, kultur lokal, dan informasi langsung dari Makkah–Madinah.":
-    "See Haramain up close through practical guides, local culture, and information directly from Makkah and Madinah.",
+  "Melihat Haramain lebih dekat melalui kultur lokal, informasi langsung dari Makkah–Madinah, dan panduan praktis.":
+    "See Haramain up close through local culture, information directly from Makkah and Madinah, and practical guides.",
   Membantu: "Helpful",
   "Memuat panduan...": "Loading guides...",
   "Memuat peta": "Loading map",
@@ -179,8 +179,10 @@ export const englishMessages: Record<string, string> = {
     "Every contribution is reviewed before it is used or published.",
   "Sorotan Haramain": "Haramain Highlights",
   "Suasana Makkah dari kejauhan": "A view of Makkah from a distance",
-  "Sudut Haramain adalah media digital yang menghadirkan informasi, panduan praktis, cerita, dan berbagai sisi kehidupan dari Makkah dan Madinah.":
-    "Sudut Haramain is a digital media platform sharing information, practical guides, stories, and different aspects of life in Makkah and Madinah.",
+  "Sudut Haramain adalah media digital yang menghadirkan informasi, cerita, berbagai sisi kehidupan, dan panduan praktis dari Makkah dan Madinah.":
+    "Sudut Haramain is a digital media platform sharing information, stories, different aspects of life, and practical guides from Makkah and Madinah.",
+  "Kehidupan dan kultur, informasi Makkah dan Madinah, perjalanan, ibadah, cerita dan sorotan dari Haramain, serta panduan praktis.":
+    "Daily life and culture, information on Makkah and Madinah, travel, worship, stories and highlights from Haramain, as well as practical guides.",
   "Sudut Haramain — Beranda": "Sudut Haramain — Home",
   "Sudut Lokal": "Local Perspectives",
   "Sudut-Sudut Madinah": "Scenes of Madinah",
@@ -265,8 +267,8 @@ export const englishMessages: Record<string, string> = {
     "The small things you tend to notice only after living here.",
   Ibadah: "Worship",
   "Info Musiman": "Seasonal Information",
-  "Informasi praktis Makkah dan Madinah, panduan perjalanan, kultur lokal, literasi ibadah, navigasi, dan pembaruan kondisi langsung dari Sudut Haramain.":
-    "Practical information on Makkah and Madinah, travel guides, local culture, worship, navigation, and firsthand updates from Sudut Haramain.",
+  "Informasi praktis Makkah dan Madinah, kultur lokal, literasi ibadah, navigasi, pembaruan kondisi langsung, dan panduan perjalanan dari Sudut Haramain.":
+    "Practical information on Makkah and Madinah, local culture, worship, navigation, firsthand updates, and travel guides from Sudut Haramain.",
   Jalan: "Streets",
   "Jelajahi Madinah": "Explore Madinah",
   "Jelajahi Makkah": "Explore Makkah",
@@ -310,8 +312,8 @@ export const englishMessages: Record<string, string> = {
     "Understanding the city’s rhythm through the eyes of its residents.",
   "Menemukan lokasi, akses, fasilitas, transportasi, atau informasi yang sudah berubah?":
     "Found a place, access route, facility, transport option, or information that has changed?",
-  "Mengenal Sudut Haramain, media digital yang menghadirkan informasi, panduan praktis, cerita, dan berbagai sisi kehidupan dari Makkah dan Madinah.":
-    "Meet Sudut Haramain, a digital media platform sharing information, practical guides, stories, and life in Makkah and Madinah.",
+  "Mengenal Sudut Haramain, media digital yang menghadirkan informasi, cerita, berbagai sisi kehidupan, dan panduan praktis dari Makkah dan Madinah.":
+    "Meet Sudut Haramain, a digital media platform sharing information, stories, life, and practical guides from Makkah and Madinah.",
   "Mengenal media digital Sudut Haramain.": "Get to know Sudut Haramain.",
   "Miqat, ihram, perlengkapan, manasik, dan hal yang perlu disiapkan.":
     "Miqat, ihram, essentials, ritual preparation, and what to get ready.",
@@ -325,17 +327,17 @@ export const englishMessages: Record<string, string> = {
     "The Prophet’s Mosque, transport, historical visits, food, and life around Madinah.",
   Panduan: "Guides",
   "Panduan Umrah": "Umrah Guides",
-  "Panduan kota, rute, kultur, dan catatan praktis untuk memahami Makkah dari sudut yang lebih dekat.":
-    "City guides, routes, culture, and practical notes for a closer understanding of Makkah.",
-  "Panduan kota, ziarah, transportasi, fasilitas, dan catatan praktis untuk memahami Madinah dari sudut yang lebih dekat.":
-    "City guides, historical visits, transport, facilities, and practical notes for a closer understanding of Madinah.",
+  "Rute, kultur, dan catatan praktis untuk memahami Makkah dari sudut yang lebih dekat, dilengkapi panduan kota.":
+    "Routes, culture, and practical notes for a closer understanding of Makkah, complemented by city guides.",
+  "Ziarah, transportasi, fasilitas, dan catatan praktis untuk memahami Madinah dari sudut yang lebih dekat, dilengkapi panduan kota.":
+    "Historical visits, transport, facilities, and practical notes for a closer understanding of Madinah, complemented by city guides.",
   "Panduan praktis untuk memahami kehidupan, perjalanan, dan kebutuhan sehari-hari di Makkah dan Madinah.":
     "Practical guides to life, travel, and everyday needs in Makkah and Madinah.",
   "Panduan praktis untuk perjalanan dan keseharian di Haramain.":
     "Practical guides for travel and everyday life in Haramain.",
   "Panduan — Sudut Haramain": "Guides — Sudut Haramain",
-  "Panduan, suasana, kultur, dan informasi praktis langsung dari Makkah–Madinah.":
-    "Guides, scenes, culture, and practical information directly from Makkah and Madinah.",
+  "Suasana, kultur, dan informasi praktis langsung dari Makkah–Madinah, dilengkapi panduan yang relevan.":
+    "Scenes, culture, and practical information directly from Makkah and Madinah, complemented by relevant guides.",
   "Persiapan Umrah": "Preparing for Umrah",
   "Punya pengalaman singkat yang mungkin membantu jamaah lain?":
     "Have a brief experience that might help other pilgrims?",
