@@ -271,7 +271,7 @@ watch(
                 <span
                   v-if="unit.id !== 1"
                   class="mt-2 inline-flex rounded-full border border-sht-gold/50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-sht-olive"
-                  >{{ t("Segera Hadir, InsyaaAllaah") }}</span
+                  >{{ t("Segera Hadir, Insyaa Allaah") }}</span
                 >
               </a>
             </div>
@@ -415,7 +415,7 @@ watch(
               <span
                 v-if="unit.id !== 1"
                 class="mt-2 inline-flex rounded-full border border-sht-gold/50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-sht-olive"
-                >{{ t("Segera Hadir, InsyaaAllaah") }}</span
+                >{{ t("Segera Hadir, Insyaa Allaah") }}</span
               ></a
             >
           </div>

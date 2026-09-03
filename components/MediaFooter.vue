@@ -128,13 +128,13 @@ function toggleGroup(group: string) {
             <li>
               <span>{{ t("Sudut Haramain Tour") }}</span
               ><span class="mt-1 block text-xs text-sht-off-white/45">{{
-                t("Segera Hadir, InsyaaAllaah")
+                t("Segera Hadir, Insyaa Allaah")
               }}</span>
             </li>
             <li>
               <span>{{ t("Sudut Haramain Jastip") }}</span
               ><span class="mt-1 block text-xs text-sht-off-white/45">{{
-                t("Segera Hadir, InsyaaAllaah")
+                t("Segera Hadir, Insyaa Allaah")
               }}</span>
             </li>
           </ul>
@@ -268,13 +268,13 @@ function toggleGroup(group: string) {
             <p class="py-2">
               {{ t("Sudut Haramain Tour") }}
               <span class="ml-2 text-xs text-sht-off-white/45">{{
-                t("Segera Hadir, InsyaaAllaah")
+                t("Segera Hadir, Insyaa Allaah")
               }}</span>
             </p>
             <p class="py-2">
               {{ t("Sudut Haramain Jastip") }}
               <span class="ml-2 text-xs text-sht-off-white/45">{{
-                t("Segera Hadir, InsyaaAllaah")
+                t("Segera Hadir, Insyaa Allaah")
               }}</span>
             </p>
           </div>
