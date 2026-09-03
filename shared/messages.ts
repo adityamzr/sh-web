@@ -174,7 +174,7 @@ export const englishMessages: Record<string, string> = {
   SOROTAN: "HIGHLIGHTS",
   "SOROTAN HARAMAIN": "HARAMAIN HIGHLIGHTS",
   "SUDUT HARAMAIN / PENCARIAN": "SUDUT HARAMAIN / SEARCH",
-  "Segera Hadir, InsyaaAllaah": "Coming Soon, Inshaa Allaah",
+  "Segera Hadir, Insyaa Allaah": "Coming Soon, Inshaa Allaah",
   "Setiap masukan akan kami tinjau terlebih dahulu sebelum digunakan atau diterbitkan.":
     "Every contribution is reviewed before it is used or published.",
   "Sorotan Haramain": "Haramain Highlights",
