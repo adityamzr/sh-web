@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { t, localePath, locale, basePath } = useLocale()
+const { t, localePath, locale, basePath } = useLocale();
 
 import {
   BookOpen,
@@ -23,18 +23,23 @@ const isScrolled = ref(false);
 const isServicesOpen = ref(false);
 const isSearchOpen = ref(false);
 const contentLinks = useContentLocaleLinks();
-const clientHash = ref('');
+const clientHash = ref("");
 const mobileLanguages = [
-  { code: 'id' as const, label: 'Indonesia' },
-  { code: 'en' as const, label: 'English' },
+  { code: "id" as const, label: "Indonesia" },
+  { code: "en" as const, label: "English" },
 ] as const;
-function getMobileLangHref(target: 'id' | 'en') {
-  const cur = contentLinks.value?.key === route.path ? contentLinks.value : null
+function getMobileLangHref(target: "id" | "en") {
+  const cur =
+    contentLinks.value?.key === route.path ? contentLinks.value : null;
   if (cur) {
-    return (cur.paths[target] as string) ?? (cur.fallback?.[target] as string) ?? localePath('/hari-ini?translation=unavailable', target)
+    return (
+      (cur.paths[target] as string) ??
+      (cur.fallback?.[target] as string) ??
+      localePath("/hari-ini?translation=unavailable", target)
+    );
   }
-  const base = route.fullPath.split('#')[0]
-  return localePath(base, target) + clientHash.value
+  const base = route.fullPath.split("#")[0];
+  return localePath(base, target) + clientHash.value;
 }
 const isHome = computed(() => basePath.value === "/");
 const searchTrigger = ref<HTMLButtonElement | null>(null);
@@ -97,43 +102,55 @@ function closeMobileMenu(restoreFocus = false) {
   if (restoreFocus) nextTick(() => menuTrigger.value?.focus());
 }
 function handleEscape(event: KeyboardEvent) {
-  if (event.key !== 'Escape') return;
+  if (event.key !== "Escape") return;
   if (isSearchOpen.value) closeSearch();
   else if (isOpen.value) closeMobileMenu(true);
   else isServicesOpen.value = false;
 }
 function closeLanguageDropdown() {
-  window.dispatchEvent(new CustomEvent('close-language-dropdown'))
+  window.dispatchEvent(new CustomEvent("close-language-dropdown"));
 }
-watch(() => route.path, () => {
-  isOpen.value = false
-  isServicesOpen.value = false
-  isSearchOpen.value = false
-  closeLanguageDropdown()
-})
+watch(
+  () => route.path,
+  () => {
+    isOpen.value = false;
+    isServicesOpen.value = false;
+    isSearchOpen.value = false;
+    closeLanguageDropdown();
+  },
+);
 watch(isOpen, (open) => {
   if (open) {
-    closeLanguageDropdown()
-    isServicesOpen.value = false
+    closeLanguageDropdown();
+    isServicesOpen.value = false;
   }
-})
+});
 watch(isServicesOpen, (open) => {
-  if (open) closeLanguageDropdown()
-})
+  if (open) closeLanguageDropdown();
+});
 onMounted(() => {
   updateScroll();
-  clientHash.value = route.hash
+  clientHash.value = route.hash;
   window.addEventListener("scroll", updateScroll, { passive: true });
   window.addEventListener("keydown", handleEscape);
-  window.addEventListener('close-services-menu', (() => { isServicesOpen.value = false }) as EventListener)
+  window.addEventListener("close-services-menu", (() => {
+    isServicesOpen.value = false;
+  }) as EventListener);
 });
 onBeforeUnmount(() => {
   window.removeEventListener("scroll", updateScroll);
   window.removeEventListener("keydown", handleEscape);
-  window.removeEventListener('close-services-menu', (() => { isServicesOpen.value = false }) as EventListener)
+  window.removeEventListener("close-services-menu", (() => {
+    isServicesOpen.value = false;
+  }) as EventListener);
   if (servicesCloseTimer) clearTimeout(servicesCloseTimer);
 });
-watch(() => route.hash, h => { clientHash.value = h })
+watch(
+  () => route.hash,
+  (h) => {
+    clientHash.value = h;
+  },
+);
 </script>
 
 <template>
@@ -207,7 +224,7 @@ watch(() => route.hash, h => { clientHash.value = h })
             @click="isServicesOpen = !isServicesOpen"
             @keydown.esc="isServicesOpen = false"
           >
-            {{ t('Tentang Kami') }}
+            {{ t("Tentang Kami") }}
             <ChevronDown
               class="h-4 w-4 transition-transform duration-200"
               :class="isServicesOpen ? 'rotate-180' : ''"
@@ -254,14 +271,15 @@ watch(() => route.hash, h => { clientHash.value = h })
                 <span
                   v-if="unit.id !== 1"
                   class="mt-2 inline-flex rounded-full border border-sht-gold/50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-sht-olive"
-                  >{{ t('Segera Hadir') }}</span
+                  >{{ t("Segera Hadir, InsyaaAllaah") }}</span
                 >
               </a>
             </div>
           </div>
         </div>
       </nav>
-      <div class="hidden items-center gap-2 lg:flex"><MediaLanguageSwitcher />
+      <div class="hidden items-center gap-2 lg:flex">
+        <MediaLanguageSwitcher />
         <button
           ref="searchTrigger"
           type="button"
@@ -274,8 +292,9 @@ watch(() => route.hash, h => { clientHash.value = h })
           :aria-label="t('Cari informasi')"
           @click="isSearchOpen = true"
         >
-          <Search class="h-4 w-4 shrink-0" aria-hidden="true" /><span class="hidden xl:inline"
-            >{{ t('Cari informasi') }}</span
+          <Search class="h-4 w-4 shrink-0" aria-hidden="true" /><span
+            class="hidden xl:inline"
+            >{{ t("Cari informasi") }}</span
           >
         </button>
       </div>
@@ -354,7 +373,7 @@ watch(() => route.hash, h => { clientHash.value = h })
               :stroke-width="1.8"
               aria-hidden="true"
             />
-            <span class="flex-1">{{ t('Tentang Kami') }}</span>
+            <span class="flex-1">{{ t("Tentang Kami") }}</span>
             <ChevronDown
               class="h-5 w-5 transition-transform duration-200"
               :class="isServicesOpen ? 'rotate-180' : ''"
@@ -370,27 +389,44 @@ watch(() => route.hash, h => { clientHash.value = h })
               v-for="unit in serviceUnits"
               :key="unit.name"
               :href="unit.id === 1 ? localePath(unit.href) : undefined"
-              :target="unit.id === 1 && unit.href.startsWith('http') ? '_blank' : undefined"
+              :target="
+                unit.id === 1 && unit.href.startsWith('http')
+                  ? '_blank'
+                  : undefined
+              "
               :rel="
-                unit.id === 1 && unit.href.startsWith('http') ? 'noopener noreferrer' : undefined
+                unit.id === 1 && unit.href.startsWith('http')
+                  ? 'noopener noreferrer'
+                  : undefined
               "
               :aria-disabled="unit.id !== 1"
               :tabindex="unit.id !== 1 ? -1 : undefined"
               class="block border-b border-sht-stone/60 py-3 last:border-0"
               :class="unit.id !== 1 ? 'cursor-not-allowed opacity-60' : ''"
-              @click="unit.id !== 1 ? $event.preventDefault() : closeMobileMenu()"
+              @click="
+                unit.id !== 1 ? $event.preventDefault() : closeMobileMenu()
+              "
               ><p class="font-sans text-base text-sht-olive-dark">
                 {{ t(unit.name) }}
               </p>
               <p class="mt-1 text-xs text-sht-charcoal/60">
                 {{ t(unit.subtitle) }}
-              </p><span v-if="unit.id !== 1" class="mt-2 inline-flex rounded-full border border-sht-gold/50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-sht-olive">{{ t('Segera Hadir') }}</span></a
+              </p>
+              <span
+                v-if="unit.id !== 1"
+                class="mt-2 inline-flex rounded-full border border-sht-gold/50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-sht-olive"
+                >{{ t("Segera Hadir, InsyaaAllaah") }}</span
+              ></a
             >
           </div>
         </div>
         <!-- Mobile Language Section -->
         <div class="border-b border-sht-stone py-5">
-          <p class="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-sht-charcoal/50">{{ t('Bahasa') }}</p>
+          <p
+            class="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-sht-charcoal/50"
+          >
+            {{ t("Bahasa") }}
+          </p>
           <div class="flex flex-col gap-1">
             <NuxtLink
               v-for="lang in mobileLanguages"
@@ -399,16 +435,26 @@ watch(() => route.hash, h => { clientHash.value = h })
               :lang="lang.code"
               :hreflang="lang.code"
               :aria-current="locale === lang.code ? 'true' : undefined"
-              :aria-label="t('Ganti bahasa ke {language}', { language: lang.label })"
+              :aria-label="
+                t('Ganti bahasa ke {language}', { language: lang.label })
+              "
               class="flex items-center justify-between rounded-xl px-3 py-3 text-base font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-sht-gold"
-              :class="locale === lang.code ? 'bg-sht-stone/60 text-sht-olive-dark' : 'text-sht-charcoal/80 hover:bg-sht-stone/40'"
+              :class="
+                locale === lang.code
+                  ? 'bg-sht-stone/60 text-sht-olive-dark'
+                  : 'text-sht-charcoal/80 hover:bg-sht-stone/40'
+              "
               @click="closeMobileMenu()"
             >
               <span class="flex items-center gap-2.5">
                 <CommonLocaleFlag :code="lang.code" size="md" />
                 <span>{{ lang.label }}</span>
               </span>
-              <Check v-if="locale === lang.code" class="h-5 w-5 shrink-0 text-sht-olive" aria-hidden="true" />
+              <Check
+                v-if="locale === lang.code"
+                class="h-5 w-5 shrink-0 text-sht-olive"
+                aria-hidden="true"
+              />
             </NuxtLink>
           </div>
         </div>
