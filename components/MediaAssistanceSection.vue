@@ -59,7 +59,7 @@ const { t, localePath, locale, basePath } = useLocale();
               </p>
               <span
                 class="rounded-full border border-sht-gold/40 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-sht-gold"
-                >{{ t("Segera Hadir, Insyaa Allaah") }}</span
+                >{{ t("Segera Hadir") }}</span
               >
             </div>
             <div>
@@ -94,7 +94,7 @@ const { t, localePath, locale, basePath } = useLocale();
             </p>
             <span
               class="rounded-full border border-sht-gold/40 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-sht-gold"
-              >{{ t("Segera Hadir, Insyaa Allaah") }}</span
+              >{{ t("Segera Hadir") }}</span
             >
           </div>
           <div class="mt-24 max-w-xl">
