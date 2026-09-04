@@ -47,10 +47,10 @@ export async function fetchMediaArticle(slug:string, locale: SupportedLocale = '
   return article
 }
 
-export async function useMediaArticles(query: MaybeRefOrGetter<Record<string, unknown>> = {}) {
+export function useMediaArticles(query: MaybeRefOrGetter<Record<string, unknown>> = {}) {
   const { locale } = useLocale()
   const key = computed(() => mediaCacheKey('articles', locale.value, toValue(query)))
-  const { data, pending, error } = await useAsyncData(key, () => fetchMediaArticles(toValue(query), locale.value), { default: () => [] })
+  const { data, pending, error } = useAsyncData(key, () => fetchMediaArticles(toValue(query), locale.value), { default: () => [], lazy: true })
   return { articles: data, pending, error }
 }
 

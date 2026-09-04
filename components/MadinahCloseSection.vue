@@ -4,7 +4,7 @@ const { t, localePath, locale, basePath } = useLocale()
 
 import { useMediaArticles } from '~/composables/useMediaArticles'
 import { useMediaPageSettings } from '~/composables/useMediaPageSettings'
-const { articles } = await useMediaArticles({ limit: 100, city: 'MADINAH' }); const { settings } = await useMediaPageSettings('madinah')
+const { articles } = useMediaArticles({ limit: 100, city: 'MADINAH' }); const { settings } = useMediaPageSettings('madinah')
 const variants=['primary','image','text','wide','daily']; const stories=computed(()=>{const ids=settings.value?.editorialArticleIds||[];const manual=ids.map((id:number)=>articles.value.find((a:any)=>a.id===id)).filter((a:any):a is NonNullable<typeof a>=>Boolean(a));const used=new Set(manual.map((a:any)=>a.id));const fallback=articles.value.filter((a:any)=>!used.has(a.id));const selected=[...manual,...fallback].slice(0,5);return selected.map((a:any,i)=>({key:a.id,slug:a.slug,category:`${a.city.toUpperCase()} · ${t(a.category.toUpperCase())}`,title:a.title,summary:a.excerpt,image:a.image,alt:a.imageAlt,variant:variants[i]}))})
 </script>
 

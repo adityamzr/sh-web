@@ -36,9 +36,9 @@ export async function fetchMediaGuides(locale: SupportedLocale = 'id'){
   return (r.data||[]).map(normalize).filter((guide): guide is MediaGuide => Boolean(guide)).sort((a,b)=>groupOrder.indexOf(a.group)-groupOrder.indexOf(b.group)||a.sortOrder-b.sortOrder)
 }
 
-export async function useMediaGuides(){
+export function useMediaGuides(){
   const {locale}=useLocale()
   const key=computed(()=>mediaCacheKey('guides',locale.value));
-  const {data,pending,error}=await useAsyncData<MediaGuide[]>(key,async()=>{const preload=takeMediaPreload<MediaGuide[]>(key.value);return preload.used?preload.data||[]:fetchMediaGuides(locale.value)},{default:()=>[]});
+  const {data,pending,error}=useAsyncData<MediaGuide[]>(key,async()=>{const preload=takeMediaPreload<MediaGuide[]>(key.value);return preload.used?preload.data||[]:fetchMediaGuides(locale.value)},{default:()=>[],lazy:true});
   return {guides:data,pending,error,groupOrder}
 }

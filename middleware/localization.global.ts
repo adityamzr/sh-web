@@ -8,6 +8,10 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const basePath = stripLocale(to.path)
   const content = useContentLocaleLinks()
   content.value = null
+  // Client-side navigation must never wait for CMS lookups. Pages populate the
+  // localized content links after their lazy data has arrived. Keep resolving
+  // them during SSR so canonical/hreflang output remains complete.
+  if (import.meta.client) return
   // Resolve alternate slugs BEFORE the navbar renders, including SSR.
   // The page reuses these async-data entries rather than issuing a second request.
   if (basePath.startsWith('/artikel/') && to.params.slug) {

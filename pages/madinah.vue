@@ -9,7 +9,7 @@ useSeoMeta({
   description: () => t('Ziarah, transportasi, fasilitas, dan catatan praktis untuk memahami Madinah dari sudut yang lebih dekat, dilengkapi panduan kota.'),
 })
 
-const { locations, error: locationError, pending: locationsPending } = await useMediaLocations('MADINAH')
+const { locations, error: locationError, pending: locationsPending } = useMediaLocations('MADINAH')
 
 const mapExplorer = ref<{ focusCategory: (category: string) => void } | null>(null)
 const quickActions = [

@@ -9,7 +9,7 @@ useSeoMeta({
   description: () => t('Rute, kultur, dan catatan praktis untuk memahami Makkah dari sudut yang lebih dekat, dilengkapi panduan kota.'),
 })
 
-const { locations, error: locationError, pending: locationsPending } = await useMediaLocations('MAKKAH')
+const { locations, error: locationError, pending: locationsPending } = useMediaLocations('MAKKAH')
 
 const route = useRoute()
 const mapExplorer = ref<{ focusCategory: (category: string) => void } | null>(null)

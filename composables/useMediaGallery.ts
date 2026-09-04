@@ -41,8 +41,8 @@ export async function fetchMediaGallery(query:Record<string,unknown>={}, locale:
   return (r.data||[]).map(row => normalizeGallery(row, locale)).filter((row): row is MediaGalleryItem => Boolean(row))
 }
 
-export async function useMediaGallery(query:Record<string,unknown>={}){
+export function useMediaGallery(query:Record<string,unknown>={}){
   const {locale}=useLocale()
-  const {data,pending,error}=await useAsyncData(computed(()=>mediaCacheKey('gallery',locale.value,query)),()=>fetchMediaGallery(query,locale.value),{default:()=>[]});
+  const {data,pending,error}=useAsyncData(computed(()=>mediaCacheKey('gallery',locale.value,query)),()=>fetchMediaGallery(query,locale.value),{default:()=>[],lazy:true});
   return {items:data,pending,error}
 }

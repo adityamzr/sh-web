@@ -4,7 +4,7 @@ import { formatMediaDate } from "~/shared/localization"
 const { t, localePath, locale, basePath } = useLocale()
 
 import { useMediaArticles } from '~/composables/useMediaArticles'
-const { articles: latestArticles } = await useMediaArticles({ city: 'MAKKAH', limit: 4 })
+const { articles: latestArticles } = useMediaArticles({ city: 'MAKKAH', limit: 4 })
 </script>
 
 <template>

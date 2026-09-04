@@ -42,8 +42,8 @@ export async function fetchMediaLocations(city:string, locale: SupportedLocale =
   return (r.data||[]).map(normalizeLocation).filter((location): location is MediaLocation => Boolean(location)).sort((a,b)=>a.sortOrder-b.sortOrder)
 }
 
-export async function useMediaLocations(city:string){
+export function useMediaLocations(city:string){
   const {locale}=useLocale()
-  const {data,pending,error}=await useAsyncData(computed(()=>mediaCacheKey('locations',locale.value,{city})),()=>fetchMediaLocations(city,locale.value),{default:()=>[]});
+  const {data,pending,error}=useAsyncData(computed(()=>mediaCacheKey('locations',locale.value,{city})),()=>fetchMediaLocations(city,locale.value),{default:()=>[],lazy:true});
   return {locations:data,pending,error}
 }
