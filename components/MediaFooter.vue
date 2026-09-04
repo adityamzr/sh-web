@@ -36,8 +36,10 @@ const socialLinks = [
   },
 ] as const;
 const accordionOpen = ref<string | null>(null);
-const whatsappHref="https://wa.me/62871361823123";
-function trackSocial(eventType:'instagram_click'|'whatsapp_click'){trackEvent({eventType})}
+const whatsappHref = "https://wa.me/62871361823123";
+function trackSocial(eventType: "instagram_click" | "whatsapp_click") {
+  trackEvent({ eventType });
+}
 function toggleGroup(group: string) {
   accordionOpen.value = accordionOpen.value === group ? null : group;
 }
@@ -131,13 +133,13 @@ function toggleGroup(group: string) {
             <li>
               <span>{{ t("Sudut Haramain Tour") }}</span
               ><span class="mt-1 block text-xs text-sht-off-white/45">{{
-                t("Segera Hadir, Insyaa Allaah")
+                t("Segera Hadir")
               }}</span>
             </li>
             <li>
               <span>{{ t("Sudut Haramain Jastip") }}</span
               ><span class="mt-1 block text-xs text-sht-off-white/45">{{
-                t("Segera Hadir, Insyaa Allaah")
+                t("Segera Hadir")
               }}</span>
             </li>
           </ul>
@@ -155,7 +157,10 @@ function toggleGroup(group: string) {
                 target="_blank"
                 rel="noopener noreferrer"
                 :aria-label="t(social.label)"
-                @click="social.platform === 'instagram' && trackSocial('instagram_click')"
+                @click="
+                  social.platform === 'instagram' &&
+                  trackSocial('instagram_click')
+                "
                 class="rounded-sm transition-colors hover:text-sht-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold"
                 ><svg
                   v-if="social.platform === 'instagram'"
@@ -207,8 +212,16 @@ function toggleGroup(group: string) {
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     d="m10 9 5 3-5 3V9Z"
-                  /></svg
-              ></a><a :href="whatsappHref" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="rounded-sm transition-colors hover:text-sht-gold" @click="trackSocial('whatsapp_click')"><MessageCircle class="h-6 w-6" /></a>
+                  /></svg></a
+              ><a
+                :href="whatsappHref"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+                class="rounded-sm transition-colors hover:text-sht-gold"
+                @click="trackSocial('whatsapp_click')"
+                ><MessageCircle class="h-6 w-6"
+              /></a>
             </div>
           </div>
         </div>
@@ -272,13 +285,13 @@ function toggleGroup(group: string) {
             <p class="py-2">
               {{ t("Sudut Haramain Tour") }}
               <span class="ml-2 text-xs text-sht-off-white/45">{{
-                t("Segera Hadir, Insyaa Allaah")
+                t("Segera Hadir")
               }}</span>
             </p>
             <p class="py-2">
               {{ t("Sudut Haramain Jastip") }}
               <span class="ml-2 text-xs text-sht-off-white/45">{{
-                t("Segera Hadir, Insyaa Allaah")
+                t("Segera Hadir")
               }}</span>
             </p>
           </div>
@@ -297,7 +310,10 @@ function toggleGroup(group: string) {
               target="_blank"
               rel="noopener noreferrer"
               :aria-label="t(social.label)"
-              @click="social.platform === 'instagram' && trackSocial('instagram_click')"
+              @click="
+                social.platform === 'instagram' &&
+                trackSocial('instagram_click')
+              "
               class="rounded-sm transition-colors hover:text-sht-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold"
               ><svg
                 v-if="social.platform === 'instagram'"
@@ -349,8 +365,16 @@ function toggleGroup(group: string) {
                   fill="currentColor"
                   stroke="none"
                   d="m10 9 5 3-5 3V9Z"
-                /></svg
-            ></a><a :href="whatsappHref" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="rounded-sm transition-colors hover:text-sht-gold" @click="trackSocial('whatsapp_click')"><MessageCircle class="h-6 w-6" /></a>
+                /></svg></a
+            ><a
+              :href="whatsappHref"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp"
+              class="rounded-sm transition-colors hover:text-sht-gold"
+              @click="trackSocial('whatsapp_click')"
+              ><MessageCircle class="h-6 w-6"
+            /></a>
           </div>
         </div>
       </div>
