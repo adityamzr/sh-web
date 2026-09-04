@@ -15,6 +15,8 @@ import {
   X,
 } from "lucide-vue-next";
 
+import { PUBLIC_ECOSYSTEM, ECOSYSTEM_UNITS } from "~/shared/ecosystem";
+
 const route = useRoute();
 import whiteLogo from "~/assets/images/sht_horizontal_white_logo.png";
 
@@ -51,28 +53,29 @@ const links = [
   { key: "visual", label: "Visual Haramain", to: "/visual", icon: Sparkles },
   { key: "panduan", label: "Panduan", to: "/panduan", icon: BookOpen },
 ];
-const serviceUnits = [
-  {
-    id: 1,
-    name: "Apa itu Sudut Haramain?",
-    subtitle: "Mengenal media digital Sudut Haramain.",
-    href: "/tentang-kami",
-  },
-  {
-    id: 2,
-    name: "Sudut Haramain Tour",
-    subtitle: "Umroh Mandiri & Land Arrangement",
-    href: "https://tour.sudutharamain.id",
-  },
-  {
-    id: 3,
-    name: "Sudut Haramain Jastip",
-    subtitle: "Titip beli dari Makkah–Madinah",
-    href: "https://jastip.sudutharamain.id",
-  },
+
+// Central visibility control - preserve original definitions for future re-enable
+const allServiceUnits = [
+  ECOSYSTEM_UNITS.media,
+  ECOSYSTEM_UNITS.tour,
+  ECOSYSTEM_UNITS.jastip,
 ];
+
+const visibleServiceUnits = computed(() =>
+  allServiceUnits.filter((unit) => {
+    if (unit.id === 2) return PUBLIC_ECOSYSTEM.tour;
+    if (unit.id === 3) return PUBLIC_ECOSYSTEM.jastip;
+    return true;
+  }),
+);
+
+const hasOnlyOneService = computed(() => visibleServiceUnits.value.length === 1);
+const singleService = computed(() => visibleServiceUnits.value[0] || allServiceUnits[0]);
+const hasServiceDropdown = computed(() => visibleServiceUnits.value.length > 1);
+
 let servicesCloseTimer: ReturnType<typeof setTimeout> | null = null;
 function openServicesMenu() {
+  if (!hasServiceDropdown.value) return;
   if (servicesCloseTimer) clearTimeout(servicesCloseTimer);
   isServicesOpen.value = true;
 }
@@ -208,7 +211,23 @@ watch(
               class="absolute inset-x-1 -bottom-0.5 h-px bg-sht-gold"
               aria-hidden="true" /></a
         ></template>
+        <!-- Simplified Tentang Kami as direct link when only one visible unit -->
+        <NuxtLink
+          v-if="hasOnlyOneService"
+          :to="localePath(singleService.href)"
+          class="relative py-2 text-[15px] font-medium opacity-80 transition-opacity hover:opacity-100"
+          :class="basePath === '/tentang-kami' ? 'font-semibold opacity-100' : 'opacity-80'"
+          :aria-current="basePath === '/tentang-kami' ? 'page' : undefined"
+        >
+          {{ t("Tentang Kami") }}
+          <span
+            v-if="basePath === '/tentang-kami'"
+            class="absolute inset-x-1 -bottom-0.5 h-px bg-sht-gold"
+            aria-hidden="true"
+          />
+        </NuxtLink>
         <div
+          v-else
           class="relative hidden lg:block"
           @mouseenter="openServicesMenu"
           @mouseleave="scheduleServicesClose"
@@ -239,41 +258,18 @@ watch(
             :aria-label="t('Tentang Kami')"
           >
             <div>
-              <a
-                v-for="unit in serviceUnits"
+              <NuxtLink
+                v-for="unit in visibleServiceUnits"
                 :key="unit.id"
-                :href="unit.id === 1 ? localePath(unit.href) : undefined"
-                :target="
-                  unit.id === 1 && unit.href.startsWith('http')
-                    ? '_blank'
-                    : undefined
-                "
-                :rel="
-                  unit.id === 1 && unit.href.startsWith('http')
-                    ? 'noopener noreferrer'
-                    : undefined
-                "
-                :aria-disabled="unit.id !== 1"
-                :tabindex="unit.id !== 1 ? -1 : undefined"
-                :class="[
-                  'block rounded-xl p-3 transition-colors',
-                  unit.id === 1
-                    ? 'hover:bg-sht-stone/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-sht-gold'
-                    : 'cursor-not-allowed opacity-60',
-                ]"
+                :to="localePath(unit.href)"
+                class="block rounded-xl p-3 transition-colors hover:bg-sht-stone/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-sht-gold"
                 role="menuitem"
-                @click="unit.id !== 1 && $event.preventDefault()"
               >
                 <p class="font-semibold">{{ t(unit.name) }}</p>
                 <p class="mt-1 text-xs text-sht-charcoal/60">
                   {{ t(unit.subtitle) }}
                 </p>
-                <span
-                  v-if="unit.id !== 1"
-                  class="mt-2 inline-flex rounded-full border border-sht-gold/50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-sht-olive"
-                  >{{ t("Segera Hadir") }}</span
-                >
-              </a>
+              </NuxtLink>
             </div>
           </div>
         </div>
@@ -360,7 +356,22 @@ watch(
             /><span>{{ t(link.label) }}</span></a
           ></template
         >
-        <div class="border-b border-sht-stone">
+        <!-- Mobile Tentang Kami - simplified to direct link when only one -->
+        <NuxtLink
+          v-if="hasOnlyOneService"
+          :to="localePath(singleService.href)"
+          class="flex min-h-[64px] items-center gap-4 border-b border-sht-stone px-1 py-4 font-sans text-base font-semibold leading-tight"
+          :aria-current="basePath === '/tentang-kami' ? 'page' : undefined"
+          @click="closeMobileMenu()"
+        >
+          <BriefcaseBusiness
+            class="h-5 w-5 shrink-0 text-sht-olive"
+            :stroke-width="1.8"
+            aria-hidden="true"
+          />
+          <span>{{ t("Tentang Kami") }}</span>
+        </NuxtLink>
+        <div v-else class="border-b border-sht-stone">
           <button
             type="button"
             class="flex min-h-[64px] w-full items-center gap-4 px-1 py-4 text-left font-sans text-base font-semibold leading-tight"
@@ -385,38 +396,18 @@ watch(
             id="media-mobile-services"
             class="ml-9 border-t border-sht-stone/70 py-2"
           >
-            <a
-              v-for="unit in serviceUnits"
+            <NuxtLink
+              v-for="unit in visibleServiceUnits"
               :key="unit.name"
-              :href="unit.id === 1 ? localePath(unit.href) : undefined"
-              :target="
-                unit.id === 1 && unit.href.startsWith('http')
-                  ? '_blank'
-                  : undefined
-              "
-              :rel="
-                unit.id === 1 && unit.href.startsWith('http')
-                  ? 'noopener noreferrer'
-                  : undefined
-              "
-              :aria-disabled="unit.id !== 1"
-              :tabindex="unit.id !== 1 ? -1 : undefined"
+              :to="localePath(unit.href)"
               class="block border-b border-sht-stone/60 py-3 last:border-0"
-              :class="unit.id !== 1 ? 'cursor-not-allowed opacity-60' : ''"
-              @click="
-                unit.id !== 1 ? $event.preventDefault() : closeMobileMenu()
-              "
+              @click="closeMobileMenu()"
               ><p class="font-sans text-base text-sht-olive-dark">
                 {{ t(unit.name) }}
               </p>
               <p class="mt-1 text-xs text-sht-charcoal/60">
                 {{ t(unit.subtitle) }}
-              </p>
-              <span
-                v-if="unit.id !== 1"
-                class="mt-2 inline-flex rounded-full border border-sht-gold/50 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-sht-olive"
-                >{{ t("Segera Hadir") }}</span
-              ></a
+              </p></NuxtLink
             >
           </div>
         </div>

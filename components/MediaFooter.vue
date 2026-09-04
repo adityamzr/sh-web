@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { t, localePath, locale, basePath } = useLocale();
 const { trackEvent } = useMediaAnalytics();
+import { SHOW_FOOTER_LAYANAN } from "~/shared/ecosystem";
 
 import footerLogo from "~/assets/images/sht_horizontal_white_logo.png";
 import { ChevronDown, MessageCircle } from "lucide-vue-next";
@@ -124,26 +125,28 @@ function toggleGroup(group: string) {
           </ul>
         </nav>
         <div class="hidden lg:block">
-          <h3
-            class="text-xs font-semibold uppercase tracking-[0.2em] text-sht-gold"
-          >
-            {{ t("LAYANAN") }}
-          </h3>
-          <ul class="mt-5 space-y-3 text-sm text-sht-off-white/70">
-            <li>
-              <span>{{ t("Sudut Haramain Tour") }}</span
-              ><span class="mt-1 block text-xs text-sht-off-white/45">{{
-                t("Segera Hadir")
-              }}</span>
-            </li>
-            <li>
-              <span>{{ t("Sudut Haramain Jastip") }}</span
-              ><span class="mt-1 block text-xs text-sht-off-white/45">{{
-                t("Segera Hadir")
-              }}</span>
-            </li>
-          </ul>
-          <div class="mt-8">
+          <div v-if="SHOW_FOOTER_LAYANAN">
+            <h3
+              class="text-xs font-semibold uppercase tracking-[0.2em] text-sht-gold"
+            >
+              {{ t("LAYANAN") }}
+            </h3>
+            <ul class="mt-5 space-y-3 text-sm text-sht-off-white/70">
+              <li>
+                <span>{{ t("Sudut Haramain Tour") }}</span
+                ><span class="mt-1 block text-xs text-sht-off-white/45">{{
+                  t("Segera Hadir")
+                }}</span>
+              </li>
+              <li>
+                <span>{{ t("Sudut Haramain Jastip") }}</span
+                ><span class="mt-1 block text-xs text-sht-off-white/45">{{
+                  t("Segera Hadir")
+                }}</span>
+              </li>
+            </ul>
+          </div>
+          <div :class="SHOW_FOOTER_LAYANAN ? 'mt-8' : ''">
             <h3
               class="text-xs font-semibold uppercase tracking-[0.2em] text-sht-gold"
             >
@@ -264,7 +267,7 @@ function toggleGroup(group: string) {
             >
           </div>
         </div>
-        <div class="border-t border-sht-off-white/15">
+        <div v-if="SHOW_FOOTER_LAYANAN" class="border-t border-sht-off-white/15">
           <button
             type="button"
             class="flex min-h-[56px] w-full items-center justify-between text-left text-xs font-semibold uppercase tracking-[0.2em] text-sht-gold"
