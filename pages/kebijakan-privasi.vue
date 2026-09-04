@@ -1,9 +1,111 @@
 <script setup lang="ts">
-import { legalEnglish } from "~/shared/legal-en"
-const { t, localePath, locale, basePath } = useLocale()
+import { legalEnglish } from "~/shared/legal-en";
+const { t, localePath, locale, basePath } = useLocale();
 
-useSeoMeta({title:() => t('Kebijakan Privasi | Sudut Haramain'),description:() => t('Kebijakan Privasi Sudut Haramain mengenai pengelolaan informasi dan penggunaan situs sudutharamain.id.')})
-const sections=[{id:'informasi',title:'1. Informasi yang Kami Terima',paragraphs:['Sudut Haramain dapat menerima informasi yang Anda berikan secara langsung ketika menggunakan fitur tertentu pada situs. Informasi tersebut dapat meliputi data yang dikirim melalui formulir kontribusi, koreksi informasi, rekomendasi tempat, tips, pengalaman, atau bentuk interaksi lain yang tersedia pada situs.','Kami juga dapat menerima feedback sederhana terhadap konten, seperti penilaian apakah sebuah artikel membantu atau kurang membantu.']},{id:'penggunaan',title:'2. Bagaimana Informasi Digunakan',paragraphs:['Informasi yang diterima dapat digunakan untuk:'],bullets:['meninjau kontribusi yang dikirim pengguna;','memperbaiki atau memperbarui informasi pada situs;','memahami apakah suatu konten bermanfaat bagi pembaca;','meningkatkan kualitas konten dan pengalaman penggunaan situs;','menjaga keamanan dan operasional layanan.','Kontribusi pengguna tidak secara otomatis dipublikasikan ke situs.']},{id:'teknis',title:'3. Informasi Teknis',paragraphs:['Dalam menjalankan situs, sistem dan penyedia infrastruktur yang digunakan dapat memproses informasi teknis dasar yang diperlukan untuk menampilkan, mengamankan, dan mengoperasikan layanan. Informasi tersebut dapat mencakup data teknis seperti alamat IP, jenis perangkat atau browser, waktu akses, serta informasi teknis lain yang lazim diproses oleh layanan hosting dan infrastruktur web.']},{id:'cookie',title:'4. Cookie dan Analitik',paragraphs:['Sudut Haramain tidak menggunakan informasi cookie atau teknologi serupa untuk membuat profil pengguna secara khusus, kecuali apabila diperlukan untuk fungsi teknis situs. Apabila di kemudian hari Sudut Haramain menggunakan layanan analitik atau teknologi serupa, Kebijakan Privasi ini dapat diperbarui untuk menjelaskan penggunaannya.']},{id:'pihak-ketiga',title:'5. Layanan Pihak Ketiga',paragraphs:['Sudut Haramain menggunakan layanan pihak ketiga tertentu untuk mendukung pengoperasian situs, seperti layanan hosting, penyimpanan dan pengiriman gambar, serta infrastruktur teknis lainnya. Dalam menjalankan fungsinya, penyedia tersebut dapat memproses informasi teknis sesuai dengan kebijakan dan ketentuan mereka masing-masing.']},{id:'keamanan',title:'6. Keamanan Informasi',paragraphs:['Kami berupaya menerapkan langkah-langkah yang wajar untuk menjaga informasi yang dikelola melalui situs. Namun, tidak ada sistem penyimpanan atau pengiriman data melalui internet yang dapat dijamin sepenuhnya bebas dari risiko.']},{id:'penyimpanan',title:'7. Penyimpanan Informasi',paragraphs:['Informasi dapat disimpan selama masih diperlukan untuk menjalankan fungsi situs, meninjau kontribusi, menjaga keamanan, menyelesaikan kebutuhan operasional, atau memenuhi kewajiban yang berlaku. Informasi yang tidak lagi diperlukan dapat dihapus atau tidak lagi digunakan sesuai kebutuhan operasional Sudut Haramain.']},{id:'permintaan',title:'8. Permintaan Terkait Informasi',paragraphs:['Apabila Anda memiliki pertanyaan atau permintaan terkait informasi yang pernah Anda kirimkan melalui Sudut Haramain, Anda dapat menghubungi kami melalui saluran kontak resmi yang tersedia.']},{id:'perubahan',title:'9. Perubahan Kebijakan Privasi',paragraphs:['Kebijakan Privasi ini dapat diperbarui dari waktu ke waktu untuk menyesuaikan perubahan pada fitur, layanan, teknologi, maupun kebutuhan operasional Sudut Haramain. Tanggal pembaruan terbaru akan ditampilkan pada halaman ini.']}]
+useSeoMeta({
+  title: () => t("Kebijakan Privasi | Sudut Haramain"),
+  description: () =>
+    t(
+      "Kebijakan Privasi Sudut Haramain mengenai pengelolaan informasi dan penggunaan situs sudutharamain.id.",
+    ),
+});
+const sections = [
+  {
+    id: "informasi",
+    title: "1. Informasi yang Kami Terima",
+    paragraphs: [
+      "Sudut Haramain dapat menerima informasi yang Anda berikan secara langsung ketika menggunakan fitur tertentu pada situs. Informasi tersebut dapat meliputi data yang dikirim melalui formulir kontribusi, koreksi informasi, rekomendasi tempat, tips, pengalaman, atau bentuk interaksi lain yang tersedia pada situs.",
+      "Kami juga dapat menerima feedback sederhana terhadap konten, seperti penilaian apakah sebuah artikel membantu atau kurang membantu.",
+    ],
+  },
+  {
+    id: "penggunaan",
+    title: "2. Bagaimana Informasi Digunakan",
+    paragraphs: ["Informasi yang diterima dapat digunakan untuk:"],
+    bullets: [
+      "meninjau kontribusi yang dikirim pengguna;",
+      "memperbaiki atau memperbarui informasi pada situs;",
+      "memahami apakah suatu konten bermanfaat bagi pembaca;",
+      "meningkatkan kualitas konten dan pengalaman penggunaan situs;",
+      "menjaga keamanan dan operasional layanan.",
+      "Kontribusi pengguna tidak secara otomatis dipublikasikan ke situs.",
+    ],
+  },
+  {
+    id: "teknis",
+    title: "3. Informasi Teknis",
+    paragraphs: [
+      "Dalam menjalankan situs, sistem dan penyedia infrastruktur yang digunakan dapat memproses informasi teknis dasar yang diperlukan untuk menampilkan, mengamankan, dan mengoperasikan layanan. Informasi tersebut dapat mencakup data teknis seperti alamat IP, jenis perangkat atau browser, waktu akses, serta informasi teknis lain yang lazim diproses oleh layanan hosting dan infrastruktur web.",
+    ],
+  },
+  {
+    id: "cookie",
+    title: "4. Cookie dan Analitik",
+    paragraphs: [
+      "Sudut Haramain menggunakan analitik anonim pihak pertama untuk menghitung kunjungan halaman, interaksi konten, pencarian, kategori perangkat, bahasa, dan sumber kunjungan. Identifier pengunjung dan sesi yang acak dapat disimpan melalui cookie pihak pertama. Kode negara hanya diproses apabila tersedia dari infrastruktur hosting.",
+      "Database analitik Sudut Haramain tidak sengaja menyimpan alamat IP lengkap, nama, email, nomor telepon, isi formulir, atau identitas iklan. Kami tidak menggunakan Google Analytics, pelacakan iklan, fingerprinting, perekaman sesi, gerakan mouse, maupun penekanan tombol untuk analitik. Sinyal Global Privacy Control dan Do Not Track dihormati oleh pengumpul analitik.",
+    ],
+  },
+  {
+    id: "pihak-ketiga",
+    title: "5. Layanan Pihak Ketiga",
+    paragraphs: [
+      "Sudut Haramain menggunakan layanan pihak ketiga tertentu untuk mendukung pengoperasian situs, seperti layanan hosting, penyimpanan dan pengiriman gambar, serta infrastruktur teknis lainnya. Dalam menjalankan fungsinya, penyedia tersebut dapat memproses informasi teknis sesuai dengan kebijakan dan ketentuan mereka masing-masing.",
+    ],
+  },
+  {
+    id: "keamanan",
+    title: "6. Keamanan Informasi",
+    paragraphs: [
+      "Kami berupaya menerapkan langkah-langkah yang wajar untuk menjaga informasi yang dikelola melalui situs. Namun, tidak ada sistem penyimpanan atau pengiriman data melalui internet yang dapat dijamin sepenuhnya bebas dari risiko.",
+    ],
+  },
+  {
+    id: "penyimpanan",
+    title: "7. Penyimpanan Informasi",
+    paragraphs: [
+      "Informasi dapat disimpan selama masih diperlukan untuk menjalankan fungsi situs, meninjau kontribusi, menjaga keamanan, menyelesaikan kebutuhan operasional, atau memenuhi kewajiban yang berlaku. Informasi yang tidak lagi diperlukan dapat dihapus atau tidak lagi digunakan sesuai kebutuhan operasional Sudut Haramain.",
+    ],
+  },
+  {
+    id: "permintaan",
+    title: "8. Permintaan Terkait Informasi",
+    paragraphs: [
+      "Apabila Anda memiliki pertanyaan atau permintaan terkait informasi yang pernah Anda kirimkan melalui Sudut Haramain, Anda dapat menghubungi kami melalui saluran kontak resmi yang tersedia.",
+    ],
+  },
+  {
+    id: "perubahan",
+    title: "9. Perubahan Kebijakan Privasi",
+    paragraphs: [
+      "Kebijakan Privasi ini dapat diperbarui dari waktu ke waktu untuk menyesuaikan perubahan pada fitur, layanan, teknologi, maupun kebutuhan operasional Sudut Haramain. Tanggal pembaruan terbaru akan ditampilkan pada halaman ini.",
+    ],
+  },
+];
 
-const localizedSections = computed(() => locale.value === 'en' ? legalEnglish.privacy : sections)
-</script><template><LegalPageShell :eyebrow="t('LEGAL')" :title="t('Kebijakan Privasi')" :intro="t('Kebijakan Privasi ini menjelaskan bagaimana Sudut Haramain mengelola informasi yang diberikan atau dihasilkan ketika Anda menggunakan situs sudutharamain.id.')" :updated="t('Terakhir diperbarui: 30 Agustus 2026')" :sections="localizedSections"><nav class="mt-10 flex flex-wrap gap-4 border-t border-sht-stone pt-6 text-sm"><NuxtLink :to="localePath('/syarat-ketentuan')" class="font-semibold text-sht-olive hover:text-sht-olive-dark">{{ t('Syarat & Ketentuan →') }}</NuxtLink></nav></LegalPageShell></template>
+const localizedSections = computed(() =>
+  locale.value === "en" ? legalEnglish.privacy : sections,
+);
+</script>
+<template>
+  <LegalPageShell
+    :eyebrow="t('LEGAL')"
+    :title="t('Kebijakan Privasi')"
+    :intro="
+      t(
+        'Kebijakan Privasi ini menjelaskan bagaimana Sudut Haramain mengelola informasi yang diberikan atau dihasilkan ketika Anda menggunakan situs sudutharamain.id.',
+      )
+    "
+    :updated="t('Terakhir diperbarui: 4 September 2026')"
+    :sections="localizedSections"
+    ><nav
+      class="mt-10 flex flex-wrap gap-4 border-t border-sht-stone pt-6 text-sm"
+    >
+      <NuxtLink
+        :to="localePath('/syarat-ketentuan')"
+        class="font-semibold text-sht-olive hover:text-sht-olive-dark"
+        >{{ t("Syarat & Ketentuan →") }}</NuxtLink
+      >
+    </nav></LegalPageShell
+  >
+</template>

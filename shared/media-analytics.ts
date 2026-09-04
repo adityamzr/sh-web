@@ -1,0 +1,3 @@
+export const MEDIA_ANALYTICS_EVENTS=['page_view','article_view','guide_view','gallery_open','map_location_view','map_direction_click','search','instagram_click','whatsapp_click','contribution_submit','article_feedback_helpful','article_feedback_not_helpful'] as const
+export type MediaAnalyticsEventType=typeof MEDIA_ANALYTICS_EVENTS[number]
+export type MediaAnalyticsPayload={eventType:MediaAnalyticsEventType;path?:string;locale?:'id'|'en';entityType?:'article'|'guide'|'gallery'|'map_location';entityId?:number;city?:'MAKKAH'|'MADINAH'|'GENERAL';category?:string;referrer?:string;metadata?:{query?:string}}

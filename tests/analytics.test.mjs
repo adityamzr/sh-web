@@ -1,0 +1,8 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import { readFile } from 'node:fs/promises'
+import { loadTs } from './helpers/load-ts.mjs'
+const analytics=await loadTs('shared/media-analytics.ts')
+test('analytics event names are centrally allowlisted',()=>{assert.ok(analytics.MEDIA_ANALYTICS_EVENTS.includes('page_view'));assert.ok(analytics.MEDIA_ANALYTICS_EVENTS.includes('article_view'));assert.ok(!analytics.MEDIA_ANALYTICS_EVENTS.includes('custom'));assert.equal(new Set(analytics.MEDIA_ANALYTICS_EVENTS).size,analytics.MEDIA_ANALYTICS_EVENTS.length)})
+test('collector remains first-party, non-blocking, private and privacy-signal aware',async()=>{const [helper,endpoint,config]=await Promise.all(['composables/useMediaAnalytics.ts','server/api/analytics/event.post.ts','nuxt.config.ts'].map(x=>readFile(new URL('../'+x,import.meta.url),'utf8')));assert.match(helper,/sendBeacon/);assert.match(helper,/keepalive:true/);assert.match(helper,/globalPrivacyControl/);assert.match(helper,/doNotTrack/);assert.match(endpoint,/httpOnly:true/);assert.match(endpoint,/x-analytics-ingest-key/);assert.doesNotMatch(config,/public:\s*\{[^}]*analyticsIngestSecret/s)})
+test('no third-party marketing analytics and privacy policy discloses first-party analytics',async()=>{const files=['app.vue','nuxt.config.ts','pages/kebijakan-privasi.vue','shared/legal-en.ts'];const source=(await Promise.all(files.map(x=>readFile(new URL('../'+x,import.meta.url),'utf8'))).then(x=>x.join('\n')));assert.doesNotMatch(source,/googletagmanager|gtag\(|GA4|Meta Pixel|analytics\.js/i);assert.match(source,/analitik anonim pihak pertama/);assert.match(source,/anonymous first-party analytics/)})

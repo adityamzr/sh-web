@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { t, localePath, locale, basePath } = useLocale()
+const { trackEvent } = useMediaAnalytics()
 
 import { Search, X } from 'lucide-vue-next'
 
@@ -10,7 +11,7 @@ const query = ref('')
 const suggestions = ['Transportasi Publik', 'Rekomendasi Kuliner', 'Panduan Umrah', 'Rute & Navigasi', 'Kultur Lokal', 'Fasilitas Umum']
 const filteredSuggestions = computed(() => query.value.trim() ? suggestions.filter((item) => t(item).toLowerCase().includes(query.value.toLowerCase())) : suggestions)
 
-function runSearch(value = query.value) { const term=value.trim(); if (!term) return; close(); navigateTo({ path: localePath('/hari-ini'), query: { search: term } }) }
+function runSearch(value = query.value) { const term=value.trim().slice(0,100); if (!term) return; trackEvent({eventType:'search',metadata:{query:term}}); close(); navigateTo({ path: localePath('/hari-ini'), query: { search: term } }) }
 function close() { emit('update:modelValue', false) }
 watch(() => props.modelValue, async (open) => {
   document.body.style.overflow = open ? 'hidden' : ''

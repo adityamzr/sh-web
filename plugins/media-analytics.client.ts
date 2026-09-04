@@ -1,0 +1,1 @@
+export default defineNuxtPlugin(nuxtApp=>{const router=useRouter(),analytics=useMediaAnalytics();const send=()=>analytics.trackPageView();nuxtApp.hook('app:mounted',send);router.afterEach(()=>nextTick(send))})

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { onImageFallback } = useImageError();
 const { t, localePath, locale, basePath } = useLocale();
+const { trackEvent } = useMediaAnalytics();
 
 import {
   ChevronLeft,
@@ -110,6 +111,7 @@ function resetLightboxScroll() {
 }
 function openLightbox(i: number) {
   selectedIndex.value = i;
+  const item=galleryItems.value[i];if(item)trackEvent({eventType:"gallery_open",entityType:"gallery",entityId:item.id,city:item.city.toUpperCase() as "MAKKAH"|"MADINAH",category:item.category});
   document.body.style.overflow = "hidden";
   resetLightboxScroll();
 }
