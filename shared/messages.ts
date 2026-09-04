@@ -205,6 +205,7 @@ export const englishMessages: Record<string, string> = {
     "Find important places, transport, facilities, guides, and local perspectives.",
   "Tentang Kami": "About Us",
   "Terakhir diperbarui: 30 Agustus 2026": "Last updated: 30 August 2026",
+  "Terakhir diperbarui: 4 September 2026": "Last updated: 4 September 2026",
   "Terbaru dari Madinah": "Latest from Madinah",
   "Terbaru dari Makkah": "Latest from Makkah",
   "Terbaru dari Sudut Haramain": "Latest from Sudut Haramain",

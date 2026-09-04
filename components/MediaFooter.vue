@@ -1,8 +1,9 @@
 <script setup lang="ts">
 const { t, localePath, locale, basePath } = useLocale();
+const { trackEvent } = useMediaAnalytics();
 
 import footerLogo from "~/assets/images/sht_horizontal_white_logo.png";
-import { ChevronDown } from "lucide-vue-next";
+import { ChevronDown, MessageCircle } from "lucide-vue-next";
 
 const explorationLinks = [
   { label: "Sorotan", to: "/hari-ini" },
@@ -35,6 +36,8 @@ const socialLinks = [
   },
 ] as const;
 const accordionOpen = ref<string | null>(null);
+const whatsappHref="https://wa.me/62871361823123";
+function trackSocial(eventType:'instagram_click'|'whatsapp_click'){trackEvent({eventType})}
 function toggleGroup(group: string) {
   accordionOpen.value = accordionOpen.value === group ? null : group;
 }
@@ -152,6 +155,7 @@ function toggleGroup(group: string) {
                 target="_blank"
                 rel="noopener noreferrer"
                 :aria-label="t(social.label)"
+                @click="social.platform === 'instagram' && trackSocial('instagram_click')"
                 class="rounded-sm transition-colors hover:text-sht-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold"
                 ><svg
                   v-if="social.platform === 'instagram'"
@@ -204,7 +208,7 @@ function toggleGroup(group: string) {
                     stroke-linejoin="round"
                     d="m10 9 5 3-5 3V9Z"
                   /></svg
-              ></a>
+              ></a><a :href="whatsappHref" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="rounded-sm transition-colors hover:text-sht-gold" @click="trackSocial('whatsapp_click')"><MessageCircle class="h-6 w-6" /></a>
             </div>
           </div>
         </div>
@@ -293,6 +297,7 @@ function toggleGroup(group: string) {
               target="_blank"
               rel="noopener noreferrer"
               :aria-label="t(social.label)"
+              @click="social.platform === 'instagram' && trackSocial('instagram_click')"
               class="rounded-sm transition-colors hover:text-sht-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold"
               ><svg
                 v-if="social.platform === 'instagram'"
@@ -345,7 +350,7 @@ function toggleGroup(group: string) {
                   stroke="none"
                   d="m10 9 5 3-5 3V9Z"
                 /></svg
-            ></a>
+            ></a><a :href="whatsappHref" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="rounded-sm transition-colors hover:text-sht-gold" @click="trackSocial('whatsapp_click')"><MessageCircle class="h-6 w-6" /></a>
           </div>
         </div>
       </div>

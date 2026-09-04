@@ -11,8 +11,9 @@ export type PublicContributionPayload={
 }
 
 export async function submitMediaContribution(payload:PublicContributionPayload){
-  return await $fetch('/api/media/contributions',{
+  const result=await $fetch('/api/media/contributions',{
     method:'POST',
     body:payload
   })
+  return result
 }

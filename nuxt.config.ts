@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss'],
   runtimeConfig: {
     apiBaseUrl: process.env.NUXT_API_BASE_URL || '',
+    analyticsIngestSecret: process.env.NUXT_ANALYTICS_INGEST_SECRET || '',
     public: { siteUrl: 'https://sudutharamain.id' },
   },
   tailwindcss: { cssPath: '~/assets/css/main.css' },

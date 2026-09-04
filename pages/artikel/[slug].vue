@@ -20,11 +20,14 @@ import {
 } from "~/shared/article-block-presentation";
 import type { SupportedLocale } from "~/shared/localization";
 const route = useRoute();
+const { trackEvent } = useMediaAnalytics();
 const slug = String(route.params.slug);
 const { article, pending, error } = await useMediaArticle(slug);
 const { articles: allArticles } = useMediaArticles({ limit: 100 });
 const current = computed(() => article.value);
 const contentLinks = useContentLocaleLinks();
+const trackedArticle=ref<number|null>(null)
+watch(article,value=>{if(value&&trackedArticle.value!==value.id){trackedArticle.value=value.id;trackEvent({eventType:'article_view',entityType:'article',entityId:value.id,city:value.city.toUpperCase() as 'MAKKAH'|'MADINAH'|'GENERAL',category:value.category})}},{immediate:true})
 watch(
   article,
   (value) => {
@@ -105,6 +108,7 @@ async function selectFeedback(value: "helpful" | "not-helpful") {
     value === "helpful" ? "HELPFUL" : "NOT_HELPFUL";
   try {
     await submitMediaFeedback(slug, apiValue);
+    trackEvent({eventType:value==='helpful'?'article_feedback_helpful':'article_feedback_not_helpful',entityType:'article',entityId:article.value?.id,city:article.value?.city.toUpperCase() as 'MAKKAH'|'MADINAH'|'GENERAL'|undefined,category:article.value?.category});
     feedback.value = value;
     localStorage.setItem(feedbackKey.value, apiValue);
   } catch (e: any) {

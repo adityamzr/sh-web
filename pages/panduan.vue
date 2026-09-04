@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { onImageFallback } = useImageError();
 const { t, localePath, locale, basePath } = useLocale();
+const { trackEvent } = useMediaAnalytics();
 
 import { Menu, Search, X } from "lucide-vue-next";
 import {
@@ -56,6 +57,8 @@ const activeTopic = computed(
   () =>
     all.value.find((g) => g.slug === activeSlug.value) || all.value[0] || null,
 );
+const trackedGuide=ref<number|null>(null)
+watch(activeTopic,topic=>{if(topic&&trackedGuide.value!==topic.id){trackedGuide.value=topic.id;trackEvent({eventType:'guide_view',entityType:'guide',entityId:topic.id,category:topic.group})}},{immediate:true})
 const activeGroup = computed(() => activeTopic.value?.group || "");
 watch(
   [activeTopic, otherGuides],
