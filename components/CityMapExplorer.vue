@@ -1,12 +1,9 @@
 <script setup lang="ts">
 const { t, localePath, locale, basePath } = useLocale()
 
-import { setWorkerUrl } from 'maplibre-gl'
 import type { Map, Marker } from 'maplibre-gl'
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url'
 import 'maplibre-gl/dist/maplibre-gl.css'
-
-setWorkerUrl(workerUrl)
 
 type CityLocation = {
   id: string
@@ -103,6 +100,7 @@ onMounted(async () => {
   try {
     await nextTick()
     const maplibre = await import('maplibre-gl')
+    maplibre.setWorkerUrl(workerUrl)
     if (!mapElement.value) throw new Error('Map container is not ready')
     markerConstructor.value = maplibre.Marker
     map.value = new maplibre.Map({

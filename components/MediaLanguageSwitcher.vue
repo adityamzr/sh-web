@@ -126,7 +126,6 @@ defineExpose({ close });
         role="menuitem"
         :aria-current="locale === lang.code ? 'true' : undefined"
         :lang="lang.code"
-        :hreflang="lang.code"
         :aria-label="t('Ganti bahasa ke {language}', { language: lang.label })"
         class="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium text-sht-olive-dark transition-colors hover:bg-sht-stone/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-sht-gold"
         :class="locale === lang.code ? 'bg-sht-stone/40' : ''"

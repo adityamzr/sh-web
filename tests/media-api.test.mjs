@@ -45,7 +45,7 @@ test('article and gallery normalization use localized fields without replacing e
 test('all async-data composables use locale-separated keys, including reactive article search', async t => {
   const locale = ref('en'), keys = [], query = ref({ search: 'train' })
   const states = new Map()
-  Object.assign(globalThis, { computed, toValue, useLocale: () => ({ locale }), useState: key => { if (!states.has(key)) states.set(key, ref({ ready: false, data: null })); return states.get(key) }, createError: value => Object.assign(new Error(value.statusMessage), value), $fetch: async url => ({ data: url.includes('page-settings') ? {} : url.includes('/articles/') ? fixture : [] }), useAsyncData: async (key, handler) => { keys.push(key); return { data: ref(await handler()), pending: ref(false), error: ref(null) } } })
+  Object.assign(globalThis, { computed, toValue, useLocale: () => ({ locale }), useState: key => { if (!states.has(key)) states.set(key, ref({ ready: false, data: null })); return states.get(key) }, createError: value => Object.assign(new Error(value.statusMessage), value), $fetch: async url => ({ data: url.includes('page-settings') ? {} : url.includes('/articles/') ? fixture : [] }), useAsyncData: (key, handler) => { keys.push(key); const result = { data: ref(null), pending: ref(true), error: ref(null) }; return Object.assign(Promise.resolve(result), result) } })
   t.after(() => { for (const key of ['computed', 'toValue', 'useLocale', 'useState', 'createError', '$fetch', 'useAsyncData']) delete globalThis[key] })
   await articles.useMediaArticles(query)
   await articles.useMediaArticle('english-slug')

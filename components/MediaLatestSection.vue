@@ -3,7 +3,7 @@ const { onImageFallback } = useImageError()
 const { t, localePath, locale, basePath } = useLocale()
 
 import { useMediaArticles, formatMediaArticleDate } from '~/composables/useMediaArticles'
-const { articles } = await useMediaArticles({ limit: 4 })
+const { articles } = useMediaArticles({ limit: 4 })
 const latestEntries = computed(() => articles.value.map(a => ({ category: a.category.toUpperCase(), title: a.title, time: formatMediaArticleDate(a.publishedAt, locale.value).toUpperCase(), image: a.image, alt: a.imageAlt, slug: a.slug })))
 </script>
 

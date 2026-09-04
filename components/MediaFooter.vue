@@ -87,10 +87,10 @@ function toggleGroup(group: string) {
           </h3>
           <ul class="mt-5 space-y-3 text-sm text-sht-off-white/70">
             <li v-for="link in explorationLinks" :key="link.label">
-              <a
-                :href="localePath(link.to)"
+              <NuxtLink
+                :to="localePath(link.to)"
                 class="transition-colors hover:text-sht-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold"
-                >{{ t(link.label) }}</a
+                >{{ t(link.label) }}</NuxtLink
               >
             </li>
           </ul>
@@ -103,17 +103,17 @@ function toggleGroup(group: string) {
           </h3>
           <ul class="mt-5 space-y-3 text-sm text-sht-off-white/70">
             <li v-for="link in guideLinks" :key="link.label">
-              <a
-                :href="localePath(link.to)"
+              <NuxtLink
+                :to="localePath(link.to)"
                 class="transition-colors hover:text-sht-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold"
-                >{{ t(link.label) }}</a
+                >{{ t(link.label) }}</NuxtLink
               >
             </li>
             <li>
-              <a
-                :href="localePath('/panduan')"
+              <NuxtLink
+                :to="localePath('/panduan')"
                 class="font-medium transition-colors hover:text-sht-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold"
-                >{{ t("Lihat semua panduan →") }}</a
+                >{{ t("Lihat semua panduan →") }}</NuxtLink
               >
             </li>
           </ul>
@@ -233,17 +233,17 @@ function toggleGroup(group: string) {
             />
           </button>
           <div v-show="accordionOpen === key" class="overflow-hidden pb-4">
-            <a
+            <NuxtLink
               v-for="link in group"
               :key="link.label"
-              :href="localePath(link.to)"
+              :to="localePath(link.to)"
               class="block py-2 text-sm text-sht-off-white/70 hover:text-sht-gold"
-              >{{ t(link.label) }}</a
-            ><a
+              >{{ t(link.label) }}</NuxtLink
+            ><NuxtLink
               v-if="key === 'Panduan'"
-              :href="localePath('/panduan')"
+              :to="localePath('/panduan')"
               class="block py-2 text-sm font-medium text-sht-off-white/70 hover:text-sht-gold"
-              >{{ t("Lihat semua panduan →") }}</a
+              >{{ t("Lihat semua panduan →") }}</NuxtLink
             >
           </div>
         </div>

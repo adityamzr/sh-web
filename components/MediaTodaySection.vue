@@ -3,8 +3,8 @@ const { onImageFallback } = useImageError()
 const { t, localePath, locale, basePath } = useLocale()
 
 import { useMediaArticles, formatMediaArticleDate } from '~/composables/useMediaArticles'
-const { settings: homeSettings } = await useMediaHomeSettings()
-const { articles } = await useMediaArticles({ limit: 4 })
+const { settings: homeSettings } = useMediaHomeSettings()
+const { articles } = useMediaArticles({ limit: 4 })
 const curated = computed(() => { const ids=homeSettings.value?.supportingArticleIds || []; const featuredId=homeSettings.value?.featuredArticleId; const featured=featuredId ? articles.value.find(a=>a.id===featuredId) : undefined; const support=ids.map(id=>articles.value.find(a=>a.id===id)).filter((a):a is NonNullable<typeof a>=>Boolean(a)); const used=new Set<number>([...(featured ? [featured.id] : []), ...support.map(a=>a.id)]); const fallback=articles.value.filter(a=>!used.has(a.id)); const autoFeatured=featured||fallback[0]||articles.value[0]; return { featured:autoFeatured, supporting:[...support,...fallback.filter(a=>a.id!==autoFeatured?.id)].slice(0,3) } })
 const featuredUpdate = computed(() => { const a=curated.value.featured; return { category:a?`${a.city.toUpperCase()} · ${t(a.category.toUpperCase())}`:'SOROTAN', title:a?.title||t('Belum ada sorotan terbaru.'), description:a?.excerpt||t('Belum ada artikel terbit.'), time:a?formatMediaArticleDate(a.publishedAt, locale.value):'—', image:a?.image||'/images/makkah-editorial.jpg', alt:a?.imageAlt||'Sudut Haramain' ,slug:a?.slug||''} })
 const supportingUpdates = computed(() => curated.value.supporting.map(a=>({category:a.category.toUpperCase(),title:a.title,time:formatMediaArticleDate(a.publishedAt, locale.value),image:a.image,alt:a.imageAlt,slug:a.slug})))

@@ -2,7 +2,7 @@
 const { onImageFallback } = useImageError()
 const { t, localePath, locale, basePath } = useLocale()
 
-const { settings: homeSettings } = await useMediaHomeSettings()
+const { settings: homeSettings } = useMediaHomeSettings()
 const heroImage = computed(() => homeSettings.value?.heroImageUrl || '/images/makkah-editorial.jpg')
 const heroHeadline = computed(() => homeSettings.value?.heroHeadline || t('Apa yang sedang terjadi di Haramain?'))
 const legacyHeroSubheadlines: Record<string, string> = {

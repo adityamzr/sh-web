@@ -4,7 +4,7 @@ const { t, localePath, locale, basePath } = useLocale()
 
 import { ChevronLeft, ChevronRight, Download, ExternalLink, Heart, X } from 'lucide-vue-next'
 import { useMediaGallery } from '~/composables/useMediaGallery'
-const { items: apiItems } = await useMediaGallery({ city: 'MAKKAH' })
+const { items: apiItems } = useMediaGallery({ city: 'MAKKAH' })
 const galleryItems = computed(() => apiItems.value.slice(0,9)); const selectedIndex=ref<number|null>(null); const lightboxContent=ref<HTMLElement|null>(null); const liked=ref<Set<number>>(new Set()); const selectedItem=computed(()=>selectedIndex.value===null?null:galleryItems.value[selectedIndex.value]); const selectedMapUrl=computed(()=>selectedItem.value?.mapUrl); function resetLightboxScroll(){nextTick(()=>{if(lightboxContent.value)lightboxContent.value.scrollTop=0})} function openLightbox(i:number){selectedIndex.value=i;document.body.style.overflow='hidden';resetLightboxScroll()} function closeLightbox(){selectedIndex.value=null;document.body.style.overflow=''} function toggleLike(id:number){const n=new Set(liked.value);n.has(id)?n.delete(id):n.add(id);liked.value=n} function previous(){if(selectedIndex.value!==null)selectedIndex.value=(selectedIndex.value+galleryItems.value.length-1)%galleryItems.value.length} function next(){if(selectedIndex.value!==null)selectedIndex.value=(selectedIndex.value+1)%galleryItems.value.length} function onKeydown(e:KeyboardEvent){if(e.key==='Escape')closeLightbox();if(e.key==='ArrowLeft')previous();if(e.key==='ArrowRight')next()} onMounted(()=>window.addEventListener('keydown',onKeydown));onBeforeUnmount(()=>{window.removeEventListener('keydown',onKeydown);document.body.style.overflow=''})
 </script>
 

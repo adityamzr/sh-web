@@ -20,8 +20,8 @@ export async function fetchMediaHomeSettings(locale: SupportedLocale = 'id'){
   }
 }
 
-export async function useMediaHomeSettings(){
+export function useMediaHomeSettings(){
   const {locale}=useLocale()
-  const {data,pending,error}=await useAsyncData(computed(()=>mediaCacheKey('home-settings',locale.value)),()=>fetchMediaHomeSettings(locale.value),{default:()=>null});
+  const {data,pending,error}=useAsyncData(computed(()=>mediaCacheKey('home-settings',locale.value)),()=>fetchMediaHomeSettings(locale.value),{default:()=>null,lazy:true});
   return {settings:data,pending,error}
 }

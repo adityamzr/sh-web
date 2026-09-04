@@ -433,7 +433,6 @@ watch(
               :key="lang.code"
               :to="getMobileLangHref(lang.code)"
               :lang="lang.code"
-              :hreflang="lang.code"
               :aria-current="locale === lang.code ? 'true' : undefined"
               :aria-label="
                 t('Ganti bahasa ke {language}', { language: lang.label })
