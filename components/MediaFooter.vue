@@ -18,26 +18,28 @@ const guideLinks = [
   { label: "Persiapan Umrah", to: "/panduan#persiapan-dasar" },
   { label: "Rute & Navigasi", to: "/panduan#dari-bandara" },
 ];
-// Ubah URL di sini ketika akun sosial resmi diperbarui.
+
+// Final public social/contact - only Instagram and WhatsApp per cleanup task
 const socialLinks = [
   {
-    label: "Instagram",
-    platform: "instagram",
-    href: "https://www.instagram.com/sudutharamain/",
+    platform: "instagram" as const,
+    label: "@sudutharamain.id",
+    ariaLabel: "Instagram Sudut Haramain",
+    href: "https://www.instagram.com/sudutharamain.id/",
+    display: "@sudutharamain.id",
+    event: "instagram_click" as const,
   },
   {
-    label: "TikTok",
-    platform: "tiktok",
-    href: "https://www.tiktok.com/@sudutharamain",
-  },
-  {
-    label: "YouTube",
-    platform: "youtube",
-    href: "https://www.youtube.com/@sudutharamain",
+    platform: "whatsapp" as const,
+    label: "08212122424",
+    ariaLabel: "WhatsApp Sudut Haramain",
+    href: "https://wa.me/628212122424",
+    display: "08212122424",
+    event: "whatsapp_click" as const,
   },
 ] as const;
+
 const accordionOpen = ref<string | null>(null);
-const whatsappHref = "https://wa.me/62871361823123";
 function trackSocial(eventType: "instagram_click" | "whatsapp_click") {
   trackEvent({ eventType });
 }
@@ -152,22 +154,20 @@ function toggleGroup(group: string) {
             >
               {{ t("IKUTI SUDUT HARAMAIN") }}
             </h3>
-            <div class="mt-4 flex items-center gap-3 text-sht-off-white/75">
+            <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-sht-off-white/75">
               <a
                 v-for="social in socialLinks"
                 :key="social.platform"
                 :href="social.href"
                 target="_blank"
                 rel="noopener noreferrer"
-                :aria-label="t(social.label)"
-                @click="
-                  social.platform === 'instagram' &&
-                  trackSocial('instagram_click')
-                "
-                class="rounded-sm transition-colors hover:text-sht-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold"
-                ><svg
+                :aria-label="social.ariaLabel"
+                class="inline-flex items-center gap-2 transition-colors hover:text-sht-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold"
+                @click="trackSocial(social.event)"
+              >
+                <svg
                   v-if="social.platform === 'instagram'"
-                  class="h-6 w-6"
+                  class="h-5 w-5 shrink-0"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -176,55 +176,11 @@ function toggleGroup(group: string) {
                 >
                   <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
                   <circle cx="12" cy="12" r="4" />
-                  <circle
-                    cx="17.5"
-                    cy="6.5"
-                    r=".75"
-                    fill="currentColor"
-                    stroke="none"
-                  /></svg
-                ><svg
-                  v-else-if="social.platform === 'tiktok'"
-                  class="h-6 w-6"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.6"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M14 4v10.2a3.8 3.8 0 1 1-3-3.7M14 4c.7 2.2 2.1 3.5 4.5 3.8"
-                  /></svg
-                ><svg
-                  v-else
-                  class="h-6 w-6"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.6"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M20.2 7.4a2.2 2.2 0 0 0-1.5-1.5C17.4 5.5 12 5.5 12 5.5s-5.4 0-6.7.4a2.2 2.2 0 0 0-1.5 1.5C3.4 8.7 3.4 12 3.4 12s0 3.3.4 4.6a2.2 2.2 0 0 0 1.5 1.5c1.3.4 6.7.4 6.7.4s5.4 0 6.7-.4a2.2 2.2 0 0 0 1.5-1.5c.4-1.3.4-4.6.4-4.6s0-3.3-.4-4.6Z"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m10 9 5 3-5 3V9Z"
-                  /></svg></a
-              ><a
-                :href="whatsappHref"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="WhatsApp"
-                class="rounded-sm transition-colors hover:text-sht-gold"
-                @click="trackSocial('whatsapp_click')"
-                ><MessageCircle class="h-6 w-6"
-              /></a>
+                  <circle cx="17.5" cy="6.5" r=".75" fill="currentColor" stroke="none" />
+                </svg>
+                <MessageCircle v-else class="h-5 w-5 shrink-0" aria-hidden="true" />
+                <span>{{ social.display }}</span>
+              </a>
             </div>
           </div>
         </div>
@@ -305,22 +261,20 @@ function toggleGroup(group: string) {
           >
             {{ t("IKUTI SUDUT HARAMAIN") }}
           </h3>
-          <div class="mt-4 flex items-center gap-3 text-sht-off-white/75">
+          <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-sht-off-white/75">
             <a
               v-for="social in socialLinks"
               :key="social.platform"
               :href="social.href"
               target="_blank"
               rel="noopener noreferrer"
-              :aria-label="t(social.label)"
-              @click="
-                social.platform === 'instagram' &&
-                trackSocial('instagram_click')
-              "
-              class="rounded-sm transition-colors hover:text-sht-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold"
-              ><svg
+              :aria-label="social.ariaLabel"
+              class="inline-flex items-center gap-2 transition-colors hover:text-sht-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-sht-gold"
+              @click="trackSocial(social.event)"
+            >
+              <svg
                 v-if="social.platform === 'instagram'"
-                class="h-6 w-6"
+                class="h-5 w-5 shrink-0"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -329,55 +283,11 @@ function toggleGroup(group: string) {
               >
                 <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
                 <circle cx="12" cy="12" r="4" />
-                <circle
-                  cx="17.5"
-                  cy="6.5"
-                  r=".75"
-                  fill="currentColor"
-                  stroke="none"
-                /></svg
-              ><svg
-                v-else-if="social.platform === 'tiktok'"
-                class="h-6 w-6"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M14 4v10.2a3.8 3.8 0 1 1-3-3.7M14 4c.7 2.2 2.1 3.5 4.5 3.8"
-                /></svg
-              ><svg
-                v-else
-                class="h-6 w-6"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.6"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M20.2 7.4a2.2 2.2 0 0 0-1.5-1.5C17.4 5.5 12 5.5 12 5.5s-5.4 0-6.7.4a2.2 2.2 0 0 0-1.5 1.5C3.4 8.7 3.4 12 3.4 12s0 3.3.4 4.6a2.2 2.2 0 0 0 1.5 1.5c1.3.4 6.7.4 6.7.4s5.4 0 6.7-.4a2.2 2.2 0 0 0 1.5-1.5c.4-1.3.4-4.6.4-4.6s0-3.3-.4-4.6Z"
-                />
-                <path
-                  fill="currentColor"
-                  stroke="none"
-                  d="m10 9 5 3-5 3V9Z"
-                /></svg></a
-            ><a
-              :href="whatsappHref"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="WhatsApp"
-              class="rounded-sm transition-colors hover:text-sht-gold"
-              @click="trackSocial('whatsapp_click')"
-              ><MessageCircle class="h-6 w-6"
-            /></a>
+                <circle cx="17.5" cy="6.5" r=".75" fill="currentColor" stroke="none" />
+              </svg>
+              <MessageCircle v-else class="h-5 w-5 shrink-0" aria-hidden="true" />
+              <span>{{ social.display }}</span>
+            </a>
           </div>
         </div>
       </div>
