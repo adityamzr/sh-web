@@ -44,7 +44,8 @@ export async function mediaApiFetch<T>(path: string, opts: any = {}): Promise<T>
   const url = `${base}/api/v1/media${cleanPath}`
 
   try {
-    return await $fetch<T>(url, opts)
+    // Use any cast to avoid Nitro TypedInternalResponse excessive depth errors on Vercel preset
+    return (await ($fetch as any)(url, opts)) as T
   } catch (err: any) {
     // Preserve original status if available, log for debugging
     const status = err?.statusCode || err?.response?.status || 500
