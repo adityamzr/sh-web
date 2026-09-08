@@ -21,6 +21,8 @@ import {
 import type { SupportedLocale } from "~/shared/localization";
 const route = useRoute();
 const { trackEvent } = useMediaAnalytics();
+import { usePublicLocalization } from "~/composables/usePublicLocalization";
+const { englishEnabled } = usePublicLocalization();
 const slug = String(route.params.slug);
 const { article, pending, error } = await useMediaArticle(slug);
 const { articles: allArticles } = useMediaArticles({ limit: 100 });
@@ -32,19 +34,21 @@ watch(
   article,
   (value) => {
     if (!value) return;
+    const rawPaths = Object.fromEntries(
+      Object.entries(value.localizedSlugs ?? { [locale.value]: value.slug })
+        .filter(([, localizedSlug]) => localizedSlug)
+        .map(([language, localizedSlug]) => [
+          language,
+          localePath(
+            `/artikel/${localizedSlug}`,
+            language as SupportedLocale,
+          ),
+        ]),
+    );
+    const publicPaths = englishEnabled.value ? rawPaths : { id: rawPaths.id || localePath(`/artikel/${value.slug}`, 'id') };
     contentLinks.value = {
       key: route.path,
-      paths: Object.fromEntries(
-        Object.entries(value.localizedSlugs ?? { [locale.value]: value.slug })
-          .filter(([, localizedSlug]) => localizedSlug)
-          .map(([language, localizedSlug]) => [
-            language,
-            localePath(
-              `/artikel/${localizedSlug}`,
-              language as SupportedLocale,
-            ),
-          ]),
-      ),
+      paths: publicPaths,
       fallback: {
         id: "/hari-ini",
         en: "/en/hari-ini?translation=unavailable",

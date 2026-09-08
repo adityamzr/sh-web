@@ -1,12 +1,25 @@
 import { localeFromPath, localePath as pathForLocale, stripLocale, translate, type SupportedLocale } from '~/shared/localization'
+import { usePublicLocalization } from '~/composables/usePublicLocalization'
 
 export function useLocale() {
   const route = useRoute()
-  const locale = computed(() => localeFromPath(route.path))
+  const { englishEnabled } = usePublicLocalization()
+  const rawLocale = computed(() => localeFromPath(route.path))
+  // When English is disabled, force public locale to id to avoid stale preference and ensure Indonesian-only UI
+  const locale = computed<SupportedLocale>(() => {
+    if (!englishEnabled.value && rawLocale.value === 'en') return 'id'
+    return rawLocale.value
+  })
   const basePath = computed(() => stripLocale(route.path))
   const t = (value: unknown, params?: Record<string, string | number>) => translate(locale.value, value, params)
-  const localePath = (path: string, target: SupportedLocale = locale.value) => pathForLocale(path, target)
-  return { locale, basePath, t, localePath }
+  const localePath = (path: string, target: SupportedLocale = locale.value) => {
+    // When English disabled, never generate /en links for public navigation
+    if (!englishEnabled.value && target === 'en') {
+      return pathForLocale(path, 'id')
+    }
+    return pathForLocale(path, target)
+  }
+  return { locale, basePath, t, localePath, rawLocale }
 }
 
 type ContentLinks = { key: string; paths: Partial<Record<SupportedLocale, string>>; fallback?: Partial<Record<SupportedLocale, string>> }

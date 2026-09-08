@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { Check, ChevronDown } from "lucide-vue-next";
+import { usePublicLocalization } from "~/composables/usePublicLocalization";
+
+const { englishEnabled } = usePublicLocalization();
 
 const route = useRoute();
 const { locale, t, localePath } = useLocale();
@@ -90,7 +93,7 @@ defineExpose({ close });
 </script>
 
 <template>
-  <div class="relative">
+  <div v-if="englishEnabled" class="relative">
     <button
       ref="triggerRef"
       type="button"

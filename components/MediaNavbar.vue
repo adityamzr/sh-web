@@ -16,6 +16,9 @@ import {
 } from "lucide-vue-next";
 
 import { PUBLIC_ECOSYSTEM, ECOSYSTEM_UNITS } from "~/shared/ecosystem";
+import { usePublicLocalization } from "~/composables/usePublicLocalization";
+
+const { englishEnabled } = usePublicLocalization();
 
 const route = useRoute();
 import whiteLogo from "~/assets/images/sht_horizontal_white_logo.png";
@@ -275,7 +278,7 @@ watch(
         </div>
       </nav>
       <div class="hidden items-center gap-2 lg:flex">
-        <MediaLanguageSwitcher />
+        <MediaLanguageSwitcher v-if="englishEnabled" />
         <button
           ref="searchTrigger"
           type="button"
@@ -411,8 +414,8 @@ watch(
             >
           </div>
         </div>
-        <!-- Mobile Language Section -->
-        <div class="border-b border-sht-stone py-5">
+        <!-- Mobile Language Section - hidden when English disabled -->
+        <div v-if="englishEnabled" class="border-b border-sht-stone py-5">
           <p
             class="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-sht-charcoal/50"
           >

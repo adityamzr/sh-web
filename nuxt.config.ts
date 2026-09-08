@@ -5,7 +5,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     apiBaseUrl: process.env.NUXT_API_BASE_URL || '',
     analyticsIngestSecret: process.env.NUXT_ANALYTICS_INGEST_SECRET || '',
-    public: { siteUrl: 'https://sudutharamain.id' },
+    public: {
+      siteUrl: 'https://sudutharamain.id',
+      englishEnabled: process.env.NUXT_PUBLIC_ENGLISH_ENABLED === 'true',
+    },
   },
   tailwindcss: { cssPath: '~/assets/css/main.css' },
   app: {

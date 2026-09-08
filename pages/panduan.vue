@@ -20,6 +20,8 @@ useSeoMeta({
 });
 const route = useRoute(),
   router = useRouter();
+import { usePublicLocalization } from "~/composables/usePublicLocalization";
+const { englishEnabled } = usePublicLocalization();
 const { guides, pending, error } = useMediaGuides();
 const searchQuery = ref(""),
   isDrawerOpen = ref(false),
@@ -47,6 +49,7 @@ const alternateKey = "guide-alternates-" + otherLocale;
 const { data: otherGuides } = useAsyncData<MediaGuide[]>(
   alternateKey,
   async () => {
+    if (!englishEnabled.value) return []
     const preload = takeMediaPreload<MediaGuide[]>(alternateKey);
     return preload.used ? preload.data || [] : fetchMediaGuides(otherLocale);
   },
@@ -63,20 +66,24 @@ const activeGroup = computed(() => activeTopic.value?.group || "");
 watch(
   [activeTopic, otherGuides],
   () => {
-    const other = otherGuides.value.find((g) => g.id === activeTopic.value?.id);
+    const other = englishEnabled.value ? otherGuides.value.find((g) => g.id === activeTopic.value?.id) : null;
     contentLinks.value = {
       key: route.path,
-      paths: {
-        [locale.value]:
-          localePath("/panduan") +
-          (activeTopic.value ? "#" + activeTopic.value.slug : ""),
-        ...(other
-          ? {
-              [otherLocale]:
-                localePath("/panduan", otherLocale) + "#" + other.slug,
-            }
-          : {}),
-      },
+      paths: englishEnabled.value
+        ? {
+            [locale.value]:
+              localePath("/panduan") +
+              (activeTopic.value ? "#" + activeTopic.value.slug : ""),
+            ...(other
+              ? {
+                  [otherLocale]:
+                    localePath("/panduan", otherLocale) + "#" + other.slug,
+                }
+              : {}),
+          }
+        : {
+            id: localePath("/panduan", "id") + (activeTopic.value ? "#" + activeTopic.value.slug : ""),
+          },
       fallback: {
         [otherLocale]: localePath(
           "/panduan?translation=unavailable",
