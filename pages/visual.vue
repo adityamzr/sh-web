@@ -333,19 +333,19 @@ onBeforeUnmount(() => {
         </button>
         <div
           ref="lightboxContent"
-          class="lightbox-content grid h-[100dvh] max-h-[100dvh] w-full max-w-6xl overflow-y-auto overscroll-contain rounded-none bg-sht-off-white sm:h-auto sm:max-h-[90vh] sm:rounded-2xl lg:grid-cols-[1.5fr_0.5fr]"
+          class="lightbox-content grid h-[100dvh] max-h-[100dvh] w-full max-w-6xl overflow-y-auto overscroll-contain rounded-none bg-sht-off-white sm:h-auto sm:max-h-[calc(100dvh-32px)] sm:rounded-2xl sm:overflow-hidden lg:grid-cols-[minmax(0,70%)_minmax(0,30%)] lg:max-h-[calc(100dvh-32px)] lg:overflow-hidden"
         >
           <div
-            class="flex h-[48dvh] max-h-[58dvh] items-center justify-center bg-black/10 sm:h-auto sm:min-h-[35vh]"
+            class="relative flex h-[clamp(260px,48dvh,460px)] max-h-[55dvh] min-h-0 items-center justify-center overflow-hidden bg-[#0a0f0d] sm:h-full sm:max-h-[calc(100dvh-32px)] sm:min-h-[400px] lg:h-full lg:max-h-[calc(100dvh-32px)]"
           >
             <img
               :src="selectedItem.src"
               :alt="selectedItem.alt"
-              class="max-h-[58dvh] w-full object-contain sm:max-h-[62vh] lg:max-h-[90vh]"
+              class="h-full max-h-full w-full max-w-full object-contain"
               @error="onImageFallback"
             />
           </div>
-          <div class="p-6 pb-[calc(2rem+env(safe-area-inset-bottom))] sm:p-8">
+          <div class="min-h-0 overflow-y-auto p-6 pb-[calc(2rem+env(safe-area-inset-bottom))] sm:max-h-[calc(100dvh-32px)] sm:p-8 lg:max-h-[calc(100dvh-32px)]">
             <p
               class="text-xs font-semibold uppercase tracking-[0.18em] text-sht-sage"
             >
