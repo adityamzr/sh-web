@@ -7,21 +7,25 @@ type Section={id:string;title:string;paragraphs:string[];bullets?:string[]};defi
   <main class="bg-sht-off-white pb-20 pt-28 sm:pt-36">
     <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <!-- Reading layout: grid height = article height, only sidebar sticky -->
-      <div class="grid gap-12 lg:grid-cols-[190px_minmax(0,760px)] lg:gap-16">
+      <div class="grid gap-12 lg:grid-cols-[190px_minmax(0,760px)] lg:items-start lg:gap-16">
         <!-- LEFT: only Daftar Isi is sticky, heading remains normal -->
         <aside
-          class="hidden lg:block lg:sticky lg:top-[var(--reading-sticky-top)] lg:self-start lg:max-h-[calc(100vh-var(--reading-sticky-top)-2rem)] lg:overflow-y-auto"
+          class="hidden lg:block lg:sticky lg:top-[var(--reading-sticky-top)] lg:self-start"
         >
-          <nav class="pr-2" :aria-label="t('Daftar isi')">
-            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-sht-sage">{{ t('DAFTAR ISI') }}</p>
-            <a
-              v-for="section in sections"
-              :key="section.id"
-              :href="`#${section.id}`"
-              class="mt-3 block text-sm leading-snug text-sht-charcoal/60 hover:text-sht-olive focus-visible:outline focus-visible:outline-2 focus-visible:outline-sht-gold"
-              >{{section.title}}</a
-            >
-          </nav>
+          <div
+            class="max-h-[calc(100dvh-var(--reading-sticky-top)-2rem)] overflow-y-auto pr-2"
+          >
+            <nav :aria-label="t('Daftar isi')">
+              <p class="text-xs font-semibold uppercase tracking-[0.18em] text-sht-sage">{{ t('DAFTAR ISI') }}</p>
+              <a
+                v-for="section in sections"
+                :key="section.id"
+                :href="`#${section.id}`"
+                class="mt-3 block text-sm leading-snug text-sht-charcoal/60 hover:text-sht-olive focus-visible:outline focus-visible:outline-2 focus-visible:outline-sht-gold"
+                >{{section.title}}</a
+              >
+            </nav>
+          </div>
         </aside>
         <!-- RIGHT: all content remains normal document flow, heading NOT sticky -->
         <div class="min-w-0">

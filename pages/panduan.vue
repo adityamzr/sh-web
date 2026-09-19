@@ -167,12 +167,14 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
         </button>
       </div>
       <!-- Reading layout: grid height = article height, sidebar sticky constrained to it -->
-      <div class="grid lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-16">
+      <div class="grid lg:grid-cols-[300px_minmax(0,1fr)] lg:items-start lg:gap-16">
         <!-- LEFT: only sidebar is sticky, heading remains normal content -->
         <aside
-          class="hidden lg:block lg:sticky lg:top-[var(--reading-sticky-top)] lg:self-start lg:max-h-[calc(100vh-var(--reading-sticky-top)-2rem)] lg:overflow-y-auto"
+          class="hidden lg:block lg:sticky lg:top-[var(--reading-sticky-top)] lg:self-start"
         >
-          <div class="pb-8 pr-4">
+          <div
+            class="max-h-[calc(100dvh-var(--reading-sticky-top)-2rem)] overflow-y-auto pb-8 pr-4"
+          >
             <div class="border-b border-sht-stone pb-5">
               <p
                 class="text-xs font-semibold uppercase tracking-[0.22em] text-sht-sage"
