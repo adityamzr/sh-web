@@ -166,12 +166,13 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
           <Menu class="h-4 w-4" />{{ t("Daftar Topik") }}
         </button>
       </div>
-      <!-- Reading container: grid height determined by article, sticky elements constrained here -->
-      <div class="grid lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-16 lg:items-start">
-        <aside class="hidden lg:block">
-          <div
-            class="sticky top-[var(--reading-sticky-top)] max-h-[calc(100vh-var(--reading-sticky-top)-2rem)] overflow-y-auto pb-8 pr-4"
-          >
+      <!-- Reading layout: grid height = article height, sidebar sticky constrained to it -->
+      <div class="grid lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-16">
+        <!-- LEFT: only sidebar is sticky, heading remains normal content -->
+        <aside
+          class="hidden lg:block lg:sticky lg:top-[var(--reading-sticky-top)] lg:self-start lg:max-h-[calc(100vh-var(--reading-sticky-top)-2rem)] lg:overflow-y-auto"
+        >
+          <div class="pb-8 pr-4">
             <div class="border-b border-sht-stone pb-5">
               <p
                 class="text-xs font-semibold uppercase tracking-[0.22em] text-sht-sage"
@@ -259,27 +260,23 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
             >
           </div>
           <div v-else class="max-w-[820px]">
-            <!-- Desktop sticky heading: group, title, summary stay visible while body scrolls -->
-            <div
-              class="lg:sticky lg:top-[var(--reading-sticky-top)] lg:z-10 lg:bg-sht-off-white lg:pb-6 lg:pt-2"
+            <!-- Heading remains normal document flow, NOT sticky -->
+            <p
+              class="text-xs font-semibold uppercase tracking-[0.22em] text-sht-sage"
             >
-              <p
-                class="text-xs font-semibold uppercase tracking-[0.22em] text-sht-sage"
-              >
-                {{ t(activeGroup) }}
-              </p>
-              <h1
-                class="mt-4 font-hero text-4xl font-bold leading-tight text-sht-olive-dark sm:text-5xl"
-              >
-                {{ activeTopic.title }}
-              </h1>
-              <p
-                v-if="activeTopic.summary"
-                class="mt-5 max-w-3xl text-base leading-relaxed text-sht-charcoal/70 sm:text-lg"
-              >
-                {{ activeTopic.summary }}
-              </p>
-            </div>
+              {{ t(activeGroup) }}
+            </p>
+            <h1
+              class="mt-4 font-hero text-4xl font-bold leading-tight text-sht-olive-dark sm:text-5xl"
+            >
+              {{ activeTopic.title }}
+            </h1>
+            <p
+              v-if="activeTopic.summary"
+              class="mt-5 max-w-3xl text-base leading-relaxed text-sht-charcoal/70 sm:text-lg"
+            >
+              {{ activeTopic.summary }}
+            </p>
             <div v-if="activeTopic.body.length" class="mt-10">
               <template v-for="(block, i) in activeTopic.body" :key="i"
                 ><p

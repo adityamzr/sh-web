@@ -6,14 +6,13 @@ type Section={id:string;title:string;paragraphs:string[];bullets?:string[]};defi
 <template>
   <main class="bg-sht-off-white pb-20 pt-28 sm:pt-36">
     <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
-      <!-- Reading container: height determined by article, sticky elements constrained here -->
-      <div class="grid gap-12 lg:grid-cols-[190px_minmax(0,760px)] lg:gap-16 lg:items-start">
-        <!-- LEFT: TOC sticky, section-scoped -->
-        <aside class="hidden lg:block">
-          <nav
-            class="sticky top-[var(--reading-sticky-top)] max-h-[calc(100vh-var(--reading-sticky-top)-2rem)] overflow-y-auto pr-2"
-            :aria-label="t('Daftar isi')"
-          >
+      <!-- Reading layout: grid height = article height, only sidebar sticky -->
+      <div class="grid gap-12 lg:grid-cols-[190px_minmax(0,760px)] lg:gap-16">
+        <!-- LEFT: only Daftar Isi is sticky, heading remains normal -->
+        <aside
+          class="hidden lg:block lg:sticky lg:top-[var(--reading-sticky-top)] lg:self-start lg:max-h-[calc(100vh-var(--reading-sticky-top)-2rem)] lg:overflow-y-auto"
+        >
+          <nav class="pr-2" :aria-label="t('Daftar isi')">
             <p class="text-xs font-semibold uppercase tracking-[0.18em] text-sht-sage">{{ t('DAFTAR ISI') }}</p>
             <a
               v-for="section in sections"
@@ -24,12 +23,9 @@ type Section={id:string;title:string;paragraphs:string[];bullets?:string[]};defi
             >
           </nav>
         </aside>
-        <!-- RIGHT: header sticky + article scrolling normally -->
+        <!-- RIGHT: all content remains normal document flow, heading NOT sticky -->
         <div class="min-w-0">
-          <!-- Desktop sticky header: eyebrow, title, intro, updated remain visible while reading -->
-          <header
-            class="max-w-3xl lg:sticky lg:top-[var(--reading-sticky-top)] lg:z-10 lg:bg-sht-off-white lg:pb-8"
-          >
+          <header class="max-w-3xl">
             <p class="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-sht-sage">
               <span class="h-px w-8 bg-sht-gold" />{{t(eyebrow)}}
             </p>
@@ -41,7 +37,7 @@ type Section={id:string;title:string;paragraphs:string[];bullets?:string[]};defi
           </header>
 
           <!-- Mobile TOC -->
-          <details class="mb-8 rounded-xl border border-sht-stone bg-white p-4 lg:hidden">
+          <details class="mb-8 mt-12 rounded-xl border border-sht-stone bg-white p-4 lg:hidden">
             <summary class="cursor-pointer text-sm font-semibold text-sht-olive-dark">{{ t('Daftar isi') }}</summary>
             <nav class="mt-3 space-y-2">
               <a
@@ -54,13 +50,13 @@ type Section={id:string;title:string;paragraphs:string[];bullets?:string[]};defi
             </nav>
           </details>
 
-          <!-- Article: normal document scroll, sections have increased scroll-mt to account for navbar + sticky header -->
+          <!-- Article: normal document scroll, scroll-mt only for navbar -->
           <article class="mt-8 space-y-10 lg:mt-12">
             <section
               v-for="section in sections"
               :id="section.id"
               :key="section.id"
-              class="scroll-mt-32 border-t border-sht-stone pt-7 first:border-t-0 first:pt-0 lg:scroll-mt-[22rem]"
+              class="scroll-mt-32 border-t border-sht-stone pt-7 first:border-t-0 first:pt-0 lg:scroll-mt-36"
             >
               <h2 class="font-hero text-2xl font-bold text-sht-olive-dark sm:text-3xl">{{section.title}}</h2>
               <p
