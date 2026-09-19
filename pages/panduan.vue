@@ -49,7 +49,7 @@ const alternateKey = "guide-alternates-" + otherLocale;
 const { data: otherGuides } = useAsyncData<MediaGuide[]>(
   alternateKey,
   async () => {
-    if (!englishEnabled.value) return []
+    if (!englishEnabled.value) return [];
     const preload = takeMediaPreload<MediaGuide[]>(alternateKey);
     return preload.used ? preload.data || [] : fetchMediaGuides(otherLocale);
   },
@@ -60,13 +60,29 @@ const activeTopic = computed(
   () =>
     all.value.find((g) => g.slug === activeSlug.value) || all.value[0] || null,
 );
-const trackedGuide=ref<number|null>(null)
-watch(activeTopic,topic=>{if(topic&&trackedGuide.value!==topic.id){trackedGuide.value=topic.id;trackEvent({eventType:'guide_view',entityType:'guide',entityId:topic.id,category:topic.group})}},{immediate:true})
+const trackedGuide = ref<number | null>(null);
+watch(
+  activeTopic,
+  (topic) => {
+    if (topic && trackedGuide.value !== topic.id) {
+      trackedGuide.value = topic.id;
+      trackEvent({
+        eventType: "guide_view",
+        entityType: "guide",
+        entityId: topic.id,
+        category: topic.group,
+      });
+    }
+  },
+  { immediate: true },
+);
 const activeGroup = computed(() => activeTopic.value?.group || "");
 watch(
   [activeTopic, otherGuides],
   () => {
-    const other = englishEnabled.value ? otherGuides.value.find((g) => g.id === activeTopic.value?.id) : null;
+    const other = englishEnabled.value
+      ? otherGuides.value.find((g) => g.id === activeTopic.value?.id)
+      : null;
     contentLinks.value = {
       key: route.path,
       paths: englishEnabled.value
@@ -82,7 +98,9 @@ watch(
               : {}),
           }
         : {
-            id: localePath("/panduan", "id") + (activeTopic.value ? "#" + activeTopic.value.slug : ""),
+            id:
+              localePath("/panduan", "id") +
+              (activeTopic.value ? "#" + activeTopic.value.slug : ""),
           },
       fallback: {
         [otherLocale]: localePath(
@@ -167,10 +185,12 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
         </button>
       </div>
       <!-- Reading layout: grid height = article height, sidebar sticky constrained to it -->
-      <div class="grid lg:grid-cols-[300px_minmax(0,1fr)] lg:items-start lg:gap-16">
+      <div
+        class="grid lg:grid-cols-[300px_minmax(0,1fr)] lg:items-start lg:gap-16"
+      >
         <!-- LEFT: only sidebar is sticky, heading remains normal content -->
         <aside
-          class="hidden lg:block lg:sticky lg:top-[var(--reading-sticky-top)] lg:self-start"
+          class="hidden lg:block lg:sticky lg:top-[var(--reading-sticky-top)] lg:self-start pt-10"
         >
           <div
             class="max-h-[calc(100dvh-var(--reading-sticky-top)-2rem)] overflow-y-auto pb-8 pr-4"
