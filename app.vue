@@ -3,7 +3,7 @@ const { basePath } = useLocale()
 useLocaleSeo()
 </script>
 <template>
-  <div class="min-h-screen overflow-x-hidden bg-sht-off-white text-sht-charcoal [overflow-wrap:anywhere]">
+  <div class="min-h-screen bg-sht-off-white text-sht-charcoal [overflow-wrap:anywhere]">
     <NuxtLoadingIndicator color="#D3C168" :height="3" :throttle="0" />
     <LiveTimeBar />
     <MediaNavbar />
