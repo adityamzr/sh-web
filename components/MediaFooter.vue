@@ -31,10 +31,10 @@ const socialLinks = [
   },
   {
     platform: "whatsapp" as const,
-    label: "08212122424",
+    label: "+62 821-2122-424",
     ariaLabel: "WhatsApp Sudut Haramain",
     href: "https://wa.me/628212122424",
-    display: "08212122424",
+    display: "+62 821-2122-424",
     event: "whatsapp_click" as const,
   },
 ] as const;
@@ -154,7 +154,9 @@ function toggleGroup(group: string) {
             >
               {{ t("IKUTI SUDUT HARAMAIN") }}
             </h3>
-            <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-sht-off-white/75">
+            <div
+              class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-sht-off-white/75"
+            >
               <a
                 v-for="social in socialLinks"
                 :key="social.platform"
@@ -176,9 +178,19 @@ function toggleGroup(group: string) {
                 >
                   <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
                   <circle cx="12" cy="12" r="4" />
-                  <circle cx="17.5" cy="6.5" r=".75" fill="currentColor" stroke="none" />
+                  <circle
+                    cx="17.5"
+                    cy="6.5"
+                    r=".75"
+                    fill="currentColor"
+                    stroke="none"
+                  />
                 </svg>
-                <MessageCircle v-else class="h-5 w-5 shrink-0" aria-hidden="true" />
+                <MessageCircle
+                  v-else
+                  class="h-5 w-5 shrink-0"
+                  aria-hidden="true"
+                />
                 <span>{{ social.display }}</span>
               </a>
             </div>
@@ -223,7 +235,10 @@ function toggleGroup(group: string) {
             >
           </div>
         </div>
-        <div v-if="SHOW_FOOTER_LAYANAN" class="border-t border-sht-off-white/15">
+        <div
+          v-if="SHOW_FOOTER_LAYANAN"
+          class="border-t border-sht-off-white/15"
+        >
           <button
             type="button"
             class="flex min-h-[56px] w-full items-center justify-between text-left text-xs font-semibold uppercase tracking-[0.2em] text-sht-gold"
@@ -261,7 +276,9 @@ function toggleGroup(group: string) {
           >
             {{ t("IKUTI SUDUT HARAMAIN") }}
           </h3>
-          <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-sht-off-white/75">
+          <div
+            class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-sht-off-white/75"
+          >
             <a
               v-for="social in socialLinks"
               :key="social.platform"
@@ -283,9 +300,19 @@ function toggleGroup(group: string) {
               >
                 <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
                 <circle cx="12" cy="12" r="4" />
-                <circle cx="17.5" cy="6.5" r=".75" fill="currentColor" stroke="none" />
+                <circle
+                  cx="17.5"
+                  cy="6.5"
+                  r=".75"
+                  fill="currentColor"
+                  stroke="none"
+                />
               </svg>
-              <MessageCircle v-else class="h-5 w-5 shrink-0" aria-hidden="true" />
+              <MessageCircle
+                v-else
+                class="h-5 w-5 shrink-0"
+                aria-hidden="true"
+              />
               <span>{{ social.display }}</span>
             </a>
           </div>
