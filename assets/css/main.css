@@ -5,7 +5,22 @@
 :root {
   --header-offset: 8rem;
   --header-safe-space: 2rem;
+  --reading-sticky-top: var(--header-offset);
 }
 html { scroll-behavior: smooth; scroll-padding-top: var(--header-offset); }
 body { margin: 0; overflow-x: clip; background: #F6F4ED; color: #242822; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
 .public-page-main { padding-top: var(--header-safe-space); }
+
+/* Centralized desktop sticky reading layout */
+@layer utilities {
+  .sht-sticky-reading {
+    position: sticky;
+    top: var(--reading-sticky-top);
+  }
+  .sht-sticky-reading-bg {
+    background-color: #F6F4ED;
+  }
+  .sht-reading-sidebar {
+    max-height: calc(100vh - var(--reading-sticky-top) - 2rem);
+  }
+}

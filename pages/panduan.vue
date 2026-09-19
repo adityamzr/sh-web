@@ -166,10 +166,14 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
           <Menu class="h-4 w-4" />{{ t("Daftar Topik") }}
         </button>
       </div>
-      <div class="grid lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-16">
-        <aside class="hidden lg:block">
+      <!-- Reading layout: grid height = article height, sidebar sticky constrained to it -->
+      <div class="grid lg:grid-cols-[300px_minmax(0,1fr)] lg:items-start lg:gap-16">
+        <!-- LEFT: only sidebar is sticky, heading remains normal content -->
+        <aside
+          class="hidden lg:block lg:sticky lg:top-[var(--reading-sticky-top)] lg:self-start"
+        >
           <div
-            class="sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto pb-8 pr-4"
+            class="max-h-[calc(100dvh-var(--reading-sticky-top)-2rem)] overflow-y-auto pb-8 pr-4"
           >
             <div class="border-b border-sht-stone pb-5">
               <p
@@ -258,6 +262,7 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
             >
           </div>
           <div v-else class="max-w-[820px]">
+            <!-- Heading remains normal document flow, NOT sticky -->
             <p
               class="text-xs font-semibold uppercase tracking-[0.22em] text-sht-sage"
             >
