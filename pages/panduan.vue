@@ -356,7 +356,7 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
                   class="mb-8 border-l-2 border-sht-gold bg-sht-gold/10 px-5 py-4 text-sm leading-relaxed"
                 >
                   {{ block.text }}
-                </aside></template
+                </aside><MediaContentTable v-else-if="block.type === 'table'" :block="block" /></template
               >
             </div>
             <div

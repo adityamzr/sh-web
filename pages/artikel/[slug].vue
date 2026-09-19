@@ -256,6 +256,10 @@ async function selectFeedback(value: "helpful" | "not-helpful") {
           >
             {{ block.text }}
           </aside>
+          <MediaContentTable
+            v-else-if="block.type === 'table'"
+            :block="block"
+          />
         </template>
       </div>
 
