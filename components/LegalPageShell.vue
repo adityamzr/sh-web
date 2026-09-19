@@ -1,55 +1,90 @@
 <script setup lang="ts">
-const { t, localePath, locale, basePath } = useLocale()
+const { t, localePath, locale, basePath } = useLocale();
 
-type Section={id:string;title:string;paragraphs:string[];bullets?:string[]};defineProps<{eyebrow:string;title:string;intro:string;updated:string;sections:Section[];kind?:'about'|'legal';}>()
+type Section = {
+  id: string;
+  title: string;
+  paragraphs: string[];
+  bullets?: string[];
+};
+defineProps<{
+  eyebrow: string;
+  title: string;
+  intro: string;
+  updated: string;
+  sections: Section[];
+  kind?: "about" | "legal";
+}>();
 </script>
 <template>
-  <main class="bg-sht-off-white pb-20 pt-28 sm:pt-36">
+  <main class="bg-sht-off-white pb-20 pt-28 sm:pt-26">
     <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <!-- Reading layout: grid height = article height, only sidebar sticky -->
-      <div class="grid gap-12 lg:grid-cols-[190px_minmax(0,760px)] lg:items-start lg:gap-16">
+      <div
+        class="grid gap-12 lg:grid-cols-[190px_minmax(0,760px)] lg:items-start lg:gap-16"
+      >
         <!-- LEFT: only Daftar Isi is sticky, heading remains normal -->
         <aside
-          class="hidden lg:block lg:sticky lg:top-[var(--reading-sticky-top)] lg:self-start"
+          class="hidden lg:block lg:sticky lg:top-[var(--reading-sticky-top)] lg:self-start pt-0 sm:pt-10"
         >
           <div
             class="max-h-[calc(100dvh-var(--reading-sticky-top)-2rem)] overflow-y-auto pr-2"
           >
             <nav :aria-label="t('Daftar isi')">
-              <p class="text-xs font-semibold uppercase tracking-[0.18em] text-sht-sage">{{ t('DAFTAR ISI') }}</p>
+              <p
+                class="text-xs font-semibold uppercase tracking-[0.18em] text-sht-sage"
+              >
+                {{ t("DAFTAR ISI") }}
+              </p>
               <a
                 v-for="section in sections"
                 :key="section.id"
                 :href="`#${section.id}`"
                 class="mt-3 block text-sm leading-snug text-sht-charcoal/60 hover:text-sht-olive focus-visible:outline focus-visible:outline-2 focus-visible:outline-sht-gold"
-                >{{section.title}}</a
+                >{{ section.title }}</a
               >
             </nav>
           </div>
         </aside>
         <!-- RIGHT: all content remains normal document flow, heading NOT sticky -->
-        <div class="min-w-0">
+        <div class="min-w-0 pt-0 sm:pt-10">
           <header class="max-w-3xl">
-            <p class="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-sht-sage">
-              <span class="h-px w-8 bg-sht-gold" />{{t(eyebrow)}}
+            <p
+              class="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.22em] text-sht-sage"
+            >
+              <span class="h-px w-8 bg-sht-gold" />{{ t(eyebrow) }}
             </p>
-            <h1 class="mt-5 font-hero text-4xl font-bold italic leading-tight text-sht-olive-dark sm:text-6xl">
-              {{t(title)}}
+            <h1
+              class="mt-5 font-hero text-4xl font-bold italic leading-tight text-sht-olive-dark sm:text-6xl"
+            >
+              {{ t(title) }}
             </h1>
-            <p class="mt-5 max-w-2xl text-base leading-relaxed text-sht-charcoal/70 sm:text-lg">{{t(intro)}}</p>
-            <p v-if="updated" class="mt-5 text-xs text-sht-charcoal/50">{{t(updated)}}</p>
+            <p
+              class="mt-5 max-w-2xl text-base leading-relaxed text-sht-charcoal/70 sm:text-lg"
+            >
+              {{ t(intro) }}
+            </p>
+            <p v-if="updated" class="mt-5 text-xs text-sht-charcoal/50">
+              {{ t(updated) }}
+            </p>
           </header>
 
           <!-- Mobile TOC -->
-          <details class="mb-8 mt-12 rounded-xl border border-sht-stone bg-white p-4 lg:hidden">
-            <summary class="cursor-pointer text-sm font-semibold text-sht-olive-dark">{{ t('Daftar isi') }}</summary>
+          <details
+            class="mb-8 mt-12 rounded-xl border border-sht-stone bg-white p-4 lg:hidden"
+          >
+            <summary
+              class="cursor-pointer text-sm font-semibold text-sht-olive-dark"
+            >
+              {{ t("Daftar isi") }}
+            </summary>
             <nav class="mt-3 space-y-2">
               <a
                 v-for="section in sections"
                 :key="section.id"
                 :href="`#${section.id}`"
                 class="block text-sm text-sht-charcoal/70"
-                >{{section.title}}</a
+                >{{ section.title }}</a
               >
             </nav>
           </details>
@@ -62,19 +97,25 @@ type Section={id:string;title:string;paragraphs:string[];bullets?:string[]};defi
               :key="section.id"
               class="scroll-mt-32 border-t border-sht-stone pt-7 first:border-t-0 first:pt-0 lg:scroll-mt-36"
             >
-              <h2 class="font-hero text-2xl font-bold text-sht-olive-dark sm:text-3xl">{{section.title}}</h2>
+              <h2
+                class="font-hero text-2xl font-bold text-sht-olive-dark sm:text-3xl"
+              >
+                {{ section.title }}
+              </h2>
               <p
                 v-for="paragraph in section.paragraphs"
                 :key="paragraph"
                 class="mt-4 text-base leading-[1.85] text-sht-charcoal/75"
               >
-                {{paragraph}}
+                {{ paragraph }}
               </p>
               <ul
                 v-if="section.bullets"
                 class="mt-4 list-disc space-y-2 pl-6 text-base leading-relaxed text-sht-charcoal/75"
               >
-                <li v-for="bullet in section.bullets" :key="bullet">{{bullet}}</li>
+                <li v-for="bullet in section.bullets" :key="bullet">
+                  {{ bullet }}
+                </li>
               </ul>
             </section>
           </article>
