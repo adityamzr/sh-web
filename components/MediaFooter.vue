@@ -339,7 +339,7 @@ function toggleGroup(group: string) {
           >
         </div>
         <p class="text-sht-off-white/60">
-          {{ t("Dari Makkah, untuk jamaah Indonesia.") }}
+          {{ t("Dari Haramain, untuk jamaah Indonesia.") }}
         </p>
       </div>
     </div>
