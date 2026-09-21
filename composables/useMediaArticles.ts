@@ -1,6 +1,8 @@
 import { mediaCacheKey, formatMediaDate, translate, type SupportedLocale } from '~/shared/localization'
 import type { MaybeRefOrGetter } from 'vue'
 import { takeMediaPreload } from '~/composables/useMediaPreload'
+import type { RichTextDocument } from '~/shared/rich-text'
+import { extractMediaBodyText } from '~/shared/rich-text'
 export type MediaArticleBlock = {
   type: string;
   level?: 2 | 3;
@@ -15,13 +17,14 @@ export type MediaArticleBlock = {
   headers?: string[];
   rows?: string[][];
   alignments?: Array<'left' | 'center' | 'right'>;
+  content?: RichTextDocument;
 }
 export type MediaArticle = { availableLocales?: SupportedLocale[]; localizedSlugs?: Partial<Record<SupportedLocale, string>>; id: number; slug: string; title: string; excerpt: string; body: MediaArticleBlock[]; content: MediaArticleBlock[]; references?: string[]; type: 'article'|'update'|'practical'; city: 'makkah'|'madinah'|'general'; category: string; tags: string[]; contentType: 'article'|'update'|'practical'; priority: number; publishedAt: string | null; updatedAt: string | null; image: string; imageAlt: string; readingTime: string; seoTitle?: string|null; seoDescription?: string|null; ogImage?: string|null }
 
 export function normalizeArticle(row:any, locale: SupportedLocale): MediaArticle | null {
   if (!row || typeof row !== 'object' || !Number.isFinite(Number(row.id)) || typeof row.slug !== 'string' || typeof row.title !== 'string') return null
   const body=Array.isArray(row.body)?row.body:[];
-  const text=body.map((b:any)=>b?.text||b?.items?.join(' ')||'').join(' ');
+  const text=extractMediaBodyText(body);
   const minutes=Math.max(1,Math.ceil((text.length||row.excerpt?.length||0)/900));
   return {
     id:row.id, availableLocales: row.availableLocales, localizedSlugs: row.localizedSlugs,
