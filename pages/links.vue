@@ -40,13 +40,12 @@ const data = computed<LinkBioSettings>(() => {
   if (!s)
     return {
       title: "Sudut Haramain",
-      description: "Informasi, panduan, dan cerita dari Makkah & Madinah.",
+      description: "Media Seputar Makkah & Madinah.",
       links: [],
     };
   return {
     title: s.title ?? "Sudut Haramain",
-    description:
-      s.description ?? "Informasi, panduan, dan cerita dari Makkah & Madinah.",
+    description: s.description ?? "Media Seputar Makkah & Madinah.",
     links: Array.isArray(s.links) ? s.links : [],
   };
 });

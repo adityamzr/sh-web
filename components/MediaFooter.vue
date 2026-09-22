@@ -74,7 +74,7 @@ function toggleGroup(group: string) {
           <p
             class="mt-4 max-w-sm text-sm leading-relaxed text-sht-off-white/70"
           >
-            {{ t("Media Digital & Informasi Praktis Makkah–Madinah") }}
+            {{ t("Media Seputar Makkah & Madinah") }}
           </p>
           <p
             class="mt-3 max-w-sm text-sm leading-relaxed text-sht-off-white/55"
