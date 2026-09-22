@@ -35,6 +35,16 @@ test('all public GET proxies forward English including article detail and page s
   }
   assert.equal((await fetch(app.origin + '/api/media/articles?locale=ar')).status, 400)
 })
+test('hybrid rich text renders semantic SSR HTML and strips unsafe link behavior', async () => {
+  const response = await fetch(app.origin + '/en/artikel/english-transport')
+  const html = await response.text()
+  assert.equal(response.status, 200)
+  assert.match(html, /<strong>EN_BODY fixture<\/strong>/)
+  assert.match(html, /<h2[^>]*>English heading<\/h2>/)
+  assert.match(html, /<ul[^>]*>[\s\S]*<em>English list item<\/em>/)
+  assert.match(html, /href="\/panduan"/)
+  assert.doesNotMatch(html, /href="javascript:/)
+})
 test('English search is sent to backend and results are locale-aware', async () => {
   const html = rendered(await (await fetch(app.origin + '/en/hari-ini?search=English')).text())
   assert.ok(html.includes('English transport article'))

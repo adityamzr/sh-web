@@ -7,7 +7,15 @@ const article = (id, locale) => ({
   id, slug: id === 2 ? 'hanya-indonesia' : locale === 'en' ? 'english-transport' : 'transportasi-indonesia',
   title: locale === 'en' ? 'English transport article' : 'Artikel transportasi Indonesia',
   excerpt: locale === 'en' ? 'EN_EXCERPT fixture' : 'ID_EXCERPT fixture',
-  body: [{ type: 'paragraph', text: locale === 'en' ? 'EN_BODY fixture' : 'ID_BODY fixture' }, { type: 'heading', level: 2, text: locale === 'en' ? 'English heading' : 'Judul bagian' }, { type: 'list', items: [locale === 'en' ? 'English list item' : 'Daftar Indonesia'] }],
+  body: [{ type: 'richText', content: { type: 'doc', content: [
+    { type: 'paragraph', content: [
+      { type: 'text', text: locale === 'en' ? 'EN_BODY fixture' : 'ID_BODY fixture', marks: [{ type: 'bold' }] },
+      { type: 'text', text: ' safe link', marks: [{ type: 'link', attrs: { href: '/panduan' } }] },
+      { type: 'text', text: ' unsafe link', marks: [{ type: 'link', attrs: { href: 'javascript:alert(1)' } }] },
+    ] },
+    { type: 'heading', attrs: { level: 2 }, content: [{ type: 'text', text: locale === 'en' ? 'English heading' : 'Judul bagian' }] },
+    { type: 'bulletList', content: [{ type: 'listItem', content: [{ type: 'paragraph', content: [{ type: 'text', text: locale === 'en' ? 'English list item' : 'Daftar Indonesia', marks: [{ type: 'italic' }] }] }] }] },
+  ] } }],
   city: 'MAKKAH', category: 'Transportasi', tags: [], contentType: 'article',
   publishedAt: '2026-08-31T00:00:00Z', heroImage: '/images/makkah-editorial.jpg', heroImageAlt: locale === 'en' ? 'English image alt' : 'Alt Indonesia',
   availableLocales: id === 2 ? ['id'] : ['id', 'en'], localizedSlugs: id === 2 ? { id: 'hanya-indonesia' } : { id: 'transportasi-indonesia', en: 'english-transport' },
@@ -36,7 +44,7 @@ export async function startFixtureApp({ port = 0 } = {}) {
       return item ? send(item) : send('Article not found', 404)
     }
     if (path === '/guides') return send(state.empty ? [] : [
-      { id: 10, slug: locale === 'en' ? 'train-guide' : 'panduan-kereta', title: locale === 'en' ? 'Train guide' : 'Panduan kereta', summary: locale === 'en' ? 'English guide summary' : 'Ringkasan Indonesia', group: 'TRANSPORTASI', body: [{ type: 'paragraph', text: locale === 'en' ? 'EN_GUIDE_BODY' : 'ID_GUIDE_BODY' }], sortOrder: 0 },
+      { id: 10, slug: locale === 'en' ? 'train-guide' : 'panduan-kereta', title: locale === 'en' ? 'Train guide' : 'Panduan kereta', summary: locale === 'en' ? 'English guide summary' : 'Ringkasan Indonesia', group: 'TRANSPORTASI', body: [{ type: 'richText', content: { type: 'doc', content: [{ type: 'paragraph', content: [{ type: 'text', text: locale === 'en' ? 'EN_GUIDE_BODY' : 'ID_GUIDE_BODY' }] }] } }], sortOrder: 0 },
       ...(locale === 'id' ? [{ id: 11, slug: 'panduan-bus', title: 'Panduan bus', group: 'TRANSPORTASI', body: [{ type: 'paragraph', text: 'ID_ONLY_GUIDE' }], sortOrder: 1 }] : []),
     ])
     if (path === '/gallery') return send(state.empty ? [] : [{ id: 20, city: 'MAKKAH', title: locale === 'en' ? 'English photo' : 'Foto Indonesia', altText: locale === 'en' ? 'English photo alt' : 'Alt foto Indonesia', description: locale === 'en' ? 'EN_PHOTO_DESCRIPTION' : 'ID_PHOTO_DESCRIPTION', imageUrl: '/images/makkah-editorial.jpg', locationName: locale === 'en' ? 'English station' : 'Stasiun Indonesia', category: 'TRANSPORTASI', coordinates: { latitude: 21.42, longitude: 39.82 }, publishedAt: '2026-08-31' }])
