@@ -160,7 +160,7 @@ onMounted(() => window.addEventListener("keydown", onKeydown));
 onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
 </script>
 <template>
-  <div class="bg-sht-off-white pt-24 text-sht-charcoal sm:pt-28">
+  <div class="bg-sht-off-white pt-24 pb-16 text-sht-charcoal sm:pt-28 lg:pb-24">
     <div class="mx-auto max-w-[84rem] px-5 sm:px-6 lg:px-8">
       <div
         class="flex items-center justify-between border-b border-sht-stone pb-5 lg:hidden"
@@ -246,7 +246,7 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
         </aside>
         <main
           ref="contentPane"
-          class="min-w-0 pt-10 pb-20 lg:pt-12 lg:pb-32"
+          class="min-w-0 pt-10 pb-28 lg:pt-12 lg:pb-48"
           aria-live="polite"
         >
           <p
