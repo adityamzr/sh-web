@@ -11,8 +11,8 @@ test('/links route renders standalone and SEO', async () => {
   assert.ok(linksVue.includes('noindex'), 'should have noindex')
   assert.ok(linksVue.includes('Sudut Haramain — Tautan'), 'should have correct title')
   assert.ok(linksVue.includes('canonical'), 'should have canonical')
-  // Logo present
-  assert.ok(linksVue.includes('sht_horizontal_black_logo') || linksVue.includes('sht_horizontal_white_logo'), 'should have logo')
+  // Logo present - supports both old horizontal logo and new sh logo
+  assert.ok(linksVue.includes('sht_horizontal_black_logo') || linksVue.includes('sht_horizontal_white_logo') || linksVue.includes('logo_sh') || linksVue.includes('logo.png'), 'should have logo')
   // Uses MediaLinkHubItem
   assert.ok(linksVue.includes('MediaLinkHubItem'), 'should use MediaLinkHubItem')
   // Empty state

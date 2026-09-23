@@ -17,7 +17,7 @@ defineProps<{
 }>();
 </script>
 <template>
-  <main class="bg-sht-off-white pb-20 pt-28 sm:pt-26">
+  <main class="bg-sht-off-white pb-28 pt-28 sm:pt-26 lg:pb-48">
     <div class="mx-auto max-w-container px-5 sm:px-6 lg:px-8">
       <!-- Reading layout: grid height = article height, only sidebar sticky -->
       <div
