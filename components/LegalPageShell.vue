@@ -28,7 +28,7 @@ defineProps<{
           class="hidden lg:block lg:sticky lg:top-[var(--reading-sticky-top)] lg:self-start pt-0 sm:pt-10"
         >
           <div
-            class="max-h-[calc(100dvh-var(--reading-sticky-top)-2rem)] overflow-y-auto pr-2"
+            class="sht-scrollbar max-h-[calc(100dvh-var(--reading-sticky-top)-2rem)] overflow-y-auto pr-3"
           >
             <nav :aria-label="t('Daftar isi')">
               <p
@@ -125,3 +125,30 @@ defineProps<{
     </div>
   </main>
 </template>
+
+<style scoped>
+.sht-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(58, 68, 40, 0.12) transparent;
+  scrollbar-gutter: stable;
+}
+.sht-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.sht-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sht-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(58, 68, 40, 0.12);
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background-clip: content-box;
+}
+.sht-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(58, 68, 40, 0.22);
+}
+.sht-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(58, 68, 40, 0.32);
+}
+</style>
