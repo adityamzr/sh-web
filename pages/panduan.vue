@@ -192,7 +192,7 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
           class="hidden lg:block lg:sticky lg:top-[var(--reading-sticky-top)] lg:self-start pt-10"
         >
           <div
-            class="max-h-[calc(100dvh-var(--reading-sticky-top)-2rem)] overflow-y-auto pb-8 pr-4"
+            class="sht-scrollbar max-h-[calc(100dvh-var(--reading-sticky-top)-2rem)] overflow-y-auto pb-8 pr-3"
           >
             <div class="border-b border-sht-stone pb-5">
               <p
@@ -347,7 +347,7 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
               class="min-h-[44px] w-full rounded-xl border border-sht-stone bg-white px-3 text-sm"
             />
           </div>
-          <nav class="min-h-0 flex-1 overflow-y-auto px-5 py-5">
+          <nav class="sht-scrollbar min-h-0 flex-1 overflow-y-auto px-5 py-5">
             <div v-for="group in grouped" :key="group.title" class="mb-6">
               <h2
                 class="px-3 text-[0.68em] font-semibold uppercase tracking-[0.18em] text-sht-charcoal/55"
@@ -374,3 +374,30 @@ onBeforeUnmount(() => window.removeEventListener("keydown", onKeydown));
     >
   </div>
 </template>
+
+<style scoped>
+.sht-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(58, 68, 40, 0.12) transparent;
+  scrollbar-gutter: stable;
+}
+.sht-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.sht-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.sht-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(58, 68, 40, 0.12);
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background-clip: content-box;
+}
+.sht-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(58, 68, 40, 0.22);
+}
+.sht-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(58, 68, 40, 0.32);
+}
+</style>
