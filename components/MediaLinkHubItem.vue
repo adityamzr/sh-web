@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ArrowUpRight, ExternalLink, Globe, MessageCircle, Instagram, Youtube, Music2, Send, FileText, BookOpen, Users, Link2 } from 'lucide-vue-next'
+import { ArrowUpRight, Globe, MessageCircle, Instagram, Youtube, Music2, Send, FileText, BookOpen, Users, Link2 } from 'lucide-vue-next'
 
 export type LinkHubType = 'website'|'whatsapp'|'instagram'|'youtube'|'tiktok'|'telegram'|'form'|'article'|'guide'|'community'|'external'|'custom'
 
@@ -22,15 +22,21 @@ function isInternalUrl(url: string): boolean {
   if (url.startsWith('/')) return true
   try {
     const u = new URL(url)
-    // Consider sudutharamain.id as internal
     return u.hostname === 'sudutharamain.id' || u.hostname.endsWith('.sudutharamain.id')
   } catch {
     return false
   }
 }
 
+function getHref(url: string): string {
+  // For internal full URLs, keep as is but ensure it is clickable
+  // For path-only, keep as is
+  return url
+}
+
 const internal = computed(() => isInternalUrl(props.item.url))
 const isExternal = computed(() => !internal.value)
+const href = computed(() => getHref(props.item.url))
 
 function iconForType(type: LinkHubType) {
   switch (type) {
@@ -52,13 +58,11 @@ const IconComp = computed(() => iconForType(props.item.type))
 </script>
 
 <template>
-  <component
-    :is="internal ? 'NuxtLink' : 'a'"
-    :to="internal ? item.url : undefined"
-    :href="!internal ? item.url : undefined"
-    :target="isExternal ? '_blank' : undefined"
+  <a
+    :href="href"
+    :target="isExternal ? '_blank' : '_self'"
     :rel="isExternal ? 'noopener noreferrer' : undefined"
-    class="group flex w-full items-center gap-4 rounded-2xl border px-5 py-4 text-left transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold"
+    class="group flex w-full items-center gap-4 rounded-2xl border px-5 py-4 text-left transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sht-gold cursor-pointer"
     :class="item.featured
       ? 'bg-[#2D351F] border-[#2D351F] text-[#F6F4ED] shadow-sm hover:bg-[#3A4428] hover:border-[#3A4428] hover:shadow-md'
       : 'bg-white border-sht-stone/70 text-sht-olive-dark hover:border-sht-gold/60 hover:shadow-sm hover:-translate-y-[1px]'"
@@ -74,5 +78,5 @@ const IconComp = computed(() => iconForType(props.item.type))
       <p v-if="item.description" class="mt-1 line-clamp-2 text-xs leading-relaxed" :class="item.featured ? 'text-[#F6F4ED]/70' : 'text-sht-charcoal/60'">{{ item.description }}</p>
     </div>
     <ArrowUpRight class="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" :class="item.featured ? 'text-sht-gold' : 'text-sht-charcoal/40 group-hover:text-sht-olive'" aria-hidden="true" />
-  </component>
+  </a>
 </template>
