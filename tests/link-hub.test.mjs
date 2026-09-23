@@ -41,12 +41,12 @@ test('MediaLinkHubItem component active/inactive/featured/internal/external', as
   // Featured style
   assert.ok(comp.includes('featured'), 'should handle featured')
   assert.ok(comp.includes('bg-[#2D351F]') || comp.includes('bg-sht-olive'), 'should have featured style')
-  // Internal vs external
+  // Internal vs external - now uses <a> with href for all to ensure clickability, target _blank for external, _self for internal
   assert.ok(comp.includes('isInternalUrl') || comp.includes('internal'), 'should have internal check')
   assert.ok(comp.includes('target') && comp.includes('_blank'), 'should have target blank for external')
   assert.ok(comp.includes('noopener noreferrer'), 'should have rel noopener')
-  // Uses NuxtLink for internal
-  assert.ok(comp.includes('NuxtLink'), 'should use NuxtLink for internal')
+  // Should use <a> with href to ensure clickability even for self-links like /links
+  assert.ok(comp.includes('<a') && comp.includes(':href'), 'should use <a> with href for clickability')
   // Icon handling
   assert.ok(comp.includes('iconForType') || comp.includes('IconComp'), 'should have icon handling')
 })
